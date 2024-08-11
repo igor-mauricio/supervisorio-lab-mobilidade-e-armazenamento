@@ -1,60 +1,98 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from database import configureDatabase, db
+from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask_login import login_user # type: ignore
+from extensions import configureDatabase, configureLoginManager, db, login_manager
+from models import User
 app = Flask(__name__)
 app.secret_key = "secret key"
 
 configureDatabase(app)
+configureLoginManager(app)
 
-@app.route("/")
-def hello_world():
+@login_manager.user_loader
+def user_loader(id):
+    return User.query.filter_by(id=id).first()
+
+@app.get("/")
+def index():
     return render_template("index.html")
 
-@app.route("/login")
+@app.get("/login")
 def login():
-    return "Login"
+    return render_template("login.html")
 
-@app.route("/register")
+@app.post("/login")
+def login_form(): 
+    username = request.form["username"]
+    password = request.form["password"]
+    user = User.query.filter_by(username=username).first()
+    if user and user.password == password:
+        login_user(user)
+        flash("Login realizado com sucesso")
+        return redirect(url_for("index"))
+    flash("Dados inválidos")
+    return redirect(url_for("login"))
+   
+
+@app.get("/register")
 def register():
-    return "Register"
+    return render_template("register.html")
 
-@app.route("/logout")
+@app.post("/register")
+def register_form():
+    name = request.form["name"]
+    username = request.form["username"]
+    password = request.form["password"]
+    password_confirm = request.form["password_confirm"]
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        flash("Nome de usuário já existe")
+        return redirect(url_for("register"))
+    if password != password_confirm:
+        flash("Senha e confirmação de senha não conferem")
+        return redirect(url_for("register"))
+    user = User(username, name, password)
+    db.session.add(user)
+    db.session.commit()
+    flash("Usuário registrado com sucesso")
+    return redirect(url_for("login"))
+
+@app.get("/logout")
 def logout():
     return "Logout"
 
-@app.route("/alarms")
+@app.get("/alarms")
 def alarms():
     return "Alarms"
 
-@app.route("/equipments")
+@app.get("/equipments")
 def equipments():
     return "Equipments"
 
-@app.route("/equipments/battery")
+@app.get("/equipments/battery")
 def battery():
     return "Battery"
 
-@app.route("/equipments/generator")
+@app.get("/equipments/generator")
 def generator():
     return "Generator"
 
-@app.route("/equipments/inversor/fronius")
+@app.get("/equipments/inversor/fronius")
 def inversor_fronnius():
     return "Fronius"
 
-@app.route("/equipments/inversor/quattro")
+@app.get("/equipments/inversor/quattro")
 def inversor_quattro():
     return "Quattro"
 
-@app.route("/equipments/charge_controller/smart_solar")
+@app.get("/equipments/charge_controller/smart_solar")
 def charge_controller_smart_solar():
     return "Charge Controller Smart Solar"
 
-@app.route("/equipments/energy_management_system/cerbo_gx")
+@app.get("/equipments/energy_management_system/cerbo_gx")
 def charge_controller_cerbo_gx():
     return "Energy Management System Cerbo GX"
 
-@app.route("/equipments/power_measurer")
+@app.get("/equipments/power_measurer")
 def power_measurement():
     return "Power Measurer"
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  {% include 'flash_message.html' %}
+  <form method="post">  
+    <div>
+      <h2>Register Form</h2>
+      <label for="username"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="username" required>
+      <label for="name"><b>Name</b></label>
+      <input type="text" placeholder="Enter Name" name="name" required>
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+      <label for="password_confirm"><b>Confirm Password</b></label>
+      <input type="password" placeholder="Confirm Password" name="password_confirm" required>
+      <button type="submit">Register</button>
+    </div>
+  </form>
+</body>
+</html>

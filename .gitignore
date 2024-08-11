@@ -1,2 +1,5 @@
 .venv
 custom-web-control/out/*
+app/instance/*
+##pycache
+*.pyc

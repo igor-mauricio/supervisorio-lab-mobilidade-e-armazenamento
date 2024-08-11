@@ -1,7 +1,10 @@
 from flask import Flask, render_template
-
+from flask_sqlalchemy import SQLAlchemy
+from database import configureDatabase, db
 app = Flask(__name__)
 app.secret_key = "secret key"
+
+configureDatabase(app)
 
 @app.route("/")
 def hello_world():
@@ -56,4 +59,6 @@ def power_measurement():
     return "Power Measurer"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=33000, host='0.0.0.0')
+    with app.app_context():
+        db.create_all()
+        app.run(debug=True, port=33000, host='0.0.0.0')

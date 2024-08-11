@@ -69,7 +69,7 @@ def logout():
 
 @app.get("/alarms")
 def alarms():
-    return "Alarms"
+    return "Alarme supervisório"
 
 @app.get("/equipments")
 def equipments():

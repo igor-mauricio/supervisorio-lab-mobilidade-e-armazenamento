@@ -69,7 +69,7 @@ def logout():
 
 @app.get("/alarms")
 def alarms():
-    return "Alarme supervisório"
+    return render_template("alarms.html")
 
 @app.get("/equipments")
 def equipments():

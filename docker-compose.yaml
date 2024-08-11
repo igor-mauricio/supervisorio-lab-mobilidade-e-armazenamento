@@ -7,3 +7,14 @@ services:
     stop_signal: SIGINT
     ports:
       - "33000:33000"
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: "app"
+    ports:
+      - 5432:5432
+    # volumes:
+    #   - ./docker_data/init.sql:/docker-entrypoint-initdb.d/init.sql

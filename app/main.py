@@ -1,4 +1,4 @@
-from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import login_user # type: ignore
 from extensions import configureDatabase, configureLoginManager, db, login_manager
 from models import User
@@ -49,6 +49,9 @@ def register_form():
         return redirect(url_for("register"))
     if password != password_confirm:
         flash("Senha e confirmação de senha não conferem")
+        return redirect(url_for("register"))
+    if len(password) < 8:
+        flash("Senha deve ter no mínimo 8 caracteres")
         return redirect(url_for("register"))
     user = User(username, name, password)
     db.session.add(user)

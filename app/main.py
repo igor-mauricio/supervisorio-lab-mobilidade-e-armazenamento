@@ -50,9 +50,13 @@ def register_form():
     if password != password_confirm:
         flash("Senha e confirmação de senha não conferem")
         return redirect(url_for("register"))
-    if len(password) < 8:
-        flash("Senha deve ter no mínimo 8 caracteres")
+    if len(password) < 3:
+        flash("Senha deve ter no mínimo 3 caracteres")
         return redirect(url_for("register"))
+    if len(name) == 0:
+        flash("Nome não pode ser vazio")
+        return redirect(url_for("register"))
+    
     user = User(username, name, password)
     db.session.add(user)
     db.session.commit()

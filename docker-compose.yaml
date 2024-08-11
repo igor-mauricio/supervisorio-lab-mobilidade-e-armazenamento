@@ -1,0 +1,17 @@
+version: "2.4"
+services:
+  web: 
+    image: flask_app
+    mem_limit: 700mb
+    restart: "unless-stopped"
+    stop_signal: SIGINT
+    ports:
+      - '33000:33000'
+
+  nodered: 
+    image: flask_app
+    mem_limit: 700mb
+    restart: "unless-stopped"
+    stop_signal: SIGINT
+    ports:
+      - '33000:33000'

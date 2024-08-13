@@ -1,12 +1,17 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
-from flask_login import login_user # type: ignore
+from flask_login import login_required, login_user # type: ignore
+from app.battery_service import BatteryService
+from app.infra.Mediator import Mediator
 from extensions import configureDatabase, configureLoginManager, db, login_manager
-from models import User
+from models import Battery, User
 app = Flask(__name__)
 app.secret_key = "secret key"
 
 configureDatabase(app)
 configureLoginManager(app)
+
+mediator = Mediator()
+batteryService = BatteryService(mediator)
 
 @login_manager.user_loader
 def user_loader(id):
@@ -16,11 +21,11 @@ def user_loader(id):
 def index():
     return render_template("index.html")
 
-@app.get("/login")
+@app.get("auth/login")
 def login():
     return render_template("login.html")
 
-@app.post("/login")
+@app.post("auth/login")
 def login_form(): 
     username = request.form["username"]
     password = request.form["password"]
@@ -33,11 +38,11 @@ def login_form():
     return redirect(url_for("login"))
    
 
-@app.get("/register")
+@app.get("auth/register")
 def register():
     return render_template("register.html")
 
-@app.post("/register")
+@app.post("auth/register")
 def register_form():
     name = request.form["name"]
     username = request.form["username"]
@@ -63,7 +68,7 @@ def register_form():
     flash("Usuário registrado com sucesso")
     return redirect(url_for("login"))
 
-@app.get("/logout")
+@app.get("auth/logout")
 def logout():
     return "Logout"
 
@@ -77,8 +82,48 @@ def equipments():
 
 @app.get("/equipments/battery")
 def battery():
-    return "Battery"
+    battery: Battery = Battery.query.all()[0] # type: ignore
+    if battery is None:
+        return "No battery found", 404
+    
+    return render_template("battery.html", battery = {
+        "capacity": battery.capacity,
+        "charged_percent": battery.charged_percent,
+        "health_percent": battery.health_percent,
+        "manufacturer": battery.manufacturer,
+        "model": battery.model,
+        "min_out_voltage": battery.min_out_voltage,
+        "max_out_voltage": battery.max_out_voltage,
+        "state": battery.state,
+        "relay_status": battery.relay_status
+    })
 
+@login_required
+@app.post("/equipments/battery/change_relay_state")
+def change_battery_relay_state():
+    state = request.form["relay_state"]
+    try:
+        batteryService.change_battery_relay_state(state)
+    except Exception as e:
+        if str(e) == "Invalid state":
+            return "Invalid state", 400
+        if str(e) == "No battery found":
+            return "No battery found", 404
+    return "State changed", 200
+
+@login_required
+@app.post("/equipments/battery/change_battery_mode")
+def change_battery_mode():
+    mode = request.form["mode"]
+    try:
+        batteryService.change_battery_mode(mode)
+    except Exception as e:
+        if str(e) == "Invalid mode":
+            return "Invalid mode", 400
+        if str(e) == "No battery found":
+            return "No battery found", 404
+    return "Mode changed", 200
+    
 @app.get("/equipments/generator")
 def generator():
     return "Generator"

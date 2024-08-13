@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  {% include 'flash_message.html' %}
+  <h1>Tela de bateria</h1>
+  <div>
+    <span>Capacidade: </span> {{ battery.capacity }} Ah<br>
+    <span>Porcentagem de Saúde:</span> {{ battery.state }} %<br>
+    <span>Percentual de Carga:</span> {{ battery.voltage }} %<br>
+    <span>Máxima Tensão de Saída</span> {{ battery.max_out_voltage }} V<br>
+    <span>Mínima Tensão de Saída</span> {{ battery.min_out_voltage }} V<br>
+    <span>Estado:</span> {{ battery.state }}<br>
+    <span>Relé:</span> {{ battery.state }}<br>
+  </div>
+  <div>
+    <span>Modelo:</span> {{ battery.state }}<br>
+    <span>Fabricante:</span> {{ battery.state }}<br>
+  </div>
+</body>
+</html>

@@ -1,10 +1,10 @@
 from extensions import db 
 from flask_login import UserMixin # type: ignore
 
-PERMISSAO_ESTUDANTE = 0
-PERMISSAO_PROFESSOR = 1
-PERMISSAO_TECNICO = 2
-PERMISSAO_ADMINISTRADOR = 3
+STUDENT_PERMISSION = 0
+PROFESSOR_PERMISSION = 1
+TECHNICIAN_PERMISSION = 2
+ADMIN_PERMISSION = 3
 
 class User(db.Model, UserMixin): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)

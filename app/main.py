@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user  # type: ignore
 from app.battery_service import BatteryService
 from app.infra.Mediator import Mediator
 from extensions import configureDatabase, configureLoginManager, db, login_manager
-from models import PERMISSAO_PROFESSOR, Battery, User
+from models import PROFESSOR_PERMISSION, Battery, User
 app = Flask(__name__)
 app.secret_key = "secret key"
 
@@ -101,9 +101,8 @@ def battery():
 @login_required
 @app.post("/equipments/battery/change_relay_state")
 def change_battery_relay_state():
-    if current_user.permission_level < PERMISSAO_PROFESSOR:
+    if current_user.permission_level < PROFESSOR_PERMISSION:
         return "Permission denied", 403
-    
     state = request.form["relay_state"]
     try:
         batteryService.change_battery_relay_state(state)
@@ -117,9 +116,8 @@ def change_battery_relay_state():
 @login_required
 @app.post("/equipments/battery/change_battery_mode")
 def change_battery_mode():
-    if current_user.permission_level < PERMISSAO_PROFESSOR:
+    if current_user.permission_level < PROFESSOR_PERMISSION:
         return "Permission denied", 403
-    
     mode = request.form["mode"]
     try:
         batteryService.change_battery_mode(mode)

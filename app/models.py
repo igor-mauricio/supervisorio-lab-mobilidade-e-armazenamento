@@ -1,12 +1,23 @@
 from extensions import db 
 from flask_login import UserMixin # type: ignore
 
+PERMISSAO_ESTUDANTE = 0
+PERMISSAO_PROFESSOR = 1
+PERMISSAO_TECNICO = 2
+PERMISSAO_ADMINISTRADOR = 3
 
 class User(db.Model, UserMixin): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(100))
 	name = db.Column(db.String(100))
 	password = db.Column(db.String(100))
+	permission_level = db.Column(db.Integer, default=0)
+	'''
+	0 - Estudante
+	1 - Professor
+	2 - Técnico
+	3 - Administrador
+	'''
 	
 	def __init__(self, username: str, name: str, password: str):
 		self.username = username

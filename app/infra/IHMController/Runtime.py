@@ -1,9 +1,9 @@
 import io
 import msvcrt as ms  # for fd magic
 import win32api, win32file, win32pipe
-from app.infra.openpipe.ODK_pipe import ODK_pipe
-from app.infra.openpipe.Tags import Tag
-from app.infra.openpipe.Tags import TagSet
+from infra.openpipe.ODK_pipe import ODK_pipe
+from infra.openpipe.Tags import Tag
+from infra.openpipe.Tags import TagSet
 from threading import Thread
 import time
 

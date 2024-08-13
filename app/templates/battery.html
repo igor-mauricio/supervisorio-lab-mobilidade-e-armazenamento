@@ -4,22 +4,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 </head>
 <body>
   {% include 'flash_message.html' %}
   <h1>Tela de bateria</h1>
   <div>
     <span>Capacidade: </span> {{ battery.capacity }} Ah<br>
-    <span>Porcentagem de Saúde:</span> {{ battery.state }} %<br>
-    <span>Percentual de Carga:</span> {{ battery.voltage }} %<br>
-    <span>Máxima Tensão de Saída</span> {{ battery.max_out_voltage }} V<br>
+    <span>Porcentagem de Saúde:</span> {{ battery.health_percent }} %<br>
+    <span>Percentual de Carga:</span> {{ battery.charged_percent }} %<br>
+    <span>Máxima Tensão de Entrada</span> {{ battery.max_in_voltage }} V<br>
     <span>Mínima Tensão de Saída</span> {{ battery.min_out_voltage }} V<br>
     <span>Estado:</span> {{ battery.state }}<br>
-    <span>Relé:</span> {{ battery.state }}<br>
+    <span>Relé:</span> {{ battery.relay_status }}<br>
   </div>
   <div>
-    <span>Modelo:</span> {{ battery.state }}<br>
-    <span>Fabricante:</span> {{ battery.state }}<br>
+    <span>Modelo:</span> {{ battery.model }}<br>
+    <span>Fabricante:</span> {{ battery.manufacturer }}<br>
   </div>
+  <script>
+    var socket = io();
+
+    socket.on('connect', () => {
+        console.log('Connected to WebSocket server');
+    });
+  </script>
 </body>
 </html>

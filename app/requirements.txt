@@ -1,10 +1,13 @@
+bidict==0.23.1
 blinker==1.8.2
 click==8.1.7
 colorama==0.4.6
 Flask==3.0.3
 Flask-Login==0.6.3
+Flask-SocketIO==5.3.6
 Flask-SQLAlchemy==3.1.1
 greenlet==3.0.3
+h11==0.14.0
 iniconfig==2.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.4
@@ -12,6 +15,9 @@ MarkupSafe==2.1.5
 packaging==24.1
 pluggy==1.5.0
 pytest==8.3.2
+python-engineio==4.9.1
+python-socketio==5.11.3
+simple-websocket==1.0.0
 SQLAlchemy==2.0.32
 types-click==7.1.8
 types-Flask==1.1.6
@@ -20,3 +26,4 @@ types-MarkupSafe==1.1.10
 types-Werkzeug==1.0.9
 typing_extensions==4.12.2
 Werkzeug==3.0.3
+wsproto==1.2.0

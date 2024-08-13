@@ -7,7 +7,7 @@
 </head>
 <body>
 {% include 'flash_message.html' %}
-<form action="/login" method="post">
+<form action="{{ url_for('login') }}" method="post">
   <div>
     <h2>Login Form</h2>
     <label for="username"><b>Username</b></label>
@@ -16,5 +16,6 @@
     <input type="password" placeholder="Enter Password" name="password" required>
     <button type="submit">Login</button>
   </div>
+</form>
 </body>
 </html>

@@ -1,9 +1,7 @@
 class OpenPipeIHMController:
-  def __init__(self):
-      raise NotImplementedError
   
   def subscribeToTag(self, tag, callback):
-      raise NotImplementedError
+      return
 
   def unsubscribeToTag(self, tag):
       raise NotImplementedError

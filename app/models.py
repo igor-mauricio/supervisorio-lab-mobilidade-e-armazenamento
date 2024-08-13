@@ -59,7 +59,7 @@ class Alarm(db.Model): # type: ignore
 
 class AlarmLog(db.Model): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)
-	alarm_id = db.Column(db.Integer, db.ForeignKey('alarms.id'))
+	alarm_id = db.Column(db.Integer, db.ForeignKey('alarm.id'))
 	confirmed = db.Column(db.Boolean, default=False)
 	confirmed_by_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	timestamp = db.Column(db.DateTime)
@@ -71,5 +71,5 @@ class UserEvent(db.Model): # type: ignore
 class UserEventLog(db.Model): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+	event_id = db.Column(db.Integer, db.ForeignKey('user_event.id'))
 	timestamp = db.Column(db.DateTime)

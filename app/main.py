@@ -19,6 +19,7 @@ mediator = Mediator()
 batteryService = BatteryService(mediator)
 authService = AuthService(mediator)
 
+
 @login_manager.user_loader
 def user_loader(id):
     return User.query.filter_by(id=id).first()
@@ -26,6 +27,10 @@ def user_loader(id):
 @app.get("/")
 def index():
     return render_template("index.html")
+
+@app.get("/minecraft")
+def minecraft():
+    return render_template("minecraft.html")
 
 @app.get("/auth/login")
 def login():

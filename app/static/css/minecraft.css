@@ -1,4 +1,372 @@
-#imagemDoSteve {
-    width: 800px;
-    height: 800px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+}
+
+#sidebar {
+    width: 70px;
+    min-width: 70px;
+    z-index: 1000;
+    transition: all .25s ease-in-out;
+    background-color: #0e2238;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* Altura total da viewport */
+
+}
+
+#sidebar.expand {
+    width: 260px;
+    min-width: 260px;
+}
+
+.toggle-btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+.toggle-btn i {
+    font-size: 1.5rem;
+    color: #FFF;
+}
+
+.sidebar-logo {
+    margin: auto 0;
+}
+
+.sidebar-logo a {
+    color: #FFF;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #FFF;
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}
+
+a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #3b7ddd;
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    background-color: #0e2238;
+    padding: 0;
+    min-width: 15rem;
+    display: none;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+    display: block;
+    max-height: 15em;
+    width: 100%;
+    opacity: 1;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
+
+/* Estilos para a Navbar */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: #3b7ddd;
+    font-size: 2.15rem;
+}
+
+.navbar {
+    background-color: #3d3d3d;
+    padding: 0.8rem;
+    border-bottom: 1px solid #ff0000;
+    text-align: center;
+
+}
+
+.content {
+    flex: 1;
+    background-color: #ffffff;
+}
+
+.right-items {
+    font-size: 15px;
+}
+
+#datetime {
+    font-size: 15px;
+}
+
+
+
+.chart-container {
+    display: flex;
+    justify-content: space-around; /* Espaçar os gráficos igualmente */
+    max-width: 100%; /* Garante que o contêiner não ultrapasse a largura da página */
+}
+
+/* Estilo individual para cada canvas */
+.chart-container canvas {
+    max-width: 400px; /* Largura máxima para cada gráfico */
+    max-height: 300px; /* Altura máxima para cada gráfico */
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.battery {
+    width: 50px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 5px;
+    position: relative;
+    background-color: #ccc;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.battery::before {
+    content: '';
+    width: 20px;
+    height: 5px;
+    background-color: black;
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.level {
+    width: 100%;
+    background-color: #76c7c0;
+    transition: height 0.3s ease-in-out;
+}
+
+.symbol {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+}
+
+.gauge {
+    position: relative;
+    height: 150px;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+    margin-left: 10px;
+}
+
+.pin {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    background: #00cae9;
+    transform: rotate(45deg);
+    color: rgb(184, 5, 5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: -20px;
+    margin-left: 30px;
+}
+
+.pin span {
+    transform: rotate(-45deg);
+    font-size: 12px
+}
+
+.gauge .label {
+    font-size: 12px;
+    text-align: right;
+    width: 30px;
+    line-height: 1.5;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.gauge .label span {
+    display: block;
+    transform: translateY(-50%);
+}
+
+.gauge .linha {
+
+    width: 60px;
+    border-left: 6px  rgb(252, 7, 7);
+}
+
+
+
+
+
+
+
+
+
+.trena {
+    width: 2px;
+    height: 150px;
+    background-color: #000;
+    position: relative;
+    margin-left: 10px;
+}
+
+.marcador {
+    position: absolute;
+    background-color: #000;
+}
+
+/* Marcações principais */
+.marcador-10 {
+    width: 20px;
+    height: 2px;
+    left: -9px;
+}
+
+/* Marcações intermediárias (de 5 em 5) */
+.marcador-5 {
+    width: 15px;
+    height: 2px;
+    left: -7px;
+}
+
+/* Marcações menores (de 1 em 1) */
+.marcador-1 {
+    width: 10px;
+    height: 1px;
+    left: -4px;
+}
+
+/* Posições das marcações (de cima para baixo) */
+.marcador:nth-child(1) { top: 0%; }
+.marcador:nth-child(2) { top: 10%; }
+.marcador:nth-child(3) { top: 20%; }
+.marcador:nth-child(4) { top: 30%; }
+.marcador:nth-child(5) { top: 40%; }
+.marcador:nth-child(6) { top: 50%; }
+.marcador:nth-child(7) { top: 60%; }
+.marcador:nth-child(8) { top: 70%; }
+.marcador:nth-child(9) { top: 80%; }
+.marcador:nth-child(10) { top: 90%; }
+.marcador:nth-child(11) { top: 100%; }
+
+/* Labels para as marcações principais */
+.label {
+    position: absolute;
+    left: 25px;
+    font-size: 12px;
+}
+
+.label-top { top: -8px; }
+.label-middle { top: 50%; transform: translateY(-50%); }
+.label-bottom { top: 155px; transform: translateY(-70%); }
+
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #a67c52;
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+.info-row span {
+    font-weight: bold;
 }

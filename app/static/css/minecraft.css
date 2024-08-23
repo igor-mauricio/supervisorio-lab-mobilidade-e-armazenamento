@@ -23,6 +23,8 @@ h1 {
 
 body {
     font-family: 'Poppins', sans-serif;
+    height: 100%;
+
 }
 
 .wrapper {
@@ -38,6 +40,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    position: fixed;
     /* Altura total da viewport */
 
 }
@@ -144,6 +147,13 @@ a.sidebar-link:hover {
     width: 100%;
     color: #3b7ddd;
     font-size: 2.15rem;
+    margin-left: 70px; /* Inicia com a largura mínima do sidebar */
+    transition: margin-left .25s ease-in-out;
+    
+}
+
+#sidebar.expand ~ .main-content {
+    margin-left: 260px; /* Ajusta quando o sidebar está expandido */
 }
 
 .navbar {
@@ -170,15 +180,14 @@ a.sidebar-link:hover {
 
 
 .chart-container {
-    display: flex;
-    justify-content: space-around; /* Espaçar os gráficos igualmente */
+    display: block;
     max-width: 100%; /* Garante que o contêiner não ultrapasse a largura da página */
 }
 
 /* Estilo individual para cada canvas */
 .chart-container canvas {
-    max-width: 400px; /* Largura máxima para cada gráfico */
-    max-height: 300px; /* Altura máxima para cada gráfico */
+    max-width: 100%; /* Largura máxima para cada gráfico */
+    max-height: 140px; /* Altura máxima para cada gráfico */
     width: 100%;
     height: auto;
 }
@@ -186,7 +195,11 @@ a.sidebar-link:hover {
 .container {
     display: flex;
     align-items: center;
-    margin: 20px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 100%;
+
 }
 
 .battery {
@@ -287,6 +300,11 @@ a.sidebar-link:hover {
     border-left: 6px  rgb(252, 7, 7);
 }
 
+.chart-container{
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
 
 
 
@@ -362,7 +380,7 @@ a.sidebar-link:hover {
 .info-row {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #a67c52;
+    
     padding: 5px 0;
     font-size: 14px;
 }

@@ -1,8 +1,12 @@
-const hamBurger = document.querySelector(".toggle-btn");
+document.addEventListener('DOMContentLoaded', () => {
+  const hamBurger = document.querySelector(".toggle-btn");
+  const sidebar = document.querySelector("#sidebar");
 
-hamBurger.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
+  hamBurger.addEventListener("click", function () {
+      sidebar.classList.toggle("expand");
+  });
 });
+
 
 function updateDateTime() {
   var now = new Date();
@@ -19,4 +23,6 @@ function updateDateTime() {
 }
 
 setInterval(updateDateTime, 1000); // Atualiza a cada segundo
+
+
 

@@ -184,4 +184,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         setup_database()
-        socketio.run(app, debug=True, port=33000, host='0.0.0.0')
+        socketio.run(app, debug=True, port=33000, host='0.0.0.0', allow_unsafe_werkzeug=True)

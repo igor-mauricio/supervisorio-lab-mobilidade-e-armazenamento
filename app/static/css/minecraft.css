@@ -147,7 +147,8 @@ a.sidebar-link:hover {
     display: flex;
     flex-direction: column;
     width: 100%;
-    color: #3b7ddd;
+    background: #1B1B38;
+    color:#FFF;
     font-size: 2.15rem;
     margin-left: 70px; /* Inicia com a largura mínima do sidebar */
     transition: margin-left .25s ease-in-out;
@@ -166,11 +167,6 @@ a.sidebar-link:hover {
 
 }
 
-.content {
-    flex: 1;
-    background-color: #ffffff;
-}
-
 .right-items {
     font-size: 15px;
 }
@@ -184,6 +180,14 @@ a.sidebar-link:hover {
 .chart-container {
     display: block;
     max-width: 100%; /* Garante que o contêiner não ultrapasse a largura da página */
+    width: 1720px;
+    height: 300px;
+    flex-shrink: 0;
+    fill: #323259;
+    stroke-width: 1px;
+    stroke: #A16EFF;
+    filter: drop-shadow(2px 2px 2px #A16EFF);
+    background-color: #323259;
 }
 
 /* Estilo individual para cada canvas */
@@ -194,199 +198,120 @@ a.sidebar-link:hover {
     height: auto;
 }
 
-.container {
+.battery-block{
+    width: 280px;
+    height: 465px;
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    border: 2px solid black;
+    content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    flex-shrink: 0;
     border-radius: 20px;
-    width: 100%;
-
+    background-color: #323259;
+    stroke-width: 1px;
+    stroke: #A16EFF;
+    filter: drop-shadow(2px 2px 2px #A16EFF);
 }
 
-.battery {
-    width: 50px;
-    height: 150px;
-    border: 2px solid black;
-    border-radius: 5px;
-    position: relative;
-    background-color: #ccc;
+
+
+#battery {
+  box-sizing: content-box;
+  height: 275px;
+  width: 140px;
+  border: 3px solid #A16EFF;
+  margin: auto;
+  border-radius: 5px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+#battery:before {
+  position: absolute;
+  border: 2px solid #A16EFF;
+  content: "";
+  height: 20px;
+  width: 45px;
+  margin: auto;
+  bottom: 275px;
+  border-radius: 5px 5px 0 0;
+}
+
+.buttons {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow: hidden;
-    margin-right: 10px;
-}
-
-.battery::before {
-    content: '';
-    width: 20px;
-    height: 5px;
-    background-color: black;
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2px;
-}
-
-.level {
-    width: 100%;
-    background-color: #76c7c0;
-    transition: height 0.3s ease-in-out;
-}
-
-.symbol {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    color: rgba(255, 255, 255, 0.7);
-    pointer-events: none;
-}
-
-.gauge {
-    position: relative;
-    height: 150px;
-    width: 30px;
-    display: flex;
+    width: 220px;
     flex-direction: column;
     justify-content: space-between;
-    padding: 5px 0;
-    margin-left: 10px;
-}
-
-.pin {
-    width: 30px;
-    height: 30px;
-    border-radius: 50% 50% 50% 0;
-    background: #00cae9;
-    transform: rotate(45deg);
-    color: rgb(184, 5, 5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: -20px;
-    margin-left: 30px;
-}
-
-.pin span {
-    transform: rotate(-45deg);
-    font-size: 12px
-}
-
-.gauge .label {
-    font-size: 12px;
-    text-align: right;
-    width: 30px;
-    line-height: 1.5;
-    position: absolute;
-    top: 0;
-    left: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.gauge .label span {
-    display: block;
-    transform: translateY(-50%);
-}
-
-.gauge .linha {
-
-    width: 60px;
-    border-left: 6px  rgb(252, 7, 7);
-}
-
-.chart-container{
-    border: 2px solid black;
-    border-radius: 20px;
-}
-
-
-
-
-
-
-
-
-
-.trena {
-    width: 2px;
-    height: 150px;
-    background-color: #000;
-    position: relative;
-    margin-left: 10px;
-}
-
-.marcador {
-    position: absolute;
-    background-color: #000;
-}
-
-/* Marcações principais */
-.marcador-10 {
-    width: 20px;
-    height: 2px;
-    left: -9px;
-}
-
-/* Marcações intermediárias (de 5 em 5) */
-.marcador-5 {
-    width: 15px;
-    height: 2px;
-    left: -7px;
-}
-
-/* Marcações menores (de 1 em 1) */
-.marcador-1 {
-    width: 10px;
-    height: 1px;
-    left: -4px;
-}
-
-/* Posições das marcações (de cima para baixo) */
-.marcador:nth-child(1) { top: 0%; }
-.marcador:nth-child(2) { top: 10%; }
-.marcador:nth-child(3) { top: 20%; }
-.marcador:nth-child(4) { top: 30%; }
-.marcador:nth-child(5) { top: 40%; }
-.marcador:nth-child(6) { top: 50%; }
-.marcador:nth-child(7) { top: 60%; }
-.marcador:nth-child(8) { top: 70%; }
-.marcador:nth-child(9) { top: 80%; }
-.marcador:nth-child(10) { top: 90%; }
-.marcador:nth-child(11) { top: 100%; }
-
-/* Labels para as marcações principais */
-.label {
-    position: absolute;
-    left: 25px;
-    font-size: 12px;
-}
-
-.label-top { top: -8px; }
-.label-middle { top: 50%; transform: translateY(-50%); }
-.label-bottom { top: 155px; transform: translateY(-70%); }
-
-.info-panel {
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
+    height: 465px;
     
-    padding: 5px 0;
-    font-size: 14px;
+
+  }
+  
+  .top, .middle, .bottom {
+    text-align: center; 
+  }
+  
+.bt-power, .bt-settings, .bt-viewr{
+    text-align: center; 
+    width: 220px;
+    stroke-width: 1px;
+    stroke: #A16EFF;;
+    border-radius: 20px;
+    height: 125px;
+    background-color: #323259;
+    filter: drop-shadow(2px 2px 2px #A16EFF);
+
+
+
 }
 
-.info-row span {
-    font-weight: bold;
+.content-p-3{
+    margin-top: 50px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 45px;
+    margin-left: 35px;
+
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz'48
+}
+
+.info-pannel{
+    width: 1130px;
+    height: 465px;
+    fill: #323259;
+    stroke: #A16EFF;
+    filter: drop-shadow(2px 2px 2px #A16EFF);
+    background-color: #323259;
+    border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+    .battery-block, .buttons, .info-pannel {
+      flex-basis: 100%;
+    }
 }   
+
+.title-battery {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-top: 20px;
+    width: 500px;
+    align-items: center; /* Centraliza verticalmente */
+    border-bottom: 2px solid #A16EFF; 
+    filter: drop-shadow(2px 2px 2px #A16EFF);
+
+    
+  }
+
+  .outer-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    
+  }

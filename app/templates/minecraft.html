@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/minecraft.css')}}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 {% endblock %}
 
 {% block content %}
@@ -13,91 +14,58 @@
             <span id="datetime"></span>
         </div>
     </nav>
-    <div class="content p-3">
-        <div class="text-center">
-            <h1>bateria</h1>
-
-            <div class="container">
-                <div class="battery">
-                    <div class="level" id="battery-level"></div>
-                    <div class="symbol">⚡</div>
-                </div>
-                <div class="trena">
-                    <div class="marcador marcador-10"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    
-                    <div class="marcador marcador-5"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-5"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-5"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-5"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-1"></div>
-                    <div class="marcador marcador-5"></div>
-                    <div class="marcador marcador-10"></div>
-
-                    <div class="label label-top">100</div>
-                    <div class="label label-middle">50</div>
-                    <div class="label label-bottom">0</div>
-                </div>
-                <div class="gauge">
-                    <div class="pin" id="gauge-marker"><span id="gauge-text">100%</span></div>
-
-                </div>
-                <div class="info-panel">
-                    <div class="info-row">
-                        <span>Capacidade:</span>
-                        <span>+250.000 Ah</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Tensão (System):</span>
-                        <span>55.10 V</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Tensão inicial:</span>
-                        <span>0.00 V</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Corrente:</span>
-                        <span>+0.00 A</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Potência:</span>
-                        <span>+0.00 W</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Temperatura:</span>
-                        <span>+27.00 °C</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Estado da carga:</span>
-                        <span>100%</span>
-                    </div>
+    <div class="outer-container">
+        <div class="title-battery">
+            <h2>bateria</h2>
+        </div>
+    </div>
+   
+    <div class="content-p-3">
+        
+            <div class="battery-block">
+                <div id="battery">
+                    <span> 100%</span>
                 </div>
             </div>
-            
+
+            <div class="buttons">
+
+                <div class="bt-power">
+                    <span class="material-symbols-outlined">
+                        power_settings_new
+                    </span>
+                </div>
+
+                <div class="bt-settings"><span class="material-symbols-outlined">
+                    settings
+                    </span>
+                </div>
+
+                <div class="bt-viewr"><span class="material-symbols-outlined">
+                    visibility
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="info-pannel">
+                a
+            </div>
 
             <div class="chart-container">
                 <canvas id="chart1"></canvas>
                 <canvas id="chart2"></canvas>
             </div>
         
+        </div>
+
+
+
+
+
+
+
+
             <script>
                 function updateBatteryAndGauge(level) {
                     const batteryLevel = document.getElementById('battery-level');
@@ -160,8 +128,9 @@
                             label: 'Sales Over Time',
                             data: [65, 59, 80, 81, 56, 55, 40],
                             fill: false,
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
                             tension: 0.1
+                            
                         }]
                     },
                     options: {
@@ -184,7 +153,7 @@
                             data: [50, 70, 90, 60, 80, 100, 85],
                             backgroundColor: 'rgba(153, 102, 255, 0.2)',
                             borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
+                            
                         }]
                     },
                     options: {
@@ -197,8 +166,7 @@
                 });
             </script>
                 
-        </div>
-    </div>
+        
 
     <script src="{{url_for('static', filename='scripts/minecraft_button.js')}}"></script>
 

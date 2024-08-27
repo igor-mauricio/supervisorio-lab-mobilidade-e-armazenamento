@@ -17,9 +17,14 @@ function updateDateTime() {
   var minutes = String(now.getMinutes()).padStart(2, '0');
   var seconds = String(now.getSeconds()).padStart(2, '0');
   
-  var datetimeString = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  // var datetimeString = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  var dateString = `${day}/${month}/${year}`;
+  var timeString = `${hours}:${minutes}`;
+
   
-  document.getElementById("datetime").innerText = datetimeString;
+  document.getElementById("datestring").innerText = dateString;
+
+  document.getElementById("timestring").innerText = timeString;
 }
 
 setInterval(updateDateTime, 1000); // Atualiza a cada segundo

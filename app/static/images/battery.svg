@@ -1,0 +1,15 @@
+<svg width="140" height="116" viewBox="0 0 140 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="22.5" width="138" height="92" rx="4" stroke="white" stroke-width="2"/>
+<mask id="path-2-inside-1_91_127" fill="white">
+<path d="M0 35.5H140V102.5H0V35.5Z"/>
+</mask>
+<path d="M0 37.5H140V33.5H0V37.5ZM140 100.5H0V104.5H140V100.5Z" fill="white" mask="url(#path-2-inside-1_91_127)"/>
+<path d="M67.1 80.9L77.45 68.5H69.45L70.9 57.15L61.65 70.5H68.6L67.1 80.9ZM62 88.5L64 74.5H54L72 48.5H76L74 64.5H86L66 88.5H62Z" fill="#E8EAED"/>
+<line x1="21" y1="59.5" x2="41" y2="59.5" stroke="white" stroke-width="2"/>
+<line x1="99" y1="59.5" x2="119" y2="59.5" stroke="white" stroke-width="2"/>
+<path d="M109 49.5V69.5" stroke="white" stroke-width="2"/>
+<rect x="17" y="14.5" width="21" height="8" stroke="white" stroke-width="2"/>
+<path d="M21 2.5C21 1.94772 21.4477 1.5 22 1.5H33C33.5523 1.5 34 1.94772 34 2.5V14.5H21V2.5Z" stroke="white" stroke-width="2"/>
+<rect x="101" y="14.5" width="21" height="8" stroke="white" stroke-width="2"/>
+<path d="M105 2.5C105 1.94772 105.448 1.5 106 1.5H117C117.552 1.5 118 1.94772 118 2.5V14.5H105V2.5Z" stroke="white" stroke-width="2"/>
+</svg>

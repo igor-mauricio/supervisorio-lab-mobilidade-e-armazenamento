@@ -1,0 +1,15 @@
+<svg width="105" height="106" viewBox="0 0 105 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="22" width="103" height="68" rx="4" stroke="white" stroke-width="2"/>
+<path d="M13 14C13 11.7909 14.7909 10 17 10H56C58.2091 10 60 11.7909 60 14V22H13V14Z" stroke="white" stroke-width="2"/>
+<path d="M90 93.5C90 99.8513 84.8513 105 78.5 105C72.1487 105 67 99.8513 67 93.5C67 87.1487 72.1487 82 78.5 82C84.8513 82 90 87.1487 90 93.5Z" stroke="white" stroke-width="2"/>
+<path d="M92 46.5C92 52.8513 86.8513 58 80.5 58C74.1487 58 69 52.8513 69 46.5C69 40.1487 74.1487 35 80.5 35C86.8513 35 92 40.1487 92 46.5Z" stroke="white" stroke-width="2"/>
+<line x1="0.00970828" y1="69" x2="104.01" y2="70.0098" stroke="white" stroke-width="2"/>
+<line x1="2" y1="55" x2="45" y2="55" stroke="white" stroke-width="2"/>
+<path d="M44.4999 54.9999C59.5 55 59.5 68.9999 59.5 68.9999" stroke="white" stroke-width="2"/>
+<rect x="80" y="1" width="11" height="21" stroke="white" stroke-width="2"/>
+<rect x="73.5" y="0.5" width="25" height="1" stroke="white"/>
+<line x1="15" y1="90" x2="15" y2="106" stroke="white" stroke-width="2"/>
+<rect x="13" y="37" width="3" height="3" stroke="white" stroke-width="2"/>
+<path d="M38 37H41V40H38V37Z" stroke="white" stroke-width="2"/>
+<rect x="25" y="37" width="3" height="3" stroke="white" stroke-width="2"/>
+</svg>

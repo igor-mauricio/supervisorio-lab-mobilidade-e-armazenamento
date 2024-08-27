@@ -36,9 +36,9 @@ body {
     min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    filter: drop-shadow(2px 2px 2px #A16EFF);
     background: #323259;
-    box-shadow: 2px 0px 24px 0px rgba(161, 110, 255, 0.25);
+    /* filter: drop-shadow(2px 2px 2px #A16EFF);
+    box-shadow: 2px 0px 24px 0px rgba(161, 110, 255, 0.25); */
     display: flex;
     flex-direction: column;
     height: 100vh;

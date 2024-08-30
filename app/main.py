@@ -138,7 +138,11 @@ def change_battery_mode():
             return "No battery found", 404
         return "Internal server error", 500
     return "Mode changed", 200
-    
+
+@app.get("/equipments/battery/grafics")
+def grafics():
+    return "Grafics"
+
 @app.get("/equipments/generator")
 def generator():
     return "Generator"

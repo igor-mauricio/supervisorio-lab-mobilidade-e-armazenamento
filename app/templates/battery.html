@@ -1,27 +1,133 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-</head>
-<body>
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/minecraft.css')}}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="bg-neutral-800 min-h-screen">
+        <nav id="topbar" class="flex justify-between items items-center py-3 px-4">
+            <h1 class="text-4xl">Bateria</h1>
+            <div class="flex items-center gap-3">
+                <img src="{{url_for('static', filename='images/user_icon.svg')}}" class=""/>
+                <div class="flex flex-col gap-1">
+                    <span class="text-base font-bold"> Mateus Henrique </span>
+                    <div class="flex items-center gap-2">
+                        <img src="{{url_for('static', filename='images/calendar.svg')}}" class=""/>
+                        <span class="text-sm" id="datestring"></span>
+                        <img src="{{url_for('static', filename='images/clock.svg')}}" class=""/>
+                        <span class="text-sm" id="timestring"></span>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
   {% include 'flash_message.html' %}
-  <h1>Tela de bateria</h1>
-  <div>
-    <span>Capacidade: </span> {{ battery.capacity }} Ah<br>
-    <span>Porcentagem de Saúde:</span> {{ battery.health_percent }} %<br>
-    <span>Percentual de Carga:</span> {{ battery.charged_percent }} %<br>
-    <span>Máxima Tensão de Entrada</span> {{ battery.max_in_voltage }} V<br>
-    <span>Mínima Tensão de Saída</span> {{ battery.min_out_voltage }} V<br>
-    <span>Estado:</span> {{ battery.state }}<br>
-    <span>Relé:</span> {{ battery.relay_status }}<br>
-  </div>
+  <div id="frame 31" class="inline-flex flex-col items-center gap-5">
+
+    <div id="frame 33" class="flex w-[1626px] justify-center items-start gap-5">
+
+      <div id="frame 44" class="flex flex-col justify-center items-center gap-5">
+        <div id="frame 36" class="flex h-[397px] px-5 justify-center items-center gap-5 ">
+            foto bateira
+        </div>
+
+        <div id="frame 34" class="flex justify-center items-center gap-4"> 
+            <div id="power" class="flex px-3 items-center gap-[10px] ">
+
+            </div>
+
+            <div id="settings" class="flex px-3 items-center gap-[10px] ">
+
+            </div>
+
+            <div id="viewer" class="flex px-3 items-center gap-[10px] ">
+
+            </div>
+
+        </div>
+      </div>
+
+      <div id="frame 35" class="flex p-5 flex-col items-center gap-5 flex-1 self-stretch rounded-[20px] border-2 border-solid border-white">
+        <div id="frame 39" class="flex p-[10px] items-start gap-[10px] self-stretch">
+          <span class=" text-4xl">Tensão</span>
+        </div>
+        <div id="chat-tensão" class=" self-stretch flex-1 ">
+          <canvas id="myChart" width="400" height="400"></canvas>
+          <script>
+            </script>
+        </div>
+      </div>
+
+      <div id="frame 45" class="flex p-5 flex-col items-center gap-5 flex-1 self-stretch rounded-[20px] border-2 border-solid border-white">
+        <div id="frame 39" class="flex p-[10px] items-start gap-[10px] self-stretch">
+          <span class=" text-4xl">Corrente
+          
+          </span>
+        </div>
+        <div id="chat-tensão" class=" self-stretch flex-1 ">
+          <canvas id="chart2" width="400" height="400"></canvas>
+          <script>
+
+            </script>
+        
+        </div>
+      </div>
+     
+    </div>
+    
+    <div id="frame 55" class="flex items-start gap-5 self-stretch">
+      <div id="frame 46" class="flex p-20 flex-col items-center gap-4 flex-1 rounded-[20px] border-2 border-solid border-white ">
+        <div id="frame 38" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Capacidade:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.capacity }} Ah</span>
+        </div>
+
+        <div id="frame 48" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Porcentagem de Saúde:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.health_percent }} %</span>
+        </div>
+
+        <div id="frame 49" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Percentual de Carga:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.charged_percent }} %</span>
+        </div>
+
+        <div id="frame 50" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Máxima Tensão de Entrada:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.max_in_voltage }} V</span>
+        </div>
+
+        <div id="frame 51" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Mínima Tensão de Saída:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.min_out_voltage }} V</span>
+        </div>
+
+      </div>
+
+      <div id="frame 47" class="flex p-20 flex-col items-center gap-4 flex-1 rounded-[20px] border-2 border-solid border-white ">
+        <div id="frame 38" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Estado:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.state }}</span>
+        </div>
+        <div id="frame 48" class="flex p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-600">
+            <span class="text-white font-inter text-2xl font-medium leading-normal">Relé:</span>
+            <span class="text-white font-inter text-2xl font-medium leading-normal">{{ battery.relay_status }}</span>
+        </div>
+       
+      </div>
+    </div>
   <div>
     <span>Modelo:</span> {{ battery.model }}<br>
     <span>Fabricante:</span> {{ battery.manufacturer }}<br>
   </div>
+</div>
   <script>
     var socket = io();
 
@@ -29,5 +135,8 @@
         console.log('Connected to WebSocket server');
     });
   </script>
-</body>
-</html>
+
+  <script src="{{url_for('static', filename='scripts/minecraft_button.js')}}"></script>
+
+
+  {% endblock %}

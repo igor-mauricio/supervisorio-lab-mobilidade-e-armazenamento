@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include 'components/head_imports.html' %}
+</head>
+<body>
+  {% include 'components/flash_message.html' %}
+  <main class="flex w-full h-screen bg-gray-700">
+    <div class="flex items-center justify-center flex-grow">
+      <form action="{{ url_for('login') }}" method="post">
+        <div>
+          <h2>Login</h2>
+          <label for="username"><b>Usuário</b></label>
+          <input type="text" placeholder="Enter Username" name="username" required>
+          <label for="password"><b>Senha</b></label>
+          <input type="password" placeholder="Enter Password" name="password" required>
+          <button type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+    <div class="flex items-center justify-center flex-grow">
+      <img src="{{url_for('static', filename='images/logo.svg')}}">
+      </img>
+  
+    </div>
+  </main>
+  
+</body>
+</html>

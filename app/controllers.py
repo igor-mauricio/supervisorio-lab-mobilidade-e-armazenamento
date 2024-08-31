@@ -4,21 +4,60 @@ from AuthService import AuthService
 from BatteryService import BatteryService
 from flask_login import login_user, current_user
 
-def AppController(app: Flask, authService: AuthService, batteryService: BatteryService):
+
+def AppController(app: Flask):
     @app.get("/")
     def index():
-        return render_template("index.html")
+        return render_template("pages/index.html")
 
     @app.get("/minecraft")
     def minecraft():
-        return render_template("minecraft.html")
+        return render_template("pages/minecraft.html")
 
+    @app.get("/alarms")
+    def alarms():
+        return render_template("pages/alarms.html")
+
+    @app.get("/equipments")
+    def equipments():
+        return "Equipments"
+
+    @app.get("/equipments/battery/grafics")
+    def grafics():
+        return "Grafics"
+
+    @app.get("/equipments/generator")
+    def generator():
+        return "Generator"
+
+    @app.get("/equipments/inversor/fronius")
+    def inversor_fronnius():
+        return "Fronius"
+
+    @app.get("/equipments/inversor/quattro")
+    def inversor_quattro():
+        return render_template("pages/quattro.html")
+
+    @app.get("/equipments/charge_controller/smart_solar")
+    def charge_controller_smart_solar():
+        return "Charge Controller Smart Solar"
+
+    @app.get("/equipments/energy_management_system/cerbo_gx")
+    def charge_controller_cerbo_gx():
+        return "Energy Management System Cerbo GX"
+
+    @app.get("/equipments/power_measurer")
+    def power_measurement():
+        return "Power Measurer"
+
+
+def AuthController(app: Flask, authService: AuthService):
     @app.get("/auth/login")
     def login():
-        return render_template("login.html")
+        return render_template("pages/login.html")
 
     @app.post("/auth/login")
-    def login_form(): 
+    def login_form():
         username = request.form["username"]
         password = request.form["password"]
         user = User.query.filter_by(username=username).first()
@@ -28,11 +67,10 @@ def AppController(app: Flask, authService: AuthService, batteryService: BatteryS
             return redirect(url_for("index"))
         flash("Dados inválidos")
         return redirect(url_for("login"))
-    
 
     @app.get("/auth/register")
     def register():
-        return render_template("register.html")
+        return render_template("pages/register.html")
 
     @app.post("/auth/register")
     def register_form():
@@ -56,16 +94,12 @@ def AppController(app: Flask, authService: AuthService, batteryService: BatteryS
 
     @app.get("/auth/logout")
     def logout():
-        return "Logout"
+        authService.logout()
+        flash("Usuário deslogado com sucesso")
+        return redirect(url_for("login"))
 
-    @app.get("/alarms")
-    def alarms():
-        return render_template("alarms.html")
 
-    @app.get("/equipments")
-    def equipments():
-        return "Equipments"
-
+def BatteryController(app: Flask, batteryService: BatteryService):
     @app.get("/equipments/battery")
     def battery():
         try:
@@ -75,8 +109,8 @@ def AppController(app: Flask, authService: AuthService, batteryService: BatteryS
             if error == "No battery found":
                 return "No battery found", 404
             return "Internal server error", 500
-        
-        return render_template("battery.html", battery = {
+
+        return render_template("pages/battery.html", battery={
             "capacity": battery.capacity,
             "charged_percent": battery.charged_percent,
             "health_percent": battery.health_percent,
@@ -119,31 +153,3 @@ def AppController(app: Flask, authService: AuthService, batteryService: BatteryS
                 return "No battery found", 404
             return "Internal server error", 500
         return "Mode changed", 200
-
-    @app.get("/equipments/battery/grafics")
-    def grafics():
-        return "Grafics"
-
-    @app.get("/equipments/generator")
-    def generator():
-        return "Generator"
-
-    @app.get("/equipments/inversor/fronius")
-    def inversor_fronnius():
-        return "Fronius"
-
-    @app.get("/equipments/inversor/quattro")
-    def inversor_quattro():
-        return render_template("quattro.html")
-
-    @app.get("/equipments/charge_controller/smart_solar")
-    def charge_controller_smart_solar():
-        return "Charge Controller Smart Solar"
-
-    @app.get("/equipments/energy_management_system/cerbo_gx")
-    def charge_controller_cerbo_gx():
-        return "Energy Management System Cerbo GX"
-
-    @app.get("/equipments/power_measurer")
-    def power_measurement():
-        return "Power Measurer"

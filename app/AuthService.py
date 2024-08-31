@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from extensions import db
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 from infra import Mediator
 from models import User
@@ -27,4 +27,8 @@ class AuthService:
     user = User(username=username, password=password, name=name)
     db.session.add(user)
     db.session.commit()
+
+  def logout(self):
+     logout_user()
+     
 

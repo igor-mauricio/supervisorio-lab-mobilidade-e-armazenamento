@@ -7,7 +7,7 @@ from infra.IHMController.IHMController import OpenPipeIHMController
 from infra.SetupDatabase import setup_database
 from infra.Mediator import Mediator
 from extensions import configureDatabase, configureLoginManager, db, login_manager
-from AppController import AppController
+from controllers import AppController, AuthController, BatteryController
 from models import User
 
 app = Flask(__name__)
@@ -26,7 +26,9 @@ batteryService = BatteryService(mediator)
 authService = AuthService(mediator)
 alarmService = AlarmService(mediator, ihmController)
 
-AppController(app, authService, batteryService)
+AppController(app)
+AuthController(app, authService)
+BatteryController(app, batteryService)
 
 alarmService.subscribeAlarms()
 

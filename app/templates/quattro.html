@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/minecraft.css')}}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="{{url_for('static', filename='scripts/minecraft_button.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="bg-neutral-800 min-h-screen">
+        <nav id="topbar" class="flex justify-between items items-center py-3 px-4">
+            <h1 class="text-4xl">Quattro</h1>
+            <div class="flex items-center gap-3">
+                <img src="{{url_for('static', filename='images/user_icon.svg')}}" class=""/>
+                <div class="flex flex-col gap-1">
+                    <span class="text-base font-bold"> Mateus Henrique </span>
+                    <div class="flex items-center gap-2">
+                        <img src="{{url_for('static', filename='images/calendar.svg')}}" class=""/>
+                        <span class="text-sm" id="datestring"></span>
+                        <img src="{{url_for('static', filename='images/clock.svg')}}" class=""/>
+                        <span class="text-sm" id="timestring"></span>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+  {% include 'flash_message.html' %}
+        <div id="frame 31" class="flex w-[1626  px] h-[928px] justify-center items-start gap-5 shrink-0">
+            <div id="frame 46" class="flex p-5 flex-col items-center gap-5 flex-[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
+                <div id="frame 39" class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">
+                    <span class="text-white font-inter text-2xl font-bold leading-normal"> Tensão</span>
+                </div>
+
+                <div id="chart" class=" flex-1 self-stretch w-[600px] h-[200px]" >
+                    <canvas id="myChart" width="400px" height="100px"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const ctx = document.getElementById('myChart');
+                    
+                        new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                            label: '# of Votes',
+                            data: [12, 19, 3, 5, 2, 3],
+                            borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                            }
+                        }
+                        });
+                    </script>
+                    
+    
+                </div>
+
+                <div id="frame 40" class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">
+                    <span class="text-white font-inter text-2xl font-bold leading-normal"> Corrente</span>
+                </div>
+
+                <div id="chart" class=" flex-1 self-stretch w-[600px] h-[200px]" >
+                    <canvas id="myChart2" width="400px" height="100px"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const ctx2 = document.getElementById('myChart2');
+                        
+                        new Chart(ctx2, {
+                            type: 'bar',
+                            data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                borderWidth: 1
+                            }]
+                            },
+                            options: {
+                            scales: {
+                                y: {
+                                beginAtZero: true
+                                }
+                            }
+                            }
+                        });
+                    </script>
+                     
+
+                    
+
+                </div>
+
+                
+                <div id="frame 40" class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">
+                    <span class="text-white font-inter text-2xl font-bold leading-normal"> Corrente</span>
+                </div>
+
+                <div id="chart" class=" flex-1 self-stretch w-[600px] h-[200px]" >
+                    <canvas id="myChart3" width="400px" height="100px"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const ctx3 = document.getElementById('myChart3');
+                        
+                        new Chart(ctx3, {
+                            type: 'bar',
+                            data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                borderWidth: 1
+                            }]
+                            },
+                            options: {
+                            scales: {
+                                y: {
+                                beginAtZero: true
+                                }
+                            }
+                            }
+                        });
+                    </script>
+                     
+
+                    
+
+                </div>
+
+            </div>
+            
+            <div id="frame 81" class="flex flex-col items-center justify-center gap-[10px] flex-[1_0_0] self-stretch">
+                <div id="frame 48" class="flex p-5 flex-col items-center flex[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neural-800">
+                    <div id="frame 38" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+                    <div id="frame 49" class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+  {% endblock %}

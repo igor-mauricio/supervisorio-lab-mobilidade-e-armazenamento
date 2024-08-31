@@ -153,7 +153,7 @@ def inversor_fronnius():
 
 @app.get("/equipments/inversor/quattro")
 def inversor_quattro():
-    return "Quattro"
+    return render_template("quattro.html")
 
 @app.get("/equipments/charge_controller/smart_solar")
 def charge_controller_smart_solar():

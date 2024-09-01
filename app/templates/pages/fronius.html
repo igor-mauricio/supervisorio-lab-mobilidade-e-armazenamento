@@ -1,14 +1,4 @@
 {% extends "base.html" %}
-{% block head %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/minecraft.css')}}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<script src="{{url_for('static', filename='scripts/minecraft_button.js')}}"></script>
-{% endblock %}
 
 {% block content %}
     <div class="bg-neutral-800 min-h-screen">
@@ -29,8 +19,99 @@
             </div>
         </nav>
 
+        {% set items = [
+            {
+                'name': 'Tensão',
+                'value': '23%'
+            },
+            {
+                'name': 'Corrente',
+                'value': '23%'
+            },
+            {
+                'name': 'Potência',
+                'value': '23%'
+            },
+            {
+                'name': 'Energia',
+                'value': '23%'
+            }
+            ] %}
+
+        {% set items2 = [
+            {
+                'name': 'bla',
+                'value': '23%'
+            },
+            {
+                'name': 'asd',
+                'value': '23%'
+            },
+            {
+                'name': 'asdsdd',
+                'value': '23%'
+            },
+            {
+                'name': 'kkkk',
+                'value': '23%'
+            }
+            ] %}
+
+        <div class="flex flex-col w-full px-3 text-2xl gap-3">
+            <div class="flex gap-3">
+                <div class="flex flex-col border-2 rounded-2xl py-2 flex-grow ">
+                    {% for item in items %}
+                        <div class="flex justify-between {% if not loop.last %} border-b-2 border-neutral-700 {% endif %} mx-3 px-2 py-1">
+                            <span>
+                                {{ item.name }}
+                            </span>
+                            <span class="font-semibold">
+                                {{ item.value }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="flex flex-col border-2 rounded-2xl flex-grow py-2">
+                    {% for item in items2 %}
+                        <div class="flex justify-between {% if not loop.last %} border-b-2 border-neutral-700 {% endif %} mx-3 px-2 py-1">
+                            <span>
+                                {{ item.name }}
+                            </span>
+                            <span class="font-semibold">
+                                {{ item.value }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="flex gap-3 ">
+                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                    <h2>Capacidade</h2>
+                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    </canvas>
+                </div>
+                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                    <h2>Capacidade</h2>
+                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    </canvas>
+                </div>
+                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                    <h2>Capacidade</h2>
+                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    </canvas>
+                </div>
+                
+            </div>
+            <div class="flex gap-3">
+                
+            </div>
+
+        </div>
 
 
+<!-- 
         <div id="container-geral" class="flex w-[1626px] h-[928px] flex-col items-center gap-5 shrink-0 border-2 border-neutral-50">
         <div id="container-blocos-dados" class="flex items-start gap-5 self-stretch">
             <div id="container-dados" class="flex p-5 flex-col items-center gap-4 flex[1_0_0] rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
@@ -92,7 +173,7 @@
         
         </div>
 
-    </div>
+    </div> -->
 
 
   {% endblock %}

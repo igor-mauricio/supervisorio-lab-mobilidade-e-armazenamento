@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  {% include 'components/head_imports.html' %}
 </head>
-<body>
+<body hx-boost="true">
   {% include 'components/flash_message.html' %} 
   <form method="post">  
     <div>

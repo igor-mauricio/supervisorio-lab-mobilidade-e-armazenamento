@@ -3,11 +3,11 @@
 <head>
   {% include 'components/head_imports.html' %}
 </head>
-<body>
+<body hx-boost="true">
   {% include 'components/flash_message.html' %}
   <main class="flex w-full h-screen bg-neutral-800 text-white">
     <div class="flex items-center justify-center flex-grow">
-      <form class="flex flex-col gap-3 p-3 border-2 rounded-xl w-[300px]" action="{{ url_for('login') }}" method="post">
+      <form class="flex flex-col gap-3 p-3 border-2 rounded-xl w-[300px]" action="{{ url_for('login') }}" method="post" hx-boost="true">
         <h2 class="mx-auto text-2xl font-semibold">Login</h2>
         <div class="flex bg-white rounded-md px-2 py-1 gap-2">
           <img src="{{url_for('static', filename='images/user_form.svg')}}"/>

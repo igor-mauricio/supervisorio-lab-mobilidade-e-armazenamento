@@ -32,7 +32,7 @@ def AppController(app: Flask):
 
     @app.get("/equipments/inversor/fronius")
     def inversor_fronnius():
-        return "Fronius"
+        return render_template("pages/fronius.html")
 
     @app.get("/equipments/inversor/quattro")
     def inversor_quattro():

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include 'components/head_imports.html' %}
-    {% block head %}
-    {% endblock %}
-    
+    {% include 'components/head_imports.html' %}    
 </head>
-<body>
+<body hx-boost="true">
     <div class="wrapper z-0">
         {% include 'components/sidebar.html' %}
         {% include 'components/flash_message.html' %}

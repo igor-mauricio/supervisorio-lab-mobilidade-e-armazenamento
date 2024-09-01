@@ -118,20 +118,47 @@
     });
   </script>
 
-  <script src="{{url_for('static', filename='scripts/minecraft_button.js')}}"></script>
 
 
   
   <script>
-  
-    const chartTensao = document.getElementById('chartTensao');
-    new Chart(chartTensao, {
+    document.addEventListener('htmx:load', function() {
+      const chartTensao = document.getElementById('chartTensao');
+      //cleanup whats inside
+      chartTensao.innerHTML = '';
+      new Chart(chartTensao, {
+        type: 'line',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+        plugins: {
+          legend: {
+            display: false, // Hide the legend
+          }
+        }
+        },
+
+      });
+    
+    const chartCorrente = document.getElementById('chartCorrente');
+    chartCorrente.innerHTML = '';
+    new Chart(chartCorrente, {
       type: 'line',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
           data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
+          borderWidth: 1,
         }]
       },
       options: {
@@ -140,41 +167,14 @@
             beginAtZero: true
           }
         },
-      plugins: {
-        legend: {
-          display: false, // Hide the legend
+        plugins: {
+          legend: {
+            display: false, // Hide the legend
+          }
         }
-      }
       },
-
+      
     });
-  </script>
-
-<script>
-  
-  const chartCorrente = document.getElementById('chartCorrente');
-  new Chart(chartCorrente, {
-    type: 'line',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1,
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        legend: {
-          display: false, // Hide the legend
-        }
-      }
-    },
-    
   });
 </script>
 

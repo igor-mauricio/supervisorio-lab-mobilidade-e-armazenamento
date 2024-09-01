@@ -1,11 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const hamBurger = document.querySelector(".toggle-btn");
+function handleSidebarButton(){
   const sidebar = document.querySelector("#sidebar");
-
-  hamBurger.addEventListener("click", function () {
-      sidebar.classList.toggle("expand");
-  });
-});
+  sidebar.classList.toggle("expand");
+}
 
 
 function updateDateTime() {

@@ -7,8 +7,8 @@ from flask_login import login_user, current_user
 
 def AppController(app: Flask):
     @app.get("/")
-    def index():
-        return render_template("pages/index.html")
+    def welcome():
+        return render_template("pages/welcome.html")
 
     @app.get("/minecraft")
     def minecraft():
@@ -64,7 +64,7 @@ def AuthController(app: Flask, authService: AuthService):
         if user and user.password == password:
             login_user(user)
             flash("Login realizado com sucesso")
-            return redirect(url_for("index"))
+            return redirect(url_for("minecraft"))
         flash("Dados inválidos")
         return redirect(url_for("login"))
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include 'components/head_imports.html' %}
+</head>
+<body>
+  {% include 'components/flash_message.html' %}
+  <main class="flex w-full h-screen bg-neutral-800 text-white">
+    <div class="flex items-center justify-center flex-grow h-screen">
+
+
+
+      <div class="relative flex flex-col justify-center gap-3 p-3 w-[800px] h-screen" action="{{ url_for('login') }}" method="post">
+        <h1 class=" text-4xl font-semibold mb-3">Laboratório de Armazenamento e Mobilidade</h1>
+        <h2 class="text-2xl font-semibold">Laboratório de Armazenamento e Mobilidade</h2>
+        <p class=" text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at interdum nisl. Nunc vitae fermentum nisi. Nunc bibendum sodales felis, et sagittis odio vestibulum sed. Sed sem mauris, dapibus posuere sapien efficitur, placerat pharetra diam. Pellentesque turpis velit, condimentum ut urna vitae, rhoncus pulvinar mauris. Nullam lobortis mauris sapien, id feugiat augue mollis sed. Suspendisse potenti. Maecenas non magna id odio finibus commodo.</p>
+        <h2 class="text-2xl font-semibold">Laboratório de Armazenamento e Mobilidade</h2>
+        <p class=" text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at interdum nisl. Nunc vitae fermentum nisi. Nunc bibendum sodales felis, et sagittis odio vestibulum sed. Sed sem mauris, dapibus posuere sapien efficitur, placerat pharetra diam. Pellentesque turpis velit, condimentum ut urna vitae, rhoncus pulvinar mauris. Nullam lobortis mauris sapien, id feugiat augue mollis sed. Suspendisse potenti. Maecenas non magna id odio finibus commodo.</p>
+        <div class="flex justify-end">
+          <a href="{{url_for('login')}}" class="px-4 py-1 bg-violet-500 rounded-md font-semibold" type="submit">Login</a>
+        </div>
+        <h2 class="absolute text-lg left-0 bottom-0 m-3">Desenvolvido por Igor Maurício e Mateus Henrique <br>
+          Sistemas Supervisórios 2 - 08/24</h2>
+      </div>
+
+
+
+    </div>
+    <div class="flex items-center justify-center overflow-hidden">
+      <img src="{{url_for('static', filename='images/logo.svg')}}">
+      </img>
+  
+    </div>
+  </main>
+  
+</body>
+</html>

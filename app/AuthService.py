@@ -30,5 +30,12 @@ class AuthService:
 
   def logout(self):
      logout_user()
+
+  def registerDefaultUsers(self):
+    user = User.query.filter_by(username="admin").first()
+    if not user:
+        user = User(username="admin", password="admin", name="admin")
+        db.session.add(user)
+        db.session.commit()
      
 

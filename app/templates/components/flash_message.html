@@ -1,6 +1,6 @@
 {% with messages = get_flashed_messages() %} 
-    <div id="flash_messages">
-      {% if messages %}  
+    <div id="flash_messages" class="absolute right-0 bottom-0 z-50 m-3 w-fit bg-red-500 rounded-xl">
+      {% if messages %}
           {% for message in messages %}
           <div role="alert" class="alert alert-error">
             <svg

@@ -916,22 +916,6 @@ video {
   height: 100vh;
 }
 
-.h-\[2\] {
-  height: 2;
-}
-
-.h-\[923\] {
-  height: 923;
-}
-
-.h-\[92\] {
-  height: 92;
-}
-
-.h-\[926px\] {
-  height: 926px;
-}
-
 .min-h-10 {
   min-height: 2.5rem;
 }
@@ -1581,10 +1565,6 @@ video {
 
 .gap-\[10px\] {
   gap: 10px;
-}
-
-.gap-\[\] {
-  gap: ;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {

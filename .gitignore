@@ -4,3 +4,4 @@ custom-web-control/out/*
 app/instance/*
 ##pycache
 *.pyc
+app/static/css/output.css

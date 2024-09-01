@@ -5,20 +5,25 @@
 </head>
 <body>
   {% include 'components/flash_message.html' %}
-  <main class="flex w-full h-screen bg-gray-700">
+  <main class="flex w-full h-screen bg-neutral-800 text-white">
     <div class="flex items-center justify-center flex-grow">
-      <form action="{{ url_for('login') }}" method="post">
-        <div>
-          <h2>Login</h2>
-          <label for="username"><b>Usuário</b></label>
-          <input type="text" placeholder="Enter Username" name="username" required>
-          <label for="password"><b>Senha</b></label>
-          <input type="password" placeholder="Enter Password" name="password" required>
-          <button type="submit">Login</button>
+      <form class="flex flex-col gap-3 p-3 border-2 rounded-xl w-[300px]" action="{{ url_for('login') }}" method="post">
+        <h2 class="mx-auto text-2xl font-semibold">Login</h2>
+        <div class="flex bg-white rounded-md px-2 py-1 gap-2">
+          <img src="{{url_for('static', filename='images/user_form.svg')}}"/>
+          <input class="w-full text-black" type="text" placeholder="usuário" name="username" required>
+        </div>
+        <div class="flex bg-white rounded-md px-2 py-1 gap-2">
+          <img src="{{url_for('static', filename='images/password_form.svg')}}"/>
+          <input class="w-full text-black" type="password" placeholder="senha" name="password" required>
+        </div>
+        <div class="flex justify-between">
+          <a href="#" class="border px-4 py-1 rounded-md font-semibold">Sair</a>
+          <button class="px-4 py-1 bg-violet-500 rounded-md font-semibold" type="submit">Entrar</button>
         </div>
       </form>
     </div>
-    <div class="flex items-center justify-center flex-grow">
+    <div class="flex items-center justify-center overflow-hidden">
       <img src="{{url_for('static', filename='images/logo.svg')}}">
       </img>
   

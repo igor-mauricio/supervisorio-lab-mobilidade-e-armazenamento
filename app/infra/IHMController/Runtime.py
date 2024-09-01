@@ -1,9 +1,11 @@
-import io
-import msvcrt as ms  # for fd magic
-import win32api, win32file, win32pipe
-from infra.openpipe.ODK_pipe import ODK_pipe
-from infra.openpipe.Tags import Tag
-from infra.openpipe.Tags import TagSet
+# import io
+# import msvcrt as ms  # for fd magic
+# import win32api
+# import win32file
+# import win32pipe
+from infra.IHMController.ODK_pipe import ODK_pipe
+from infra.IHMController.Tags import Tag
+# from Tags import TagSet
 from threading import Thread
 import time
 
@@ -29,7 +31,7 @@ class Runtime:
 
     # Read single Tag, return only the value
     def ReadTagValueSync(self, name):
-        return_result = self.client.write("ReadTagValue %s\n" % name)
+        # return_result = self.client.write("ReadTagValue %s\n" % name)
         response = self.client.read()
         tag = Tag(response)
         return tag.value

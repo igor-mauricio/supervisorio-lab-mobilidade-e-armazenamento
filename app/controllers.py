@@ -10,6 +10,8 @@ def AppController(app: Flask):
     def welcome():
         return render_template("pages/welcome.html")
 
+
+
     @app.get("/minecraft")
     def minecraft():
         return render_template("pages/minecraft.html")
@@ -49,6 +51,10 @@ def AppController(app: Flask):
     @app.get("/equipments/power_measurer")
     def power_measurement():
         return "Power Measurer"
+    
+    @app.get("/lobby")
+    def lobby():
+        return render_template("pages/index.html")
 
 
 def AuthController(app: Flask, authService: AuthService):

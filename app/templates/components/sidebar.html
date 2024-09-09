@@ -17,10 +17,18 @@
         <li class="sidebar-item">
             <a href="{{ url_for('battery')}}" class="sidebar-link">
                 <i class="bi bi-battery-charging"></i>
-                <span>Battery</span>
+                <span>Bateria</span>
             </a>
         </li>
-        <li class="sidebar-item">
+        {% if is_admin %}
+        <li class="sidebar-item"></li>
+            <a href="{{ url_for('register')}}" class="sidebar-link">
+                <i class="lni lni-protection"></i>
+                <span>Registrar</span>
+            </a>
+        </li>
+        {% endif %}
+        <!-- <li class="sidebar-item">
             <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                 data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                 <i class="lni lni-protection"></i>
@@ -34,7 +42,7 @@
                     <a href="#" class="sidebar-link">Register</a>
                 </li>
             </ul>
-        </li>
+        </li> -->
         <li class="sidebar-item">
             <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                 data-bs-target="#multi" aria-expanded="false" aria-controls="multi">

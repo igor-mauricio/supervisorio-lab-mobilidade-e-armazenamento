@@ -10,17 +10,15 @@ def AppController(app: Flask):
     def welcome():
         return render_template("pages/welcome.html")
 
-
-
     @app.get("/minecraft")
     @login_required
     def minecraft():
-        return render_template("pages/minecraft.html", user=current_user.name)
+        return render_template("pages/minecraft.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/alarms")
     @login_required
     def alarms():
-        return render_template("pages/alarms.html", user=current_user.name)
+        return render_template("pages/alarms.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/equipments")
     @login_required
@@ -40,12 +38,12 @@ def AppController(app: Flask):
     @app.get("/equipments/inversor/fronius")
     @login_required
     def inversor_fronnius():
-        return render_template("pages/fronius.html", user=current_user.name)
+        return render_template("pages/fronius.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/equipments/inversor/quattro")
     @login_required
     def inversor_quattro():
-        return render_template("pages/quattro.html", user=current_user.name)
+        return render_template("pages/quattro.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/equipments/charge_controller/smart_solar")
     @login_required
@@ -65,7 +63,7 @@ def AppController(app: Flask):
     @app.get("/lobby")
     @login_required
     def lobby():
-        return render_template("pages/index.html", user=current_user.name)
+        return render_template("pages/index.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
 
 def AuthController(app: Flask, authService: AuthService):
@@ -86,10 +84,12 @@ def AuthController(app: Flask, authService: AuthService):
         return redirect(url_for("login"))
 
     @app.get("/auth/register")
+    @login_required
     def register():
         return render_template("pages/register.html")
 
     @app.post("/auth/register")
+    @login_required
     def register_form():
         name = request.form["name"]
         username = request.form["username"]
@@ -128,7 +128,7 @@ def BatteryController(app: Flask, batteryService: BatteryService):
                 return "No battery found", 404
             return "Internal server error", 500
 
-        return render_template("pages/battery.html", user=current_user.name, battery={
+        return render_template("pages/battery.html", user=current_user.name, is_admin=current_user.permission_level == 3, battery={
             "capacity": battery.capacity,
             "charged_percent": battery.charged_percent,
             "health_percent": battery.health_percent,

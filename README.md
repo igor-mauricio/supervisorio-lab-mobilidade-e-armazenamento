@@ -13,7 +13,7 @@
 	- [ ] Alterar modelos do banco de dados para os equipamentos
 	- [ ] Enviar para o template
 ### autenticação
-- [ ] Colocar nome de usuário logado no topo
+- [x] Colocar nome de usuário logado no topo
 - [ ] Tela de registro de usuários
 ### alarmes
 - [ ] Decidir os alarmes a serem empregados

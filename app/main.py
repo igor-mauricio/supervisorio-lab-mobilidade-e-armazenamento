@@ -3,7 +3,7 @@ from flask_socketio import SocketIO  # type: ignore
 from AuthService import AuthService
 from AlarmService import AlarmService
 from BatteryService import BatteryService
-from infra.IHMController.IHMController import OpenPipeIHMController
+from infra.IHMController.IHMController import FakeIHMController
 from infra.SetupDatabase import setup_database
 from infra.Mediator import Mediator
 from extensions import configureDatabase, configureLoginManager, db, login_manager
@@ -20,7 +20,7 @@ configureLoginManager(app)
 def user_loader(id):
     return User.query.filter_by(id=id).first()
 
-ihmController = OpenPipeIHMController()
+ihmController = FakeIHMController()
 mediator = Mediator()
 batteryService = BatteryService(mediator)
 authService = AuthService(mediator)
@@ -38,5 +38,5 @@ if __name__ == "__main__":
         db.create_all()
         setup_database()
         authService.registerDefaultUsers()
-        socketio.run(app, debug=True, port=33000,
+        socketio.run(app, debug=True, port=3000,
                      host='0.0.0.0', allow_unsafe_werkzeug=True)

@@ -6,7 +6,7 @@ services:
     restart: "unless-stopped"
     stop_signal: SIGINT
     ports:
-      - "33000:33000"
+      - "33000:3000"
 
   postgres:
     image: postgres

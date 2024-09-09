@@ -1,80 +1,58 @@
-import sys
-sys.path.insert(0, '..\\')
-import json
-
-from infra.IHMController.Runtime import Runtime
-
-def printOnSuccess(jsonResponse):
-    # parse and print success json
-    tagsInfo = jsonResponse["Params"]["Tags"]
-    for tag in tagsInfo:
-        print(
-            "Name : {}\nErrorCode : {}\nError Description : {}\n\n".format(
-                tag["Name"], tag["ErrorCode"], tag["ErrorDescription"]
-            )
-        )
+from abc import ABC, abstractmethod
 
 
-def printOnError(jsonResponse):
-    # parse and print error json
-    print(
-        "Message : {}\nError Code : {}\nErrorDescription : {}".format(
-            jsonResponse["Message"],
-            jsonResponse["ErrorCode"],
-            jsonResponse["ErrorDescription"],
-        )
-    )
-
-
-def callbackFunction(response):
-    # Callback comes here from Runtime
-    # do JSON loading in a try block to avoid invalid JSON processing.
-    try:
-        j = json.loads(response)
-        msg = j.get("Message")
-        if msg == "NotifyWriteTag":
-            printOnSuccess(j)
-        elif msg == "ErrorWriteTag":
-            printOnError(j)
-    except json.decoder.JSONDecodeError:
-        print("response is not a valid JSON")
-
-
-
-
-
-class OpenPipeIHMController:
+class IHMController(ABC):
+  @abstractmethod
+  def subscribeToTag(self, tag, callback):...
   
-  def subscribeToTag(self, tag, callback):
-      return
-
-  def unsubscribeToTag(self, tag):
-      raise NotImplementedError
-
-  def readTag(self, tag):
-      raise NotImplementedError
-
-  def writeTag(self, tag, value):
-        global Runtime
-        runtime = Runtime(callbackFunction)
-        WriteTagCommand = '{"Message":"WriteTag","Params":{"Tags":[{"Name":"' + tag + '","Value":"'+ value +'"}]},"ClientCookie":" myCookie1"}\n'
-        runtime.SendExpertCommand(WriteTagCommand)
-
-  def subscribeToAlarm(self, alarm, callback):
-      raise NotImplementedError
-
-  def unsubscribeToAlarm(self, alarm):
-      raise NotImplementedError
-
-  def readAlarm(self, alarm):
-      raise NotImplementedError
-
-  def writeAlarm(self, alarm, value):
-      raise NotImplementedError
+  @abstractmethod
+  def unsubscribeToTag(self, tag):...
   
+  @abstractmethod
+  def readTag(self, tag):...
+  
+  @abstractmethod
+  def writeTag(self, tag, value):...
+  
+  @abstractmethod
+  def subscribeToAlarm(self, alarm, callback):...
+  
+  @abstractmethod
+  def unsubscribeToAlarm(self, alarm):...
+  
+  @abstractmethod
+  def readAlarm(self, alarm):...
+  
+  @abstractmethod
+  def writeAlarm(self, alarm, value):...
 
 
-# runtime = Runtime.Runtime(callbackFunction)
-# SubscribeTagsExpertCommand = '{"Message":"SubscribeTag","Params":{"Tags":["Potato","Carrot", "Wheat", "Egg", "Bamboo", "Onion"]},"ClientCookie":"myCookie1"}\n'
-# runtime.SendExpertCommand(SubscribeTagsExpertCommand)
-# time.sleep(100)
+class FakeIHMController(IHMController):
+    def __init__(self):
+        self.tags = {}
+        self.alarms = {}
+    
+    def subscribeToTag(self, tag, callback):
+        return
+    
+    def unsubscribeToTag(self, tag):
+        return
+    
+    def readTag(self, tag):
+        return self.tags[tag]
+    
+    def writeTag(self, tag, value):
+        self.tags[tag] = value
+    
+    def subscribeToAlarm(self, alarm, callback):
+        return
+    
+    def unsubscribeToAlarm(self, alarm):
+        return
+    
+    def readAlarm(self, alarm):
+        return self.alarms[alarm]
+    
+    def writeAlarm(self, alarm, value):
+        self.alarms[alarm] = value
+  

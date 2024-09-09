@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from infra.IHMController.IHMController import OpenPipeIHMController
+from infra.IHMController.IHMController import IHMController
 from infra.Mediator import Mediator
 @dataclass
 class AlarmService:
     mediator: Mediator
-    ihmController: OpenPipeIHMController
+    ihmController: IHMController
 
     def subscribeAlarms(self):
         def handle_alarm(tag_name, event_name):

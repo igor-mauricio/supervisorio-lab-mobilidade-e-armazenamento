@@ -1,4 +1,4 @@
-from app.infra.IHMController.IHMController import OpenPipeIHMController
+from app.infra.IHMController.OpenPipeIHMController import OpenPipeIHMController
 
 
 def test_shouldModifyVariableInIHMController():

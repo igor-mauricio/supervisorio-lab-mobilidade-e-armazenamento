@@ -34,7 +34,7 @@ class AuthService:
   def registerDefaultUsers(self):
     user = User.query.filter_by(username="admin").first()
     if not user:
-        user = User(username="admin", password="admin", name="admin")
+        user = User(username="admin", password="admin", name="admin", permission_level=3)
         db.session.add(user)
         db.session.commit()
      

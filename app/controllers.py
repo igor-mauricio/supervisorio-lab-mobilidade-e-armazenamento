@@ -2,7 +2,7 @@ from flask import Flask, request, flash, redirect, url_for, render_template
 from models import User, PROFESSOR_PERMISSION
 from AuthService import AuthService
 from BatteryService import BatteryService
-from flask_login import login_user, current_user
+from flask_login import login_required, login_user, current_user
 
 
 def AppController(app: Flask):
@@ -107,7 +107,9 @@ def AuthController(app: Flask, authService: AuthService):
 
 def BatteryController(app: Flask, batteryService: BatteryService):
     @app.get("/equipments/battery")
+    @login_required
     def battery():
+        user:User = current_user
         try:
             battery = batteryService.get_battery()
         except Exception as e:
@@ -116,7 +118,7 @@ def BatteryController(app: Flask, batteryService: BatteryService):
                 return "No battery found", 404
             return "Internal server error", 500
 
-        return render_template("pages/battery.html", battery={
+        return render_template("pages/battery.html", user=user.name, battery={
             "capacity": battery.capacity,
             "charged_percent": battery.charged_percent,
             "health_percent": battery.health_percent,
@@ -129,6 +131,7 @@ def BatteryController(app: Flask, batteryService: BatteryService):
         })
 
     @app.post("/equipments/battery/change_relay_state")
+    @login_required
     def change_battery_relay_state():
         if not current_user.is_authenticated or current_user.permission_level < PROFESSOR_PERMISSION:
             return "Permission denied", 403
@@ -145,6 +148,7 @@ def BatteryController(app: Flask, batteryService: BatteryService):
         return "State changed", 200
 
     @app.post("/equipments/battery/change_battery_mode")
+    @login_required
     def change_battery_mode():
         if not current_user.is_authenticated or current_user.permission_level < PROFESSOR_PERMISSION:
             return "Permission denied", 403

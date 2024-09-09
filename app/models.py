@@ -19,10 +19,11 @@ class User(db.Model, UserMixin): # type: ignore
 	3 - Administrador
 	'''
 	
-	def __init__(self, username: str, name: str, password: str):
+	def __init__(self, username: str, name: str, password: str, permission_level: int = 0):
 		self.username = username
 		self.name = name
 		self.password = password
+		self.permission_level = permission_level
 
 
 

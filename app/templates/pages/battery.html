@@ -1,116 +1,97 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="bg-neutral-800 min-h-screen">
-        <nav id="topbar" class="flex justify-between items items-center py-3 px-4">
-            <h1 class="text-4xl">Bateria</h1>
-            <div class="flex items-center gap-3">
-                <img src="{{url_for('static', filename='images/user_icon.svg')}}" class=""/>
-                <div class="flex flex-col gap-1">
-                    <span class="text-base font-bold"> Mateus Henrique </span>
-                    <div class="flex items-center gap-2">
-                        <img src="{{url_for('static', filename='images/calendar.svg')}}" class=""/>
-                        <span class="text-sm" id="datestring"></span>
-                        <img src="{{url_for('static', filename='images/clock.svg')}}" class=""/>
-                        <span class="text-sm" id="timestring"></span>
-                    </div>
-                </div>
+  <div class="bg-neutral-800 min-h-screen">
+    {% include "components/topbar.html" %}
+    <div  class="flex flex-col items-center gap-3 px-4">
+      <div  class="flex w-full gap-3">
+        <div  class="flex flex-col items-stretch gap-3 w-fit">
+          <div class="flex justify-center">
+            <div  class="relative flex h-full w-fit justify-center items-center ">
+              <img class="z-20" src="{{url_for('static', filename='images/battery_animated.svg')}}"/>
+              <span class="absolute">
+                23%
+              </span>
+              <span class="absolute bottom-0 left-0 h-[80px] w-full bg-red-500 z-10 rounded-md shadow-glow  shadow-red-500"></span>
+            </span>
+            </div>
+          </div>
+          <div  class="flex justify-center items-center gap-4"> 
+              <div id="power" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
+                <img class="size-6" src="{{url_for('static', filename='images/on.svg')}}">
+              </div>
+              <div id="settings" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
+                <img class="size-6" src="{{url_for('static', filename='images/cog.svg')}}">
+              </div>
+              <div id="viewer" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
+                <img class="size-6" src="{{url_for('static', filename='images/eye.svg')}}">
+              </div>
+          </div>
+        </div>
+        <div class="flex-grow grid grid-cols-2 gap-3">
+          <div  class="flex p-3 flex-col items-center gap-3 col-span-1  rounded-2xl border-2 border-solid border-white">
+            <div  class="flex p-[10px] items-start gap-[10px]">
+              <span class=" text-4xl">Tensão</span>
+            </div>
+            <div class="flex flex-grow">
+              <canvas id="chartTensao" class=""></canvas>
+            </div>
+          </div>
+          <div  class="flex p-3 flex-col items-center gap-3 col-span-1 rounded-2xl border-2 border-solid border-white">
+            <div  class="flex p-[10px] items-start gap-[10px]">
+              <span class=" text-4xl">Corrente
+              </span>
+            </div>
+            <div class="flex flex-grow">
+              <canvas id="chartCorrente" class=""></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% set first_half = [
+        ('Capacidade:', battery.capacity),
+        ('Porcentagem de Saúde:', battery.health_percent),
+        ('Percentual de Carga:', battery.charged_percent),
+        ('Máxima Tensão de Entrada:', battery.max_in_voltage),
+        ('Mínima Tensão de Saída:', battery.min_out_voltage),
+        ('Estado:', battery.state),
+      ]%}
+      {% set second_half = [
+        ('Relé:', battery.relay_status),
+        ('Modelo:', battery.model),
+        ('Fabricante:', battery.manufacturer),
+        ('Estado:', battery.state),
+        ('Relé:', battery.relay_status)
+      ]%}
+      <div class="flex items-start gap-3 w-full">
+        <div class="flex px-3 py-2 flex-col items-stretch flex-1 rounded-2xl border-2 border-solid border-white ">
+          {% for item in first_half %}
+            <div class="flex px-1 py-2 justify-between items-start {% if not loop.last %} border-b-2 {% endif %} border-neutral-600">
+              <span class="text-white
+            text-2xl">{{ item[0] }}</span>
+              <span class="text-white text-2xl font-medium">{{ item[1] }}</span>
+            </div>
+          {% endfor %}  
+        </div>
+        <div class="flex px-3 py-2 flex-col items-stretch flex-1 rounded-2xl border-2 border-solid border-white ">
+          {% for item in second_half %}
+            <div class="flex px-1 py-2 justify-between items-start {% if not loop.last %} border-b-2 {% endif %}-b-2 border-neutral-600">
+              <span class="text-white
+            text-2xl">{{ item[0] }}</span>
+              <span class="text-white text-2xl font-medium">{{ item[1] }}</span>
+            </div>
+          {% endfor %}  
+        </div>
+      </div>
+  </div>
 
-            </div>
-        </nav>
-  <div  class="flex flex-col items-center gap-3 px-4">
-    <div  class="flex w-full gap-3">
-      <div  class="flex flex-col items-stretch gap-3 w-fit">
-        <div class="flex justify-center">
-          <div  class="relative flex h-full w-fit justify-center items-center ">
-            <img class="z-20" src="{{url_for('static', filename='images/battery_animated.svg')}}"/>
-            <span class="absolute">
-              23%
-            </span>
-            <span class="absolute bottom-0 left-0 h-[80px] w-full bg-red-500 z-10 rounded-md shadow-glow  shadow-red-500"></span>
-          </span>
-          </div>
-        </div>
-        <div  class="flex justify-center items-center gap-4"> 
-            <div id="power" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
-              <img class="size-6" src="{{url_for('static', filename='images/on.svg')}}">
-            </div>
-            <div id="settings" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
-              <img class="size-6" src="{{url_for('static', filename='images/cog.svg')}}">
-            </div>
-            <div id="viewer" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
-              <img class="size-6" src="{{url_for('static', filename='images/eye.svg')}}">
-            </div>
-        </div>
-      </div>
-      <div class="flex-grow grid grid-cols-2 gap-3">
-        <div  class="flex p-3 flex-col items-center gap-3 col-span-1  rounded-2xl border-2 border-solid border-white">
-          <div  class="flex p-[10px] items-start gap-[10px]">
-            <span class=" text-4xl">Tensão</span>
-          </div>
-          <div class="flex flex-grow">
-            <canvas id="chartTensao" class=""></canvas>
-          </div>
-        </div>
-        <div  class="flex p-3 flex-col items-center gap-3 col-span-1 rounded-2xl border-2 border-solid border-white">
-          <div  class="flex p-[10px] items-start gap-[10px]">
-            <span class=" text-4xl">Corrente
-            </span>
-          </div>
-          <div class="flex flex-grow">
-            <canvas id="chartCorrente" class=""></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    {% set first_half = [
-      ('Capacidade:', battery.capacity),
-      ('Porcentagem de Saúde:', battery.health_percent),
-      ('Percentual de Carga:', battery.charged_percent),
-      ('Máxima Tensão de Entrada:', battery.max_in_voltage),
-      ('Mínima Tensão de Saída:', battery.min_out_voltage),
-      ('Estado:', battery.state),
-    ]%}
-    {% set second_half = [
-      ('Relé:', battery.relay_status),
-      ('Modelo:', battery.model),
-      ('Fabricante:', battery.manufacturer),
-      ('Estado:', battery.state),
-      ('Relé:', battery.relay_status)
-    ]%}
-    <div class="flex items-start gap-3 w-full">
-      <div class="flex px-3 py-2 flex-col items-stretch flex-1 rounded-2xl border-2 border-solid border-white ">
-        {% for item in first_half %}
-          <div class="flex px-1 py-2 justify-between items-start {% if not loop.last %} border-b-2 {% endif %} border-neutral-600">
-            <span class="text-white
-           text-2xl">{{ item[0] }}</span>
-            <span class="text-white text-2xl font-medium">{{ item[1] }}</span>
-          </div>
-        {% endfor %}  
-      </div>
-      <div class="flex px-3 py-2 flex-col items-stretch flex-1 rounded-2xl border-2 border-solid border-white ">
-        {% for item in second_half %}
-          <div class="flex px-1 py-2 justify-between items-start {% if not loop.last %} border-b-2 {% endif %}-b-2 border-neutral-600">
-            <span class="text-white
-           text-2xl">{{ item[0] }}</span>
-            <span class="text-white text-2xl font-medium">{{ item[1] }}</span>
-          </div>
-        {% endfor %}  
-      </div>
-    </div>
-</div>
   <script>
     var socket = io();
 
     socket.on('connect', () => {
         console.log('Connected to WebSocket server');
     });
-  </script>
 
-
-
-  
-  <script>
     document.addEventListener('htmx:load', function() {
       const chartTensao = document.getElementById('chartTensao');
       //cleanup whats inside

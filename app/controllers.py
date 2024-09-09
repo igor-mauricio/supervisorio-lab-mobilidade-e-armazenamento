@@ -15,68 +15,57 @@ def AppController(app: Flask):
     @app.get("/minecraft")
     @login_required
     def minecraft():
-        user:User = current_user
-        return render_template("pages/minecraft.html", user=user.name)
+        return render_template("pages/minecraft.html", user=current_user.name)
 
     @app.get("/alarms")
     @login_required
     def alarms():
-        user:User = current_user
-        return render_template("pages/alarms.html", user=user.name)
+        return render_template("pages/alarms.html", user=current_user.name)
 
     @app.get("/equipments")
     @login_required
     def equipments():
-        user:User = current_user
         return "Equipments"
 
     @app.get("/equipments/battery/grafics")
     @login_required
     def grafics():
-        user:User = current_user
         return "Grafics"
 
     @app.get("/equipments/generator")
     @login_required
     def generator():
-        user:User = current_user
         return "Generator"
 
     @app.get("/equipments/inversor/fronius")
     @login_required
     def inversor_fronnius():
-        user:User = current_user
-        return render_template("pages/fronius.html", user=user.name)
+        return render_template("pages/fronius.html", user=current_user.name)
 
     @app.get("/equipments/inversor/quattro")
     @login_required
     def inversor_quattro():
-        user:User = current_user
-        return render_template("pages/quattro.html", user=user.name)
+        return render_template("pages/quattro.html", user=current_user.name)
 
     @app.get("/equipments/charge_controller/smart_solar")
     @login_required
     def charge_controller_smart_solar():
-        user:User = current_user
         return "Charge Controller Smart Solar"
 
     @app.get("/equipments/energy_management_system/cerbo_gx")
     @login_required
     def charge_controller_cerbo_gx():
-        user:User = current_user
         return "Energy Management System Cerbo GX"
 
     @app.get("/equipments/power_measurer")
     @login_required
     def power_measurement():
-        user:User = current_user
         return "Power Measurer"
     
     @app.get("/lobby")
     @login_required
     def lobby():
-        user:User = current_user
-        return render_template("pages/index.html", user=user.name)
+        return render_template("pages/index.html", user=current_user.name)
 
 
 def AuthController(app: Flask, authService: AuthService):
@@ -131,7 +120,6 @@ def BatteryController(app: Flask, batteryService: BatteryService):
     @app.get("/equipments/battery")
     @login_required
     def battery():
-        user:User = current_user
         try:
             battery = batteryService.get_battery()
         except Exception as e:
@@ -140,7 +128,7 @@ def BatteryController(app: Flask, batteryService: BatteryService):
                 return "No battery found", 404
             return "Internal server error", 500
 
-        return render_template("pages/battery.html", user=user.name, battery={
+        return render_template("pages/battery.html", user=current_user.name, battery={
             "capacity": battery.capacity,
             "charged_percent": battery.charged_percent,
             "health_percent": battery.health_percent,

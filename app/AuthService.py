@@ -18,13 +18,13 @@ class AuthService:
         raise Exception("Invalid password")
     login_user(user)
 
-  def register(self, username: str, password: str, name: str, password_confirmation:str) -> None:
+  def register(self, username: str, password: str, name: str, password_confirmation:str, permission_level:int) -> None:
     existing_user = User.query.filter_by(username=username).first()
     if existing_user:
         raise Exception("User already exists")
     if password != password_confirmation:
         raise Exception("Password and confirmation do not match")
-    user = User(username=username, password=password, name=name)
+    user = User(username=username, password=password, name=name, permission_level=permission_level)
     db.session.add(user)
     db.session.commit()
 

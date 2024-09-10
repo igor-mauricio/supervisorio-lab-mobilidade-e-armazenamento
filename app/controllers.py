@@ -79,7 +79,7 @@ def AuthController(app: Flask, authService: AuthService):
         if user and user.password == password:
             login_user(user)
             flash("Login realizado com sucesso")
-            return redirect(url_for("minecraft"))
+            return redirect(url_for("lobby"))
         flash("Dados inválidos")
         return redirect(url_for("login"))
 
@@ -95,8 +95,9 @@ def AuthController(app: Flask, authService: AuthService):
         username = request.form["username"]
         password = request.form["password"]
         password_confirm = request.form["password_confirm"]
+        permission_level = int(request.form["permission_level"])
         try:
-            authService.register(username, password, name, password_confirm)
+            authService.register(username, password, name, password_confirm, permission_level)
         except Exception as e:
             error = str(e)
             if error == "User already exists":
@@ -107,7 +108,7 @@ def AuthController(app: Flask, authService: AuthService):
                 return redirect(url_for("register"))
             return "Internal server error", 500
         flash("Usuário registrado com sucesso")
-        return redirect(url_for("login"))
+        return redirect(url_for("lobby"))
 
     @app.get("/auth/logout")
     def logout():

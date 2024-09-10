@@ -1533,6 +1533,10 @@ video {
   gap: 10px;
 }
 
+.gap-8 {
+  gap: 2rem;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1877,6 +1881,10 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
 .rounded-b {
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
@@ -2067,6 +2075,21 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-violet-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 243 255 / var(--tw-bg-opacity));
+}
+
+.bg-violet-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(167 139 250 / var(--tw-bg-opacity));
+}
+
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
 .decoration-slice {

@@ -28,7 +28,7 @@ def AppController(app: Flask):
     @app.get("/equipments/battery/grafics")
     @login_required
     def grafics():
-        return "Grafics"
+        return render_template("pages/grafics.html")
 
     @app.get("/equipments/generator")
     @login_required

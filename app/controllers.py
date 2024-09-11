@@ -11,7 +11,7 @@ def AppController(app: Flask):
         return render_template("pages/welcome.html")
 
     @app.get("/minecraft")
-    @login_required
+    @login_required 
     def minecraft():
         return render_template("pages/minecraft.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
@@ -37,7 +37,7 @@ def AppController(app: Flask):
 
     @app.get("/equipments/inversor/fronius")
     @login_required
-    def inversor_fronnius():
+    def inversor_fronius():
         return render_template("pages/fronius.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/equipments/inversor/quattro")

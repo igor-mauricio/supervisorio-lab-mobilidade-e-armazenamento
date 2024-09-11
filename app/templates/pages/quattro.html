@@ -1,7 +1,8 @@
+{% import "components/topbar.html" as TopBar %}
 {% extends "base.html" %}
 {% block content %}
     <div class="bg-neutral-800 min-h-screen">
-        {% include "components/topbar.html" %}
+        {{ TopBar.render(title='Quattro', user=user) }}
         <div id="frame 31" class="flex w-[1626  px] h-[928px] justify-center items-start gap-5 shrink-0">
             <div id="frame 46" class="flex p-5 flex-col items-center gap-5 flex-[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
                 <div id="frame 39" class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">

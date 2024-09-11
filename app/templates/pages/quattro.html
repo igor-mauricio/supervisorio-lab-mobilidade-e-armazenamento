@@ -4,106 +4,24 @@
     <div class="bg-neutral-800 min-h-screen">
         {{ TopBar.render(title='Quattro', user=user) }}
         <div class="flex w-[1626  px] h-[928px] justify-center items-start gap-5 shrink-0">
-            <div class="flex p-5 flex-col items-center gap-5 flex-[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
-                <div class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">
-                    <span class="text-white font-inter text-2xl font-bold leading-normal"> Tensão</span>
-                </div>
-
-                <div id="chart" class=" flex-1 self-stretch w-[600px] h-[200px]" >
-                    <canvas id="myChart" width="400px" height="100px"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        const ctx = document.getElementById('myChart');
-                    
-                        new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                            datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                            }
-                        }
-                        });
-                    </script>
-                    
-    
-                </div>
-
-                <div class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">
-                    <span class="text-white font-inter text-2xl font-bold leading-normal"> Corrente</span>
-                </div>
-
-                <div id="chart" class=" flex-1 self-stretch w-[600px] h-[200px]" >
-                    <canvas id="myChart2" width="400px" height="100px"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        const ctx2 = document.getElementById('myChart2');
-                        
-                        new Chart(ctx2, {
-                            type: 'bar',
-                            data: {
-                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
-                                borderWidth: 1
-                            }]
-                            },
-                            options: {
-                            scales: {
-                                y: {
-                                beginAtZero: true
-                                }
-                            }
-                            }
-                        });
-                    </script>
-                     
-
-                    
-
-                </div>
-
+            <div class="flex p-5 flex-col gap-5 flex-[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
                 
-                <div class="flex p-[10px] items-start gap-[10px] self-stretch rounded-[10px]">
-                    <span class="text-white font-inter text-2xl font-bold leading-normal"> Potência</span>
+                <div class="flex flex-col flex-grow p-3 gap-2">
+                    <h2>Corrente L1</h2>
+                    <canvas id="chartTensao" class="max-h-[200px]"></canvas> 
+                    </canvas>
                 </div>
 
-                <div id="chart" class=" flex-1 self-stretch w-[600px] h-[200px]" >
-                    <canvas id="myChart3" width="400px" height="100px"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        const ctx3 = document.getElementById('myChart3');
-                        
-                        new Chart(ctx3, {
-                            type: 'bar',
-                            data: {
-                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
-                                borderWidth: 1
-                            }]
-                            },
-                            options: {
-                            scales: {
-                                y: {
-                                beginAtZero: true
-                                }
-                            }
-                            }
-                        });
-                    </script>
-                     
+                <div class="flex flex-col flex-grow p-3 gap-2">
+                    <h2>Corrente L2</h2>
+                    <canvas id="chartCorrente" class="max-h-[200px]"></canvas> 
+                    </canvas>
+                </div>
+
+                <div class="flex flex-col flex-grow p-3 gap-2">
+                    <h2>Corrente L1</h2>
+                    <canvas id="chartPotencia" class="max-h-[200px]"></canvas> 
+                    </canvas>
                 </div>
 
             </div>
@@ -117,59 +35,233 @@
                     </div>
 
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L1 </span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
 
                     </div>
 
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L2</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L3</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L1</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L2</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L3</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L1</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W </span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L2</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W  </span>
 
                     </div>
                     <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L3</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W  </span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> Teste</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
-
-                    </div>
+              
 
 
                 </div>
             </div>
         </div>
+
+        <script>
+            var socket = io();
+        
+            socket.on('connect', () => {
+                console.log('Connected to WebSocket server');
+            });
+        
+            document.addEventListener('htmx:load', function() {
+              let width, height, gradient;
+              function getGradient(ctx, chartArea) {
+                const chartWidth = chartArea.right - chartArea.left;
+                const chartHeight = chartArea.bottom - chartArea.top;
+                if (!gradient || width !== chartWidth || height !== chartHeight) {
+                  // Create the gradient because this is either the first render
+                  // or the size of the chart has changed
+                  width = chartWidth;
+                  height = chartHeight;
+                  gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                  gradient.addColorStop(0, '#7C3AED00');
+                  // gradient.addColorStop(0.4, '#FFFF00');
+                  gradient.addColorStop(1, '#7C3AED');
+                }
+        
+                return gradient;
+              }
+        
+              const chartTensao = document.getElementById('chartTensao');
+            
+              chartTensao.innerHTML = '';
+              new Chart(chartTensao, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    cubicInterpolationMode: 'monotone',
+                    fill:true,
+                    // backgroundColor:  '#AA00FF',
+                    backgroundColor:  function(context) {
+                      const chart = context.chart;
+                      const {ctx, chartArea} = chart;
+        
+                      if (!chartArea) {
+                        // This case happens on initial chart load
+                        return;
+                      }
+                      return getGradient(ctx, chartArea);
+                    },
+                    // borderColor: '#AA00FF',
+                    borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                      
+                    },
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+        
+              });
+            
+              const chartCorrente = document.getElementById('chartCorrente');
+              chartCorrente.innerHTML = '';
+              new Chart(chartCorrente, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    fill:true,
+                    cubicInterpolationMode: 'monotone',
+                    backgroundColor:  function(context) {
+                        const chart = context.chart;
+                        const {ctx, chartArea} = chart;
+          
+                        if (!chartArea) {
+                          // This case happens on initial chart load
+                          return;
+                        }
+                        return getGradient(ctx, chartArea);
+                      },
+                      // borderColor: '#AA00FF',
+                      borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                          color: '#AAAAAA'
+                        },
+                    },
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      }
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+              });
+
+
+              const chartPotencia = document.getElementById('chartPotencia');
+              //cleanup whats inside
+              chartPotencia.innerHTML = '';
+              new Chart(chartPotencia, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    cubicInterpolationMode: 'monotone',
+                    fill:true,
+                    // backgroundColor:  '#AA00FF',
+                    backgroundColor:  function(context) {
+                      const chart = context.chart;
+                      const {ctx, chartArea} = chart;
+        
+                      if (!chartArea) {
+                        // This case happens on initial chart load
+                        return;
+                      }
+                      return getGradient(ctx, chartArea);
+                    },
+                    // borderColor: '#AA00FF',
+                    borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                      
+                    },
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+              });
+   
+          });
+        </script>
   {% endblock %}

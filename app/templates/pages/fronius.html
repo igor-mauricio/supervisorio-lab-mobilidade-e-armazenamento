@@ -7,39 +7,62 @@
 
         {% set items = [
             {
-                'name': 'Tensão',
-                'value': '23%'
+                'name': 'Potência Máxima',
+                'value': '999 kw/h'
+            },
+
+            {
+                'name': 'Capacidade Máxima de Potência',
+                'value': '999 Kw/h'
+            },
+
+            {
+                'name': 'Limite de Potência',
+                'value': '999 Kw/h'
             },
             {
-                'name': 'Corrente',
-                'value': '23%'
+                'name': 'Potência L1',
+                'value': ' 999 W'
             },
             {
-                'name': 'Potência',
-                'value': '23%'
+                'name': 'Potência L2',
+                'value': ' 999 W'
             },
             {
-                'name': 'Energia',
-                'value': '23%'
+                'name': 'Potência L3',
+                'value': ' 999 W'
             }
+
             ] %}
 
         {% set items2 = [
             {
-                'name': 'bla',
-                'value': '23%'
+                'name': 'Tensão L1',
+                'value': ' 999 V'
+            },
+
+            {
+                'name': 'Tensão L2',
+                'value': ' 999 V'
             },
             {
-                'name': 'asd',
-                'value': '23%'
+                'name': 'Tensão L3',
+                'value': ' 999 V'
             },
+
             {
-                'name': 'asdsdd',
-                'value': '23%'
+                'name': 'Corrente L1',
+                'value': ' 999 A'
             },
+
             {
-                'name': 'kkkk',
-                'value': '23%'
+                'name': 'Corrente L2',
+                'value': ' 999 A'
+            },
+
+            {
+                'name': 'Corrente L3',
+                'value': ' 999 A'
             }
             ] %}
 
@@ -74,17 +97,17 @@
             </div>
             <div class="flex gap-3 ">
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
+                    <h2>Tensão L1</h2>
                     <canvas class="bg-red-500 max-h-[200px]"> 
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
+                    <h2>Tensão L2</h2>
                     <canvas class="bg-red-500 max-h-[200px]"> 
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
+                    <h2>Tensão L3</h2>
                     <canvas class="bg-red-500 max-h-[200px]"> 
                     </canvas>
                 </div>
@@ -92,17 +115,17 @@
             </div>
             <div class="flex gap-3 ">
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
+                    <h2>Corrente L1</h2>
+                    <canvas id="chartTensao" class="w-[678px] h-[339px]"></canvas> 
+                    </canvas>
+                </div>
+                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                    <h2>Corrente L2</h2>
                     <canvas class="bg-red-500 max-h-[200px]"> 
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
-                    </canvas>
-                </div>
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
+                    <h2>Corrente L3</h2>
                     <canvas class="bg-red-500 max-h-[200px]"> 
                     </canvas>
                 </div>
@@ -175,6 +198,82 @@
         </div>
 
     </div> -->
+    <script>
 
+        var socket = io();
+        socket.on('connect', () => {
+        console.log('Connected to WebSocket server');
+        });
+
+        document.addEventListener('htmx:load', function() {
+
+      let width, height, gradient;
+      function getGradient(ctx, chartArea) {
+        const chartWidth = chartArea.right - chartArea.left;
+        const chartHeight = chartArea.bottom - chartArea.top;
+        if (!gradient || width !== chartWidth || height !== chartHeight) {
+          // Create the gradient because this is either the first render
+          // or the size of the chart has changed
+          width = chartWidth;
+          height = chartHeight;
+          gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          gradient.addColorStop(0, '#7C3AED00');
+          // gradient.addColorStop(0.4, '#FFFF00');
+          gradient.addColorStop(1, '#7C3AED');
+        }
+
+        return gradient;
+      }
+        const chartTensao = document.getElementById('chartTensao');
+      //cleanup whats inside
+      chartTensao.innerHTML = '';
+      new Chart(chartTensao, {
+        type: 'line',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1,
+            cubicInterpolationMode: 'monotone',
+            fill:true,
+            // backgroundColor:  '#AA00FF',
+            backgroundColor:  function(context) {
+              const chart = context.chart;
+              const {ctx, chartArea} = chart;
+
+              if (!chartArea) {
+                // This case happens on initial chart load
+                return;
+              }
+              return getGradient(ctx, chartArea);
+            },
+            // borderColor: '#AA00FF',
+            borderColor: '#7C3AED'
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              ticks: {
+                color: '#AAAAAA'
+              },
+              
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#AAAAAA'
+              },
+            }
+          },
+          plugins: {
+            legend: {
+              display: false, // Hide the legend
+            }
+          }
+        },
+
+      });
+    </script>
 
   {% endblock %}

@@ -8,7 +8,10 @@ from infra.SetupDatabase import setup_database
 from infra.Mediator import Mediator
 from extensions import configureDatabase, configureLoginManager, db, login_manager
 from controllers import AppController, AuthController, BatteryController
-from models import User
+from models import Battery, User
+import threading
+import time
+import random
 
 app = Flask(__name__)
 app.secret_key = "secret key"
@@ -37,6 +40,19 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         setup_database()
+        def change_battery_percent():
+            with app.app_context():
+                battery:Battery = batteryService.get_battery()
+                while True:
+                    # Generate a random battery charged percent
+                    battery.charged_percent = random.randint(0, 1000)/10
+                    db.session.commit()
+                    
+                    time.sleep(5)  # Sleep for 5 seconds before updating again
+
+        # Create and start the service in a separate thread
+        battery_thread = threading.Thread(target=change_battery_percent)
+        battery_thread.start()
         authService.registerDefaultUsers()
         socketio.run(app, debug=True, port=3000,
                      host='0.0.0.0', allow_unsafe_werkzeug=True)

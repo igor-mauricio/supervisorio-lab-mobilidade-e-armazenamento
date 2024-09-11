@@ -5,6 +5,9 @@
 - [ ] Configurar websocket no docker para trocar informações em tempo real entre cliente e servidor
 ### Gráficos
 - [ ] animar carga da bateria
+	- 60% verde
+	- 20% amarelo
+	- 0% vermelho
 - [ ] estilizar gráficos para roxo com degradê
 - [ ] botões na barra lateral com ícones e respectivos links
 ### HTTP
@@ -14,7 +17,7 @@
 	- [ ] Enviar para o template
 ### autenticação
 - [x] Colocar nome de usuário logado no topo
-- [ ] Tela de registro de usuários
+- [x] Tela de registro de usuários
 ### alarmes
 - [ ] Decidir os alarmes a serem empregados
 - [ ] Fazer lógica de alarmes

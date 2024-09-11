@@ -143,34 +143,38 @@ def BatteryController(app: Flask, batteryService: BatteryService):
 
     @app.post("/equipments/battery/change_relay_state")
     @login_required
-    def change_battery_relay_state():
+    def toggle_battery_relay_state():
         if not current_user.is_authenticated or current_user.permission_level < PROFESSOR_PERMISSION:
             return "Permission denied", 403
-        state = request.form["relay_state"]
         try:
-            batteryService.change_battery_relay_state(state)
+
+            batteryService.toggle_battery_relay_state()
         except Exception as e:
             error = str(e)
+            print(e)
             if error == "Invalid state":
                 return "Invalid state", 400
             if error == "No battery found":
                 return "No battery found", 404
             return "Internal server error", 500
-        return "State changed", 200
+        return redirect(url_for("battery"))
 
     @app.post("/equipments/battery/change_battery_mode")
     @login_required
-    def change_battery_mode():
+    def toggle_battery_mode():
+        print("asodjasiodjio")
         if not current_user.is_authenticated or current_user.permission_level < PROFESSOR_PERMISSION:
             return "Permission denied", 403
-        mode = request.form["mode"]
+        # mode = request.form["mode"]
         try:
-            batteryService.change_battery_mode(mode)
+            batteryService.toggle_battery_mode()
         except Exception as e:
             error = str(e)
+            print(e)
+            print("asiduasidou")
             if error == "Invalid mode":
                 return "Invalid mode", 400
             elif error == "No battery found":
                 return "No battery found", 404
             return "Internal server error", 500
-        return "Mode changed", 200
+        return redirect(url_for("battery"))

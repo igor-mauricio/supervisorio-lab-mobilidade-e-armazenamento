@@ -8,5 +8,7 @@ class Mediator():
         self.callbacks[event].append(callback)
 
     def notify(self, event: str, args: Any):
+        if(event not in self.callbacks):
+            return
         for callback in self.callbacks[event]:
             callback(args)

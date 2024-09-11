@@ -29,7 +29,14 @@
     background-color: transparent;
     cursor: pointer;
     border: 0;
-    padding: 1rem 1.5rem;
+    padding-left: 1.3rem;
+    margin-right:0.75rem;
+    
+}
+
+
+.d-flex{
+    margin-top: 1.5rem;
 }
 
 .toggle-btn i {
@@ -55,10 +62,11 @@
 .sidebar-nav {
     padding: 2rem 0;
     flex: 1 1 auto;
+
 }
 
 a.sidebar-link {
-    padding: .625rem 1.625rem;
+    padding: 1rem 1.2rem;
     color: #FFF;
     display: block;
     font-size: 0.9rem;

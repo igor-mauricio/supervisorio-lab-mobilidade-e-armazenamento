@@ -1,6 +1,6 @@
 <aside id="sidebar">
-    <div class="d-flex">
-        <button class="toggle-btn" type="button" onclick="handleSidebarButton()">
+    <div class="d-flex" style="display:flex">
+        <button class="toggle-btn" type="button" onclick="handleSidebarButton()" style="display:flex">
             <i class="lni lni-grid-alt"></i>
         </button>
         <div class="sidebar-logo">
@@ -9,13 +9,13 @@
     </div>
     <ul class="sidebar-nav">
         <li class="sidebar-item">
-            <a href="{{ url_for('lobby') }}" class="sidebar-link">
+            <a href="{{ url_for('lobby') }}" class="sidebar-link" style="display: flex">
                 <i class="material-symbols-outlined" style="font-size:24px">        home</i>
                 <span>Home</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="{{ url_for('battery')}}" class="sidebar-link">
+            <a href="{{ url_for('battery')}}" class="sidebar-link" style="display: flex">
                 <i class="material-symbols-outlined" style="font-size:24px">battery_charging_80</i>
                 <span>Bateria</span>
             </a>
@@ -43,7 +43,7 @@
                 </li>
             </ul>
         </li> -->
-        <li class="sidebar-item">
+        <!--<li class="sidebar-item">
             <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                 data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
                 <i class="lni lni-layout"></i>
@@ -65,7 +65,7 @@
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li>-->
 
         <li class="sidebar-item">
             <a href="{{ url_for('inversor_fronius')}}" class="sidebar-link" style="display: flex">
@@ -100,7 +100,7 @@
         </li>
 
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="{{ url_for('alarms')}}" class="sidebar-link" style="display: flex">
                 <i class="material-symbols-outlined" style="font-size:24px">notification_important</i>
                 <span>Alarms</span>
             </a>

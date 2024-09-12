@@ -42,6 +42,16 @@ def AppController(app: Flask):
     def inversor_fronius():
         return render_template("pages/fronius.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
+    @app.get("/equipments/conversor")
+    @login_required
+    def conversor():
+        return render_template("pages/conversor.html", user=current_user.name, is_admin=current_user.permission_level == 3)
+    
+    @app.get("/equipments/controlador")
+    @login_required
+    def controlador():
+        return render_template("pages/controlador.html", user=current_user.name, is_admin=current_user.permission_level == 3)
+
     @app.get("/equipments/inversor/quattro")
     @login_required
     def inversor_quattro():
@@ -65,7 +75,7 @@ def AppController(app: Flask):
     @app.get("/lobby")
     @login_required
     def lobby():
-        return render_template("pages/index.html", user=current_user.name, is_admin=current_user.permission_level == 3)
+        return render_template("pages/lobby.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
 
 def AuthController(app: Flask, authService: AuthService):

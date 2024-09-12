@@ -7,39 +7,62 @@
 
         {% set items = [
             {
-                'name': 'Tensão',
-                'value': '23%'
+                'name': 'Potência Máxima',
+                'value': '999 kw/h'
+            },
+
+            {
+                'name': 'Capacidade Máxima de Potência',
+                'value': '999 Kw/h'
+            },
+
+            {
+                'name': 'Limite de Potência',
+                'value': '999 Kw/h'
             },
             {
-                'name': 'Corrente',
-                'value': '23%'
+                'name': 'Potência L1',
+                'value': ' 999 W'
             },
             {
-                'name': 'Potência',
-                'value': '23%'
+                'name': 'Potência L2',
+                'value': ' 999 W'
             },
             {
-                'name': 'Energia',
-                'value': '23%'
+                'name': 'Potência L3',
+                'value': ' 999 W'
             }
+
             ] %}
 
         {% set items2 = [
             {
-                'name': 'bla',
-                'value': '23%'
+                'name': 'Tensão L1',
+                'value': ' 999 V'
+            },
+
+            {
+                'name': 'Tensão L2',
+                'value': ' 999 V'
             },
             {
-                'name': 'asd',
-                'value': '23%'
+                'name': 'Tensão L3',
+                'value': ' 999 V'
             },
+
             {
-                'name': 'asdsdd',
-                'value': '23%'
+                'name': 'Corrente L1',
+                'value': ' 999 A'
             },
+
             {
-                'name': 'kkkk',
-                'value': '23%'
+                'name': 'Corrente L2',
+                'value': ' 999 A'
+            },
+
+            {
+                'name': 'Corrente L3',
+                'value': ' 999 A'
             }
             ] %}
 
@@ -74,36 +97,36 @@
             </div>
             <div class="flex gap-3 ">
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <h2>Tensão L1</h2>
+                    <canvas id="chartTensaoL1" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <h2>Tensão L2</h2>
+                    <canvas id="chartTensaoL2" class="max-h-[200px]"></canvas>  
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <h2>Tensão L3</h2>
+                    <canvas id="chartTensaoL3" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
                 
             </div>
             <div class="flex gap-3 ">
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <h2>Corrente L1</h2>
+                    <canvas id="chartCorrenteL1" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <h2>Corrente L2</h2>
+                    <canvas id="chartCorrenteL2" class="max-h-[200px]"></canvas>
                     </canvas>
                 </div>
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Capacidade</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <h2>Corrente L3</h2>
+                    <canvas id="chartCorrenteL3" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
                 
@@ -111,70 +134,341 @@
 
         </div>
 
-
-<!-- 
-        <div id="container-geral" class="flex w-[1626px] h-[928px] flex-col items-center gap-5 shrink-0 border-2 border-neutral-50">
-        <div id="container-blocos-dados" class="flex items-start gap-5 self-stretch">
-            <div id="container-dados" class="flex p-5 flex-col items-center gap-4 flex[1_0_0] rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-            </div>
-
-            <div id="container-dados" class="flex p-5 flex-col items-center gap-4 flex[1_0_0] rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-            </div>
-
-            <div id="container-dados" class="flex p-5 flex-col items-center gap-4 flex[1_0_0] rounded-[20px] border-2 border-neutral-50 bg-neutral-800">
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-                <div id="container-texto" class="flex  p-[10px] justify-between items-start self-stretch border-b-2 border-neutral-700">
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">aaaaa</span>
-                    <span class="text-white font-inter text-2xl font-medium leading-normal">99999</span>
-                </div>
-
-
-
-            </div>
-
-        </div>
-
+        <script>
+            var socket = io();
         
-        </div>
+            socket.on('connect', () => {
+                console.log('Connected to WebSocket server');
+            });
+        
+            document.addEventListener('htmx:load', function() {
+              let width, height, gradient;
+              function getGradient(ctx, chartArea) {
+                const chartWidth = chartArea.right - chartArea.left;
+                const chartHeight = chartArea.bottom - chartArea.top;
+                if (!gradient || width !== chartWidth || height !== chartHeight) {
+                  // Create the gradient because this is either the first render
+                  // or the size of the chart has changed
+                  width = chartWidth;
+                  height = chartHeight;
+                  gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                  gradient.addColorStop(0, '#7C3AED00');
+                  // gradient.addColorStop(0.4, '#FFFF00');
+                  gradient.addColorStop(1, '#7C3AED');
+                }
+        
+                return gradient;
+              }
+        
+              const chartTensaoL1 = document.getElementById('chartTensaoL1');
+            
+              chartTensaoL1.innerHTML = '';
+              new Chart(chartTensaoL1, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    cubicInterpolationMode: 'monotone',
+                    fill:true,
+                    // backgroundColor:  '#AA00FF',
+                    backgroundColor:  function(context) {
+                      const chart = context.chart;
+                      const {ctx, chartArea} = chart;
+        
+                      if (!chartArea) {
+                        // This case happens on initial chart load
+                        return;
+                      }
+                      return getGradient(ctx, chartArea);
+                    },
+                    // borderColor: '#AA00FF',
+                    borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                      
+                    },
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+        
+              });
+            
+              const chartTensaoL2 = document.getElementById('chartTensaoL2');
+              chartTensaoL2.innerHTML = '';
+              new Chart(chartTensaoL2, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    fill:true,
+                    cubicInterpolationMode: 'monotone',
+                    backgroundColor:  function(context) {
+                        const chart = context.chart;
+                        const {ctx, chartArea} = chart;
+          
+                        if (!chartArea) {
+                          // This case happens on initial chart load
+                          return;
+                        }
+                        return getGradient(ctx, chartArea);
+                      },
+                      // borderColor: '#AA00FF',
+                      borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                          color: '#AAAAAA'
+                        },
+                    },
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      }
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+              });
 
-    </div> -->
+
+              const chartTensaoL3 = document.getElementById('chartTensaoL3');
+              //cleanup whats inside
+              chartTensaoL3.innerHTML = '';
+              new Chart(chartTensaoL3, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    cubicInterpolationMode: 'monotone',
+                    fill:true,
+                    // backgroundColor:  '#AA00FF',
+                    backgroundColor:  function(context) {
+                      const chart = context.chart;
+                      const {ctx, chartArea} = chart;
+        
+                      if (!chartArea) {
+                        // This case happens on initial chart load
+                        return;
+                      }
+                      return getGradient(ctx, chartArea);
+                    },
+                    // borderColor: '#AA00FF',
+                    borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                      
+                    },
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+              });
+        
+        
+        
+        
+        
+        
+        
+        
+              const chartCorrenteL1 = document.getElementById('chartCorrenteL1');
+              //cleanup whats inside
+              chartCorrenteL1.innerHTML = '';
+              new Chart(chartCorrenteL1, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    cubicInterpolationMode: 'monotone',
+                    fill:true,
+                    // backgroundColor:  '#AA00FF',
+                    backgroundColor:  function(context) {
+                      const chart = context.chart;
+                      const {ctx, chartArea} = chart;
+        
+                      if (!chartArea) {
+                        // This case happens on initial chart load
+                        return;
+                      }
+                      return getGradient(ctx, chartArea);
+                    },
+                    // borderColor: '#AA00FF',
+                    borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                      
+                    },
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+        
+              });
+
+              const chartCorrenteL2 = document.getElementById('chartCorrenteL2');
+              chartCorrenteL2.innerHTML = '';
+              new Chart(chartCorrenteL2, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    fill:true,
+                    cubicInterpolationMode: 'monotone',
+                    backgroundColor:  function(context) {
+                        const chart = context.chart;
+                        const {ctx, chartArea} = chart;
+          
+                        if (!chartArea) {
+                          // This case happens on initial chart load
+                          return;
+                        }
+                        return getGradient(ctx, chartArea);
+                      },
+                      // borderColor: '#AA00FF',
+                      borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                          color: '#AAAAAA'
+                        },
+                    },
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      }
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+              });
 
 
+              const chartCorrenteL3 = document.getElementById('chartCorrenteL3');
+              //cleanup whats inside
+              chartCorrenteL3.innerHTML = '';
+              new Chart(chartCorrenteL3, {
+                type: 'line',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1,
+                    cubicInterpolationMode: 'monotone',
+                    fill:true,
+                    // backgroundColor:  '#AA00FF',
+                    backgroundColor:  function(context) {
+                      const chart = context.chart;
+                      const {ctx, chartArea} = chart;
+        
+                      if (!chartArea) {
+                        // This case happens on initial chart load
+                        return;
+                      }
+                      return getGradient(ctx, chartArea);
+                    },
+                    // borderColor: '#AA00FF',
+                    borderColor: '#7C3AED'
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                      
+                    },
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        color: '#AAAAAA'
+                      },
+                    }
+                  },
+                  plugins: {
+                    legend: {
+                      display: false, // Hide the legend
+                    }
+                  }
+                },
+              });
+
+
+
+
+
+          });
+        </script>
   {% endblock %}

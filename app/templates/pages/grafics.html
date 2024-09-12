@@ -9,42 +9,70 @@
     <div class="bg-neutral-800 min-h-screen">
         {{ TopBar.render(title='Grafics', user=user) }}
 
-        <div class="flex px-3 flex-col gap-5">
+        <div class="flex px-4 flex-col gap-3">
 
-        
-            <div class="flex gap-5 ">
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+            <div class="flex gap-3">
+
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Potência</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <canvas class="w-[550px]" id="chartPotencia"> 
                     </canvas>
+                </div>
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Energia</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <canvas class="w-[550px]" id="chartEnergia"> 
                     </canvas>
                 </div>
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Consumo</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
-                    </canvas>
-                    <h2>Temperatura</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <canvas class="w-[550px]" id="chartConsumo"> 
                     </canvas>
                 </div>
-                
             </div>
-            <div class="flex gap-5 ">
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                
+            <div class="flex gap-3">
+
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Carga Média</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
-                    </canvas>
-                    <h2>Descarga Média</h2>
-                    <canvas class="bg-red-500 max-h-[200px]"> 
+                    <canvas class="w-[550px]" id="chartCargaMedia"> 
                     </canvas>
                 </div>
-                
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
+                    <h2>Descarga Média</h2>
+                    <canvas class="w-[550px]" id="chartDescargaMedia"> 
+                    </canvas>
+                </div>
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
+                    <h2>Temperatura</h2>
+                    <canvas class="w-[550px]" id="chartTemperatura"> 
+                    </canvas>
+                </div>
             </div>
+                
+
         </div>
 
     </div>
+
+    <script>
+        let contextPotencia = document.getElementById('chartPotencia').getContext("2d");
+        let PotenciaChart = newGraph(contextPotencia);
+
+        let contextEnergia = document.getElementById('chartEnergia').getContext("2d");
+        let EnergiaChart = newGraph(contextEnergia);
+
+        let contextConsumo = document.getElementById('chartConsumo').getContext("2d");
+        let ConsumoChart = newGraph(contextConsumo);
+
+        let contextTemperatura = document.getElementById('chartTemperatura').getContext("2d");
+        let TemperaturaChart = newGraph(contextTemperatura);
+
+        let contextCargaMedia = document.getElementById('chartCargaMedia').getContext("2d");
+        let CargaMediaChart = newGraph(contextCargaMedia);
+
+        let contextDescargaMedia = document.getElementById('chartDescargaMedia').getContext("2d");
+        let DescargaMediaChart = newGraph(contextDescargaMedia);
+    </script>
     
 
 {% endblock %}

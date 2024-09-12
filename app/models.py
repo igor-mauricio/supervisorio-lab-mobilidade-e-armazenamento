@@ -49,7 +49,33 @@ class BatteryLog(db.Model): # type: ignore
 	power = db.Column(db.Float)
 	temperature = db.Column(db.Float)
 	timestamp = db.Column(db.DateTime)
+	average_charge = db.Column(db.Float)
+	average_discharge = db.Column(db.Float)
+	energy = db.Column(db.Float)
+	consumo = db.Column(db.Float)
 
+
+class Fronius(db.Model): # type: ignore
+	id = db.Column(db.Integer, primary_key=True)
+	limitedePotencia = db.Column(db.Float)
+
+class FroniusLog(db.Model): # type: ignore
+	id = db.Column(db.Integer, primary_key=True)
+	fronius_id = db.Column(db.Integer, db.ForeignKey('fronius.id'))
+	timestamp = db.Column(db.DateTime)
+	tensaoL1 = db.Column(db.Float)
+	tensaoL2 = db.Column(db.Float)
+	tensaoL3 = db.Column(db.Float)
+	correnteL1 = db.Column(db.Float)
+	correnteL2 = db.Column(db.Float)
+	correnteL3 = db.Column(db.Float)
+	potenciaL1 = db.Column(db.Float)
+	potenciaL2 = db.Column(db.Float)
+	potenciaL3 = db.Column(db.Float)
+	frequency = db.Column(db.Float)
+	potenciaMaxima = db.Column(db.Float)
+	capacidadeMaximaPotencia = db.Column(db.Float)
+	limitedePotencia = db.Column(db.Float)
 
 class Alarm(db.Model): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)
@@ -64,6 +90,19 @@ class AlarmLog(db.Model): # type: ignore
 	confirmed = db.Column(db.Boolean, default=False)
 	confirmed_by_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	timestamp = db.Column(db.DateTime)
+
+class ControllerLog(db.Model): # type: ignore
+	id = db.Column(db.Integer, primary_key=True)
+	timestamp = db.Column(db.DateTime)
+	chargerOnOff = db.Column(db.Boolean)
+	chargerState = db.Column(db.String(100))
+	MPPOperationMode = db.Column(db.String(100))
+	PVVoltage = db.Column(db.Float)
+	PVCurrent = db.Column(db.Float)
+	PVPower = db.Column(db.Float)
+	UserYield = db.Column(db.Float)
+	yieldToday = db.Column(db.Float)
+	maximumChargePowerToday = db.Column(db.Float)
 
 class UserEvent(db.Model): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)

@@ -8,29 +8,35 @@
         {% set items = [
             {
                 'name': 'Potência Máxima',
-                'value': '999 kw/h'
+                'value': '999 kw/h',
+                'id': 'potenciaMaxima'
             },
 
             {
                 'name': 'Capacidade Máxima de Potência',
-                'value': '999 Kw/h'
+                'value': '999 Kw/h',
+                'id': 'capacidadeMaximaPotencia'
             },
 
             {
                 'name': 'Limite de Potência',
-                'value': '999 Kw/h'
+                'value': '999 Kw/h',
+                'id': 'limitePotencia'
             },
             {
                 'name': 'Potência L1',
-                'value': ' 999 W'
+                'value': ' 999 W',
+                'id': 'potenciaL1'
             },
             {
                 'name': 'Potência L2',
-                'value': ' 999 W'
+                'value': ' 999 W',
+                'id': 'potenciaL2'
             },
             {
                 'name': 'Potência L3',
-                'value': ' 999 W'
+                'value': ' 999 W',
+                'id': 'potenciaL3'
             }
 
             ] %}
@@ -38,31 +44,37 @@
         {% set items2 = [
             {
                 'name': 'Tensão L1',
-                'value': ' 999 V'
+                'value': ' 999 V',
+                'id': 'tensaoL1'
             },
 
             {
                 'name': 'Tensão L2',
-                'value': ' 999 V'
+                'value': ' 999 V',
+                'id': 'tensaoL2'
             },
             {
                 'name': 'Tensão L3',
-                'value': ' 999 V'
+                'value': ' 999 V',
+                'id': 'tensaoL3'
             },
 
             {
                 'name': 'Corrente L1',
-                'value': ' 999 A'
+                'value': ' 999 A',
+                'id': 'correnteL1'
             },
 
             {
                 'name': 'Corrente L2',
-                'value': ' 999 A'
+                'value': ' 999 A',
+                'id': 'correnteL2'
             },
 
             {
                 'name': 'Corrente L3',
-                'value': ' 999 A'
+                'value': ' 999 A',
+                'id': 'correnteL3'
             }
             ] %}
 
@@ -112,7 +124,7 @@
                           <span>
                               {{ item.name }}
                           </span>
-                          <span class="font-semibold">
+                          <span class="font-semibold" id="{{item.id}}">
                               {{ item.value }}
                           </span>
                       </div>
@@ -125,7 +137,7 @@
                           <span>
                               {{ item.name }}
                           </span>
-                          <span class="font-semibold">
+                          <span class="font-semibold" id="{{item.id}}">
                               {{ item.value }}
                           </span>
                       </div>
@@ -144,22 +156,90 @@
             socket.on('connect', () => {
                 console.log('Connected to WebSocket server');
             });
+
+            socket.on('fronius_log_created', (data) => {
+                let timestamp = data.timestamp;
+                tensaoL1Chart.data.labels.push(timestamp);
+                tensaoL1Chart.data.datasets[0].data.push(data.tensaoL1);
+
+                tensaoL2Chart.data.labels.push(timestamp);
+                tensaoL2Chart.data.datasets[0].data.push(data.tensaoL2);
+
+                tensaoL3Chart.data.labels.push(timestamp);
+                tensaoL3Chart.data.datasets[0].data.push(data.tensaoL3);
+
+                CorrenteL1Chart.data.labels.push(timestamp);
+                CorrenteL1Chart.data.datasets[0].data.push(data.correnteL1);
+
+                CorrenteL2Chart.data.labels.push(timestamp);
+                CorrenteL2Chart.data.datasets[0].data.push(data.correnteL2);
+
+                CorrenteL3Chart.data.labels.push(timestamp);
+                CorrenteL3Chart.data.datasets[0].data.push(data.correnteL3);
+
+                if (tensaoL1Chart.data.labels.length > 200){
+                    tensaoL1Chart.data.labels.shift();
+                    tensaoL1Chart.data.datasets[0].data.shift();
+                }
+                if (tensaoL2Chart.data.labels.length > 200){
+                    tensaoL2Chart.data.labels.shift();
+                    tensaoL2Chart.data.datasets[0].data.shift();
+                }
+                if (tensaoL3Chart.data.labels.length > 200){
+                    tensaoL3Chart.data.labels.shift();
+                    tensaoL3Chart.data.datasets[0].data.shift();
+                }
+                if (CorrenteL1Chart.data.labels.length > 200){
+                    CorrenteL1Chart.data.labels.shift();
+                    CorrenteL1Chart.data.datasets[0].data.shift();
+                }
+                if (CorrenteL2Chart.data.labels.length > 200){
+                    CorrenteL2Chart.data.labels.shift();
+                    CorrenteL2Chart.data.datasets[0].data.shift();
+                }
+                if (CorrenteL3Chart.data.labels.length > 200){
+                    CorrenteL3Chart.data.labels.shift();
+                    CorrenteL3Chart.data.datasets[0].data.shift();
+                }
+                tensaoL1Chart.update();
+                tensaoL2Chart.update();
+                tensaoL3Chart.update();
+                CorrenteL1Chart.update();
+                CorrenteL2Chart.update();
+                CorrenteL3Chart.update();
+
+                document.getElementById('potenciaMaxima').innerText = data.potenciaMaxima.toFixed(2) + ' W';
+                document.getElementById('capacidadeMaximaPotencia').innerText = data.capacidadeMaximaPotencia.toFixed(2) + ' W';
+                document.getElementById('limitePotencia').innerText = data.limitedePotencia.toFixed(2) + ' W';
+
+                document.getElementById('potenciaL1').innerText = data.potenciaL1.toFixed(2) + ' W';
+                document.getElementById('potenciaL2').innerText = data.potenciaL2.toFixed(2) + ' W';
+                document.getElementById('potenciaL3').innerText = data.potenciaL3.toFixed(2) + ' W';
+
+                document.getElementById('tensaoL1').innerText = data.tensaoL1.toFixed(2) + ' V';
+                document.getElementById('tensaoL2').innerText = data.tensaoL2.toFixed(2) + ' V';
+                document.getElementById('tensaoL3').innerText = data.tensaoL3.toFixed(2) + ' V';
+
+                document.getElementById('correnteL1').innerText = data.correnteL1.toFixed(2) + ' A';
+                document.getElementById('correnteL2').innerText = data.correnteL2.toFixed(2) + ' A';
+                document.getElementById('correnteL3').innerText = data.correnteL3.toFixed(2) + ' A';
+
+            })
         
-            document.addEventListener('htmx:load', function() {
 
-              let contextTensaoL1 = document.getElementById('chartTensaoL1').getContext("2d");
-              let tensaoL1Chart = newGraph(contextTensaoL1);
-              let contextTensaoL2 = document.getElementById('chartTensaoL2').getContext("2d");
-              let tensaoL2Chart = newGraph(contextTensaoL2);
-              let contextTensaoL3 = document.getElementById('chartTensaoL3').getContext("2d");
-              let tensaoL3Chart = newGraph(contextTensaoL3);
+              var contextTensaoL1 = document.getElementById('chartTensaoL1').getContext("2d");
+              var tensaoL1Chart = newGraph(contextTensaoL1);
+              var contextTensaoL2 = document.getElementById('chartTensaoL2').getContext("2d");
+              var tensaoL2Chart = newGraph(contextTensaoL2);
+              var contextTensaoL3 = document.getElementById('chartTensaoL3').getContext("2d");
+              var tensaoL3Chart = newGraph(contextTensaoL3);
 
-              let contextCorrenteL1 = document.getElementById('chartCorrenteL1').getContext("2d");
-              let CorrenteL1Chart = newGraph(contextCorrenteL1);
-              let contextCorrenteL2 = document.getElementById('chartCorrenteL2').getContext("2d");
-              let CorrenteL2Chart = newGraph(contextCorrenteL2);
-              let contextCorrenteL3 = document.getElementById('chartCorrenteL3').getContext("2d");
-              let CorrenteL3Chart = newGraph(contextCorrenteL3);
-          });
+              var contextCorrenteL1 = document.getElementById('chartCorrenteL1').getContext("2d");
+              var CorrenteL1Chart = newGraph(contextCorrenteL1);
+              var contextCorrenteL2 = document.getElementById('chartCorrenteL2').getContext("2d");
+              var CorrenteL2Chart = newGraph(contextCorrenteL2);
+              var contextCorrenteL3 = document.getElementById('chartCorrenteL3').getContext("2d");
+              var CorrenteL3Chart = newGraph(contextCorrenteL3);
+        
         </script>
   {% endblock %}

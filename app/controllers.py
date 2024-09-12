@@ -1,13 +1,14 @@
 from socket import SocketIO
 from flask import Flask, request, flash, redirect, url_for, render_template
 from infra import Mediator
-from models import User, PROFESSOR_PERMISSION
+from models import Alarm, AlarmLog, User, PROFESSOR_PERMISSION
 from AuthService import AuthService
 from BatteryService import BatteryService
 from flask_login import login_required, login_user, current_user
-
+from extensions import db
 
 def AppController(app: Flask):
+    
     @app.get("/")
     def welcome():
         return render_template("pages/welcome.html")
@@ -20,7 +21,28 @@ def AppController(app: Flask):
     @app.get("/alarms")
     @login_required
     def alarms():
-        return render_template("pages/alarms.html", user=current_user.name, is_admin=current_user.permission_level == 3)
+        alarmLogsCalculated = []
+        alarmLogs = AlarmLog.query.all()
+        for alarmLog in alarmLogs:
+            alarmLogsCalculated.append({
+                "id": alarmLog.id,
+                "message": Alarm.query.get(alarmLog.alarm_id).message,
+                "description": Alarm.query.get(alarmLog.alarm_id).description,
+                "confirmed": alarmLog.confirmed,
+                "confirmed_by_user_id": User.query.get(alarmLog.confirmed_by_user_id).name if alarmLog.confirmed_by_user_id else None,
+                "timestamp": alarmLog.timestamp.strftime("%H:%M:%S")
+            })
+        print(alarmLogsCalculated)
+        return render_template("pages/alarms.html", alarmLogs=alarmLogsCalculated, user=current_user.name, is_admin=current_user.permission_level == 3)
+    
+    @app.get("/alarms/confirm/<int:alarm_id>")
+    @login_required
+    def confirm_alarm(alarm_id: int):
+        alarm = AlarmLog.query.get(alarm_id)
+        alarm.confirmed = True
+        alarm.confirmed_by_user_id = current_user.id
+        db.session.commit()
+        return redirect(url_for("alarms"))
 
     @app.get("/equipments")
     @login_required
@@ -30,7 +52,7 @@ def AppController(app: Flask):
     @app.get("/equipments/battery/grafics")
     @login_required
     def grafics():
-        return render_template("pages/grafics.html")
+        return render_template("pages/grafics.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/equipments/generator")
     @login_required
@@ -136,8 +158,48 @@ def BatteryController(app: Flask, batteryService: BatteryService, mediator: Medi
         "voltage": battery_log.voltage,
         "power": battery_log.power,
         "temperature": battery_log.temperature,
-        "timestamp": battery_log.timestamp.strftime("%H:%M:%S")
+        "timestamp": battery_log.timestamp.strftime("%H:%M:%S"),
+        "average_charge": battery_log.average_charge,
+        "average_discharge": battery_log.average_discharge,
+        "energy": battery_log.energy,
+        "consumo": battery_log.consumo
     }))
+
+    mediator.subscribe("fronius_log_created", lambda battery_log: socketio.emit('fronius_log_created', {
+        "tensaoL1": battery_log.tensaoL1,
+        "tensaoL2": battery_log.tensaoL2,
+        "tensaoL3": battery_log.tensaoL3,
+        "timestamp": battery_log.timestamp.strftime("%H:%M:%S"),
+        "correnteL1": battery_log.correnteL1,
+        "correnteL2": battery_log.correnteL2,
+        "correnteL3": battery_log.correnteL3,
+        "potenciaL1": battery_log.potenciaL1,
+        "potenciaL2": battery_log.potenciaL2,
+        "potenciaL3": battery_log.potenciaL3,
+        "potenciaMaxima": battery_log.potenciaMaxima,
+        "capacidadeMaximaPotencia": battery_log.capacidadeMaximaPotencia,
+        "limitedePotencia": battery_log.limitedePotencia,
+        "frequency": battery_log.frequency
+    }))
+
+    mediator.subscribe("controller_log_created", lambda state: socketio.emit('controller_log_created', {
+        'timestamp': state.timestamp.strftime("%H:%M:%S"),
+        'chargerOnOff': state.chargerOnOff,
+        'chargerState': state.chargerState,
+        'MPPOperationMode': state.MPPOperationMode,
+        'PVVoltage': state.PVVoltage,
+        'PVCurrent': state.PVCurrent,
+        'PVPower': state.PVPower,
+        'UserYield': state.UserYield,
+        'yieldToday': state.yieldToday,
+        'maximumChargePowerToday': state.maximumChargePowerToday
+    }))
+
+
+
+
+
+
     @app.get("/equipments/battery")
     @login_required
     def battery():

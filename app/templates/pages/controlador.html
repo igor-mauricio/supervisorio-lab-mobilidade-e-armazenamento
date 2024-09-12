@@ -2,57 +2,57 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="bg-neutral-800 min-h-screen">
-        {{ TopBar.render(title='Quattro', user=user) }}
+        {{ TopBar.render(title='Controlador', user=user) }}
         <div class="flex w-full justify-center items-start gap-3 shrink-0">
             <div class="flex px-4 flex-col items-center gap-3 flex-[1_0_0] self-stretch bg-neutral-800">
                 <div class="flex p-2 flex-col items-center flex[1_0_0] self-stretch rounded-lg border-2 border-neutral-50 bg-neural-800">
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Charger on/off</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="chargerOn"> 9999  </span>
 
                     </div>
 
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Charger state </span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="chargerState"> 9999  </span>
 
                     </div>
 
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> MPP operation mode</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="MPPOperationMode"> 9999   </span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> PV voltage</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="PVVoltage"> 9999 V  </span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> PV current</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="PVCurrent"> 9999 A</span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> PV power</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="PVPower"> 9999 W</span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> User yield</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 Kw/h</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="UserYield"> 9999 Kw/h</span>
 
                     </div>
 
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Yield today</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 Kw/h  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="YieldToday"> 9999 Kw/h  </span>
   
                     </div>
     
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Maximum charge power today </span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="MaximumChargePowerToday"> 9999 V  </span>
   
                     </div>
               
@@ -61,4 +61,42 @@
                 </div>
             </div>
         </div>
+        <script>
+            var socket = io();
+            socket.on('connect', () => {
+                console.log('Connected to WebSocket server');
+            });
+
+            socket.on('controller_log_created', (data) => {
+                console.log('Controller log created:', data);
+
+                /*
+                 mediator.subscribe("controller_log_created", lambda state: socketio.emit('controller_log_created', {
+        'timestamp': state.timestamp.strftime("%H:%M:%S"),
+        'chargerOnOff': state.chargerOnOff,
+        'chargerState': state.chargerState,
+        'MPPOperationMode': state.MPPOperationMode,
+        'PVVoltage': state.PVVoltage,
+        'PVCurrent': state.PVCurrent,
+        'PVPower': state.PVPower,
+        'UserYield': state.UserYield,
+        'yieldToday': state.yieldToday,
+        'maximumChargePowerToday': state.maximumChargePowerToday
+    }))
+
+    */
+
+                document.getElementById('chargerOn').innerText = data.chargerOnOff  ;
+                document.getElementById('chargerState').innerText = data.chargerState;
+                document.getElementById('MPPOperationMode').innerText = data.MPPOperationMode;
+                document.getElementById('PVVoltage').innerText = data.PVVoltage.toFixed(2);
+                document.getElementById('PVCurrent').innerText = data.PVCurrent.toFixed(2);
+                document.getElementById('PVPower').innerText = data.PVPower.toFixed(2);
+                document.getElementById('UserYield').innerText = data.UserYield.toFixed(2);
+                document.getElementById('YieldToday').innerText = data.yieldToday.toFixed(2);
+                document.getElementById('MaximumChargePowerToday').innerText = data.maximumChargePowerToday.toFixed(2);
+            })
+
+        </script>
+    </div>
   {% endblock %}

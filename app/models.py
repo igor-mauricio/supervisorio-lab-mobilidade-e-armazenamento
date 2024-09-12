@@ -91,7 +91,6 @@ class AlarmLog(db.Model): # type: ignore
 	confirmed_by_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	timestamp = db.Column(db.DateTime)
 
-
 class ControllerLog(db.Model): # type: ignore
 	id = db.Column(db.Integer, primary_key=True)
 	timestamp = db.Column(db.DateTime)

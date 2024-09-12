@@ -172,7 +172,7 @@
             socket.on('battery_log_created', (data) => {
                 console.log('Battery log created:', data);
 
-                document.getElementById('batteryState').innerText = "SHUTDOWN";
+                document.getElementById('batteryState').innerText = "STANDBY";
                 document.getElementById('batteryCapacity').innerText = 270.0 + ' Ah';
                 document.getElementById('temperature').innerText = data.temperature.toFixed(2) + ' ºC';
                 document.getElementById('voltage').innerText = data.voltage.toFixed(2) + ' V';

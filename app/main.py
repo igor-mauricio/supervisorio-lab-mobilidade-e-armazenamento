@@ -10,7 +10,7 @@ from infra.SetupDatabase import setup_database
 from infra.Mediator import Mediator
 from extensions import configureDatabase, configureLoginManager, db, login_manager
 from controllers import AppController, AuthController, BatteryController
-from models import Battery, BatteryLog, ControllerLog, Fronius, FroniusLog, User
+from models import Alarm, AlarmLog, Battery, BatteryLog, ControllerLog, Fronius, FroniusLog, User
 import threading
 import time
 import random
@@ -47,6 +47,7 @@ if __name__ == "__main__":
             with app.app_context():
                 battery:Battery = batteryService.get_battery()
                 fronius:Fronius = Fronius.query.first()
+                batteryHighVoltageAlarm:Alarm = Alarm.query.first()
                 while True:
                     # Generate a random battery charged percent
                     battery.charged_percent = float(f"{(math.sin(time.time()/10) + 1) * 50:.1f}")
@@ -55,6 +56,15 @@ if __name__ == "__main__":
                     power = current * voltage
                     harmonics_voltage = [100 * math.sin(time.time()/(5*h)) + 100 + random.uniform(0, 10) for h in [1,3,5]]
                     harmonics_current = [100 * math.sin(time.time()/(5*h)) + 100 + random.uniform(0, 10) for h in [2, 4]]
+
+                    if(voltage > 56.5):
+                        alarmLog = AlarmLog(
+                            alarm_id = batteryHighVoltageAlarm.id,
+                            timestamp = datetime.now(),
+                        )
+                        db.session.add(alarmLog)
+                        db.session.commit()
+                        mediator.notify("alarm_created", alarmLog)
 
                     battery_log = BatteryLog(
                         battery_id=battery.id,

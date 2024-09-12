@@ -8,6 +8,7 @@ from flask_login import login_required, login_user, current_user
 
 
 def AppController(app: Flask):
+    
     @app.get("/")
     def welcome():
         return render_template("pages/welcome.html")
@@ -30,7 +31,7 @@ def AppController(app: Flask):
     @app.get("/equipments/battery/grafics")
     @login_required
     def grafics():
-        return render_template("pages/grafics.html")
+        return render_template("pages/grafics.html", user=current_user.name, is_admin=current_user.permission_level == 3)
 
     @app.get("/equipments/generator")
     @login_required
@@ -136,8 +137,48 @@ def BatteryController(app: Flask, batteryService: BatteryService, mediator: Medi
         "voltage": battery_log.voltage,
         "power": battery_log.power,
         "temperature": battery_log.temperature,
-        "timestamp": battery_log.timestamp.strftime("%H:%M:%S")
+        "timestamp": battery_log.timestamp.strftime("%H:%M:%S"),
+        "average_charge": battery_log.average_charge,
+        "average_discharge": battery_log.average_discharge,
+        "energy": battery_log.energy,
+        "consumo": battery_log.consumo
     }))
+
+    mediator.subscribe("fronius_log_created", lambda battery_log: socketio.emit('fronius_log_created', {
+        "tensaoL1": battery_log.tensaoL1,
+        "tensaoL2": battery_log.tensaoL2,
+        "tensaoL3": battery_log.tensaoL3,
+        "timestamp": battery_log.timestamp.strftime("%H:%M:%S"),
+        "correnteL1": battery_log.correnteL1,
+        "correnteL2": battery_log.correnteL2,
+        "correnteL3": battery_log.correnteL3,
+        "potenciaL1": battery_log.potenciaL1,
+        "potenciaL2": battery_log.potenciaL2,
+        "potenciaL3": battery_log.potenciaL3,
+        "potenciaMaxima": battery_log.potenciaMaxima,
+        "capacidadeMaximaPotencia": battery_log.capacidadeMaximaPotencia,
+        "limitedePotencia": battery_log.limitedePotencia,
+        "frequency": battery_log.frequency
+    }))
+
+    mediator.subscribe("controller_log_created", lambda state: socketio.emit('controller_log_created', {
+        'timestamp': state.timestamp.strftime("%H:%M:%S"),
+        'chargerOnOff': state.chargerOnOff,
+        'chargerState': state.chargerState,
+        'MPPOperationMode': state.MPPOperationMode,
+        'PVVoltage': state.PVVoltage,
+        'PVCurrent': state.PVCurrent,
+        'PVPower': state.PVPower,
+        'UserYield': state.UserYield,
+        'yieldToday': state.yieldToday,
+        'maximumChargePowerToday': state.maximumChargePowerToday
+    }))
+
+
+
+
+
+
     @app.get("/equipments/battery")
     @login_required
     def battery():

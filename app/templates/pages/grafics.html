@@ -55,6 +55,12 @@
     </div>
 
     <script>
+        var socket = io();
+
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
+
         let contextPotencia = document.getElementById('chartPotencia').getContext("2d");
         let PotenciaChart = newGraph(contextPotencia);
 
@@ -72,6 +78,73 @@
 
         let contextDescargaMedia = document.getElementById('chartDescargaMedia').getContext("2d");
         let DescargaMediaChart = newGraph(contextDescargaMedia);
+
+
+        socket.on('battery_log_created', (data) => {
+            console.log('Battery log created:', data);
+
+            // Update the chart with the new data
+            let timestamp = data.timestamp;
+            let current = data.current;
+
+            // Add the new data to the chart
+            PotenciaChart.data.labels.push(timestamp);
+            PotenciaChart.data.datasets[0].data.push(data.power);
+
+            EnergiaChart.data.labels.push(timestamp);
+            EnergiaChart.data.datasets[0].data.push(data.energy);
+
+            ConsumoChart.data.labels.push(timestamp);
+            ConsumoChart.data.datasets[0].data.push(data.consumo);
+
+            TemperaturaChart.data.labels.push(timestamp);
+            TemperaturaChart.data.datasets[0].data.push(data.temperature);
+
+            CargaMediaChart.data.labels.push(timestamp);
+            CargaMediaChart.data.datasets[0].data.push(data.average_charge);
+
+            DescargaMediaChart.data.labels.push(timestamp);
+            DescargaMediaChart.data.datasets[0].data.push(data.average_discharge);
+
+            if (PotenciaChart.data.labels.length > 200) {
+                // Remove the oldest data
+                PotenciaChart.data.labels.shift();
+                PotenciaChart.data.datasets[0].data.shift();
+            }
+            if (EnergiaChart.data.labels.length > 200) {
+                // Remove the oldest data
+                EnergiaChart.data.labels.shift();
+                EnergiaChart.data.datasets[0].data.shift();
+            }
+            if (ConsumoChart.data.labels.length > 200) {
+                // Remove the oldest data
+                ConsumoChart.data.labels.shift();
+                ConsumoChart.data.datasets[0].data.shift();
+            }
+            if (TemperaturaChart.data.labels.length > 200) {
+                // Remove the oldest data
+                TemperaturaChart.data.labels.shift();
+                TemperaturaChart.data.datasets[0].data.shift();
+            }
+            if (CargaMediaChart.data.labels.length > 200) {
+                // Remove the oldest data
+                CargaMediaChart.data.labels.shift();
+                CargaMediaChart.data.datasets[0].data.shift();
+            }
+            if (DescargaMediaChart.data.labels.length > 200) {
+                // Remove the oldest data
+                DescargaMediaChart.data.labels.shift();
+                DescargaMediaChart.data.datasets[0].data.shift();
+            }
+
+            // Update the chart
+            EnergiaChart.update();
+            PotenciaChart.update();
+            ConsumoChart.update();
+            TemperaturaChart.update();
+            CargaMediaChart.update();
+            DescargaMediaChart.update();
+        });
     </script>
     
 

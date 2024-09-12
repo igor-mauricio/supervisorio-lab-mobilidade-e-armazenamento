@@ -30,54 +30,54 @@
                 <div class="flex p-2 flex-col items-center flex[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neural-800">
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Frequência de Saída</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 Hz  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="frequenciaSaida"> 9999 Hz  </span>
 
                     </div>
 
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L1 </span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="tensaoSaidaL1"> 9999 V  </span>
 
                     </div>
 
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L2</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V   </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="tensaoSaidaL2"> 9999 V   </span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L3</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="tensaoSaidaL3"> 9999 V  </span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L1</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="correnteSaidaL1"> 9999 A</span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L2</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="correnteSaidaL2"> 9999 A</span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L3</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="correnteSaidaL3"> 9999 A</span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L1</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="potenciaSaidaL1"> 9999 W </span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L2</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="potenciaSaidaL2"> 9999 W  </span>
 
                     </div>
                     <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L3</span>
-                        <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W  </span>
+                        <span class="text-white font-inter text-2xl font-medium leading-normal" id="potenciaSaidaL3"> 9999 W  </span>
 
                     </div>
               
@@ -93,16 +93,58 @@
             socket.on('connect', () => {
                 console.log('Connected to WebSocket server');
             });
-        
-            document.addEventListener('htmx:load', function() {
-              let contextPotenciaL1 = document.getElementById('chartPotenciaL1').getContext("2d");
-              let potenciaL1Chart = newGraph(contextPotenciaL1);
 
-              let contextPotenciaL2 = document.getElementById('chartPotenciaL2').getContext("2d");
-              let potenciaL2Chart = newGraph(contextPotenciaL2);
-          
-              let contextPotenciaL3 = document.getElementById('chartPotenciaL3').getContext("2d");
-              let potenciaL3Chart = newGraph(contextPotenciaL3);   
-          });
+            socket.on('fronius_log_created', (data) => {
+                let timestamp = data.timestamp;
+                potenciaL1Chart.data.labels.push(timestamp);
+                potenciaL1Chart.data.datasets[0].data.push(data.potenciaL1);
+
+                potenciaL2Chart.data.labels.push(timestamp);
+                potenciaL2Chart.data.datasets[0].data.push(data.potenciaL2);
+
+                potenciaL3Chart.data.labels.push(timestamp);
+                potenciaL3Chart.data.datasets[0].data.push(data.potenciaL3);
+
+
+                if (potenciaL1Chart.data.labels.length > 200){
+                    potenciaL1Chart.data.labels.shift();
+                    potenciaL1Chart.data.datasets[0].data.shift();
+                }
+                if (potenciaL2Chart.data.labels.length > 200){
+                    potenciaL2Chart.data.labels.shift();
+                    potenciaL2Chart.data.datasets[0].data.shift();
+                }
+                if (potenciaL3Chart.data.labels.length > 200){
+                    potenciaL3Chart.data.labels.shift();
+                    potenciaL3Chart.data.datasets[0].data.shift();
+                }
+
+                potenciaL1Chart.update();
+                potenciaL2Chart.update();
+                potenciaL3Chart.update();
+
+                document.getElementById('potenciaSaidaL1').innerText = data.potenciaL1.toFixed(2) + ' W';
+                document.getElementById('potenciaSaidaL2').innerText = data.potenciaL2.toFixed(2) + ' W';
+                document.getElementById('potenciaSaidaL3').innerText = data.potenciaL3.toFixed(2) + ' W';
+
+                document.getElementById('tensaoSaidaL1').innerText = data.tensaoL1.toFixed(2) + ' V';
+                document.getElementById('tensaoSaidaL2').innerText = data.tensaoL2.toFixed(2) + ' V';
+                document.getElementById('tensaoSaidaL3').innerText = data.tensaoL3.toFixed(2) + ' V';
+
+                document.getElementById('correnteSaidaL1').innerText = data.correnteL1.toFixed(2) + ' A';
+                document.getElementById('correnteSaidaL2').innerText = data.correnteL2.toFixed(2) + ' A';
+                document.getElementById('correnteSaidaL3').innerText = data.correnteL3.toFixed(2) + ' A';
+
+                document.getElementById('frequenciaSaida').innerText = data.frequency.toFixed(2) + ' Hz';
+            })
+        
+            var contextPotenciaL1 = document.getElementById('chartPotenciaL1').getContext("2d");
+            var potenciaL1Chart = newGraph(contextPotenciaL1);
+
+            var contextPotenciaL2 = document.getElementById('chartPotenciaL2').getContext("2d");
+            var potenciaL2Chart = newGraph(contextPotenciaL2);
+        
+            var contextPotenciaL3 = document.getElementById('chartPotenciaL3').getContext("2d");
+            var potenciaL3Chart = newGraph(contextPotenciaL3);   
         </script>
   {% endblock %}

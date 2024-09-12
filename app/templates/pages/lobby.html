@@ -5,77 +5,39 @@
     <div class="bg-neutral-800 min-h-screen">
         {{ TopBar.render(title='Home', user=user) }}
 
-        {% set items = [
-            {
-                'name': 'Tensão',
-                'value': '23%'
-            },
-            {
-                'name': 'Corrente',
-                'value': '23%'
-            },
-            {
-                'name': 'Potência',
-                'value': '23%'
-            },
-            {
-                'name': 'Energia',
-                'value': '23%'
-            }
-            ] %}
-
-        {% set items2 = [
-            {
-                'name': 'bla',
-                'value': '23%'
-            },
-            {
-                'name': 'asd',
-                'value': '23%'
-            },
-            {
-                'name': 'asdsdd',
-                'value': '23%'
-            },
-            {
-                'name': 'kkkk',
-                'value': '23%'
-            }
-            ] %}
-
         <div class="flex w-full px-4 gap-3 flex-wrap">
             <div class="flex flex-col items-center border-2 rounded-2xl py-2 px-2 gap-3 w-fit">
                 <img class="size-[160px]" src="{{url_for('static', filename='images/battery_animated.svg')}}">
                 <span class="">Bateria</span>
                 <div class=" flex  flex-col text-2xl"> 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Estado</span>
                             <span>dado</span>
                         </div>
                     </div>
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Capacidade</span>
                             <span>dado</span>
                         </div>
                     </div>
 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Tensão</span>
                             <span>dado</span>
                         </div>
                     </div>
 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Corrente</span>
                             <span>dado</span>
                         </div>
                     </div>
                     <div class="flex px-2">
-                        <div class="flex w-full mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full mx-3 px-2 py-1 justify-between gap-3">
                             <span>Temperatura</span>
                             <span>dado</span>
                         </div>
@@ -90,35 +52,29 @@
                 <span class="">Quattro</span>
                 <div class=" flex  flex-col text-2xl"> 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Estado</span>
-                            <span>dado</span>
+                            <span>ON</span>
                         </div>
                     </div>
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Capacidade</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Tensão</span>
-                            <span>dado</span>
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>Frequência de Saída</span>
+                            <span>60 hz</span>
                         </div>
                     </div>
 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Corrente</span>
-                            <span>dado</span>
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>PV Inverter</span>
+                            <span>ON</span>
                         </div>
                     </div>
+
                     <div class="flex px-2">
-                        <div class="flex w-full mx-3 px-2 py-1 justify-between">
-                            <span>Temperatura</span>
-                            <span>dado</span>
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>Limite de Corrente Ativa</span>
+                            <span>10 A</span>
                         </div>
                     </div>
                 </div>
@@ -131,35 +87,35 @@
                 <span class="">Fronius</span>
                 <div class=" flex  flex-col text-2xl"> 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Estado</span>
-                            <span>dado</span>
+                            <span>ON</span>
                         </div>
                     </div>
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Capacidade</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Tensão</span>
-                            <span>dado</span>
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>Posição</span>
+                            <span>AC INPUT</span>
                         </div>
                     </div>
 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Corrente</span>
-                            <span>dado</span>
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>Potência máxima</span>
+                            <span> 1000 W</span>
+                        </div>
+                    </div>
+
+                    <div class="flex px-2">
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>Limite de Potência</span>
+                            <span>1000 W</span>
                         </div>
                     </div>
                     <div class="flex px-2">
-                        <div class="flex w-full mx-3 px-2 py-1 justify-between">
-                            <span>Temperatura</span>
-                            <span>dado</span>
+                        <div class="flex w-full mx-3 px-2 py-1 justify-between gap-3">
+                            <span>Cap. máxima de potência</span>
+                            <span>1000 W</span>
                         </div>
                     </div>
                 </div>
@@ -176,37 +132,12 @@
                 <span class="">Gerador</span>
                 <div class=" flex  flex-col text-2xl"> 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
+                        <div class="flex w-full  mx-3 px-2 py-1 justify-between gap-3">
                             <span>Estado</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Capacidade</span>
-                            <span>dado</span>
+                            <span>ON</span>
                         </div>
                     </div>
 
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Tensão</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Corrente</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-                    <div class="flex px-2">
-                        <div class="flex w-full mx-3 px-2 py-1 justify-between">
-                            <span>Temperatura</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -215,35 +146,15 @@
                 <span class="">CLP</span>
                 <div class=" flex  flex-col text-2xl"> 
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Estado</span>
-                            <span>dado</span>
+                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
+                            <span>CCGX Relé 1</span>
+                            <span>OPEN</span>
                         </div>
                     </div>
                     <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Capacidade</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Tensão</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-
-                    <div class="flex px-2">
-                        <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between">
-                            <span>Corrente</span>
-                            <span>dado</span>
-                        </div>
-                    </div>
-                    <div class="flex px-2">
-                        <div class="flex w-full mx-3 px-2 py-1 justify-between">
-                            <span>Temperatura</span>
-                            <span>dado</span>
+                        <div class="flex w-full  mx-3 px-2 py-1 justify-between gap-3">
+                            <span>CCGX Relé 2</span>
+                            <span>CLOSED</span>
                         </div>
                     </div>
                 </div>

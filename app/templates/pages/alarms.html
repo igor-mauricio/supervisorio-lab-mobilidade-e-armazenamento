@@ -8,7 +8,6 @@
 {% block content %}
     <div class="bg-neutral-800 min-h-screen flex flex-col">
         {{ TopBar.render(title='Alarmes', user=user) }}
-
         <div class="flex flex-col w-full flex-fill  items-center gap-3  px-4">
           <div class="flex items-start gap-3 self-stretch">
 
@@ -22,10 +21,39 @@
             </div>
           </div>
 
-          <div class="flex p-[10px] items-start gap-[10px] flex-1 self-stretch rounded-lg mb-4 border">
-
+          <div class="flex p-3 items-start gap-2 flex-1 self-stretch rounded-lg mb-4 border">
+                <table class="min-w-full text-white">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b">Id</th>
+                            <th class="py-2 px-4 border-b">Titulo do Alarme</th>
+                            <th class="py-2 px-4 border-b">Descrição</th>
+                            <th class="py-2 px-4 border-b">Confirmado</th>
+                            <th class="py-2 px-4 border-b">Usuário que confirmou</th>
+                            <th class="py-2 px-4 border-b">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-lg">
+                        {% for alarmLog in alarmLogs %}
+                        <tr>
+                            <td class="py-2 px-4 border-b">{{ alarmLog['id'] }}</td>
+                            <td class="py-2 px-4 border-b">{{ alarmLog['message'] }}</td>
+                            <td class="py-2 px-4 border-b">{{ alarmLog['description'] }}</td>
+                            <td class="py-2 px-4 border-b">
+                                {{ alarmLog['confirmed'] }}
+                                {% if not alarmLog['confirmed'] %}
+                                <a class="text-purple-500 font-semibold" href="{{url_for('confirm_alarm', alarm_id=alarmLog['id'])}}">
+                                    Confirmar
+                                </a>
+                                 {% endif %}
+                            </td>
+                            <td class="py-2 px-4 border-b">{{ alarmLog['confirmed_by_user_id'] }}</td>
+                            <td class="py-2 px-4 border-b">{{ alarmLog['timestamp'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
           </div>
-
         </div>
     </div>
 

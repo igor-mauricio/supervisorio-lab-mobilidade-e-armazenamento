@@ -58,13 +58,18 @@ if __name__ == "__main__":
                     harmonics_current = [100 * math.sin(time.time()/(5*h)) + 100 + random.uniform(0, 10) for h in [2, 4]]
 
                     if(voltage > 56.5):
-                        alarmLog = AlarmLog(
-                            alarm_id = batteryHighVoltageAlarm.id,
-                            timestamp = datetime.now(),
-                        )
-                        db.session.add(alarmLog)
+                        last_alarm_log = AlarmLog.query.filter_by(alarm_id=batteryHighVoltageAlarm.id).order_by(AlarmLog.timestamp.desc()).first()
+                        if not last_alarm_log or (datetime.now() - last_alarm_log.timestamp).total_seconds() > 5:
+                            alarmLog = AlarmLog(
+                                alarm_id=batteryHighVoltageAlarm.id,
+                                timestamp=datetime.now(),
+                            )
+                            db.session.add(alarmLog)
+                            db.session.commit()
+                            mediator.notify("alarm_created", alarmLog)
+                            db.session.add(alarmLog)
+                            mediator.notify("alarm_created", alarmLog)
                         db.session.commit()
-                        mediator.notify("alarm_created", alarmLog)
 
                     battery_log = BatteryLog(
                         battery_id=battery.id,

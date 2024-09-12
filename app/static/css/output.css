@@ -914,6 +914,10 @@ video {
   height: 100vh;
 }
 
+.h-80 {
+  height: 20rem;
+}
+
 .max-h-\[200px\] {
   max-height: 200px;
 }
@@ -1009,6 +1013,14 @@ video {
 
 .w-\[325px\] {
   width: 325px;
+}
+
+.w-80 {
+  width: 20rem;
+}
+
+.min-w-full {
+  min-width: 100%;
 }
 
 .flex-1 {
@@ -2385,6 +2397,11 @@ video {
   line-height: 1.75rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -2506,6 +2523,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-purple-500 {
+  --tw-text-opacity: 1;
+  color: rgb(168 85 247 / var(--tw-text-opacity));
 }
 
 .underline {

@@ -1,11 +1,11 @@
 from socket import SocketIO
 from flask import Flask, request, flash, redirect, url_for, render_template
 from infra import Mediator
-from models import User, PROFESSOR_PERMISSION
+from models import Alarm, AlarmLog, User, PROFESSOR_PERMISSION
 from AuthService import AuthService
 from BatteryService import BatteryService
 from flask_login import login_required, login_user, current_user
-
+from extensions import db
 
 def AppController(app: Flask):
     
@@ -21,7 +21,28 @@ def AppController(app: Flask):
     @app.get("/alarms")
     @login_required
     def alarms():
-        return render_template("pages/alarms.html", user=current_user.name, is_admin=current_user.permission_level == 3)
+        alarmLogsCalculated = []
+        alarmLogs = AlarmLog.query.all()
+        for alarmLog in alarmLogs:
+            alarmLogsCalculated.append({
+                "id": alarmLog.id,
+                "message": Alarm.query.get(alarmLog.alarm_id).message,
+                "description": Alarm.query.get(alarmLog.alarm_id).description,
+                "confirmed": alarmLog.confirmed,
+                "confirmed_by_user_id": User.query.get(alarmLog.confirmed_by_user_id).name if alarmLog.confirmed_by_user_id else None,
+                "timestamp": alarmLog.timestamp.strftime("%H:%M:%S")
+            })
+        print(alarmLogsCalculated)
+        return render_template("pages/alarms.html", alarmLogs=alarmLogsCalculated, user=current_user.name, is_admin=current_user.permission_level == 3)
+    
+    @app.get("/alarms/confirm/<int:alarm_id>")
+    @login_required
+    def confirm_alarm(alarm_id: int):
+        alarm = AlarmLog.query.get(alarm_id)
+        alarm.confirmed = True
+        alarm.confirmed_by_user_id = current_user.id
+        db.session.commit()
+        return redirect(url_for("alarms"))
 
     @app.get("/equipments")
     @login_required

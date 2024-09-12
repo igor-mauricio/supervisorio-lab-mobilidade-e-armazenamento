@@ -3,24 +3,24 @@
 {% block content %}
     <div class="bg-neutral-800 min-h-screen">
         {{ TopBar.render(title='Quattro', user=user) }}
-        <div class="flex w-[1626  px] h-[928px] justify-center items-start gap-5 shrink-0">
-            <div class="flex pl-4 flex-col gap-5 flex-[1_0_0] self-stretch bg-neutral-800">
+        <div class=" px-4 flex gap-3 w-full justify-center items-start ">
+            <div class="flex  flex-col gap-3 flex-[1_0_0] self-stretch bg-neutral-800">
                 
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Tensão</h2>
-                    <canvas id="chartTensao" class="max-h-[200px]"></canvas> 
+                    <h2>Potência L1</h2>
+                    <canvas id="chartPotenciaL1" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
 
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Corrente</h2>
-                    <canvas id="chartCorrente" class="max-h-[200px]"></canvas> 
+                    <h2>Potência L2</h2>
+                    <canvas id="chartPotenciaL2" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
 
                 <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
-                    <h2>Potência</h2>
-                    <canvas id="chartPotencia" class="max-h-[200px]"></canvas> 
+                    <h2>Potência L3</h2>
+                    <canvas id="chartPotenciaL3" class="max-h-[200px]"></canvas> 
                     </canvas>
                 </div>
 
@@ -28,54 +28,54 @@
             
             <div class="flex flex-col items-center gap-[10px] flex-[1_0_0] self-stretch bg-neutral-800">
                 <div class="flex p-2 flex-col items-center flex[1_0_0] self-stretch rounded-[20px] border-2 border-neutral-50 bg-neural-800">
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Frequência de Saída</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 Hz  </span>
 
                     </div>
 
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L1 </span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V  </span>
 
                     </div>
 
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L2</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V   </span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Tensão de Sáida L3</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 V  </span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L1</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L2</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Corrente de Sáida L3</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 A</span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L1</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W </span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L2</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W  </span>
 
                     </div>
-                    <div class="flex py-4 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
+                    <div class="flex py-2 px-[10px] items-start justify-between self-stretch border-b-2 border-neutral-700">
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> Potência de Sáida L3</span>
                         <span class="text-white font-inter text-2xl font-medium leading-normal"> 9999 W  </span>
 
@@ -95,173 +95,14 @@
             });
         
             document.addEventListener('htmx:load', function() {
-              let width, height, gradient;
-              function getGradient(ctx, chartArea) {
-                const chartWidth = chartArea.right - chartArea.left;
-                const chartHeight = chartArea.bottom - chartArea.top;
-                if (!gradient || width !== chartWidth || height !== chartHeight) {
-                  // Create the gradient because this is either the first render
-                  // or the size of the chart has changed
-                  width = chartWidth;
-                  height = chartHeight;
-                  gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                  gradient.addColorStop(0, '#7C3AED00');
-                  // gradient.addColorStop(0.4, '#FFFF00');
-                  gradient.addColorStop(1, '#7C3AED');
-                }
-        
-                return gradient;
-              }
-        
-              const chartTensao = document.getElementById('chartTensao');
-            
-              chartTensao.innerHTML = '';
-              new Chart(chartTensao, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    cubicInterpolationMode: 'monotone',
-                    fill:true,
-                    // backgroundColor:  '#AA00FF',
-                    backgroundColor:  function(context) {
-                      const chart = context.chart;
-                      const {ctx, chartArea} = chart;
-        
-                      if (!chartArea) {
-                        // This case happens on initial chart load
-                        return;
-                      }
-                      return getGradient(ctx, chartArea);
-                    },
-                    // borderColor: '#AA00FF',
-                    borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                      
-                    },
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-        
-              });
-            
-              const chartCorrente = document.getElementById('chartCorrente');
-              chartCorrente.innerHTML = '';
-              new Chart(chartCorrente, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    fill:true,
-                    cubicInterpolationMode: 'monotone',
-                    backgroundColor:  function(context) {
-                        const chart = context.chart;
-                        const {ctx, chartArea} = chart;
+              let contextPotenciaL1 = document.getElementById('chartPotenciaL1').getContext("2d");
+              let potenciaL1Chart = newGraph(contextPotenciaL1);
+
+              let contextPotenciaL2 = document.getElementById('chartPotenciaL2').getContext("2d");
+              let potenciaL2Chart = newGraph(contextPotenciaL2);
           
-                        if (!chartArea) {
-                          // This case happens on initial chart load
-                          return;
-                        }
-                        return getGradient(ctx, chartArea);
-                      },
-                      // borderColor: '#AA00FF',
-                      borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                          color: '#AAAAAA'
-                        },
-                    },
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      }
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-              });
-
-
-              const chartPotencia = document.getElementById('chartPotencia');
-              //cleanup whats inside
-              chartPotencia.innerHTML = '';
-              new Chart(chartPotencia, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    cubicInterpolationMode: 'monotone',
-                    fill:true,
-                    // backgroundColor:  '#AA00FF',
-                    backgroundColor:  function(context) {
-                      const chart = context.chart;
-                      const {ctx, chartArea} = chart;
-        
-                      if (!chartArea) {
-                        // This case happens on initial chart load
-                        return;
-                      }
-                      return getGradient(ctx, chartArea);
-                    },
-                    // borderColor: '#AA00FF',
-                    borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                      
-                    },
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-              });
-   
+              let contextPotenciaL3 = document.getElementById('chartPotenciaL3').getContext("2d");
+              let potenciaL3Chart = newGraph(contextPotenciaL3);   
           });
         </script>
   {% endblock %}

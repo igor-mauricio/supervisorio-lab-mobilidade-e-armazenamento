@@ -66,73 +66,77 @@
             }
             ] %}
 
-        <div class="flex flex-col w-full px-3 text-2xl gap-3">
-            <div class="flex gap-3">
-                <div class="flex flex-col border-2 rounded-2xl py-2 flex-grow ">
-                    {% for item in items %}
-                        <div class="flex justify-between {% if not loop.last %} border-b-2 border-neutral-700 {% endif %} mx-3 px-2 py-1">
-                            <span>
-                                {{ item.name }}
-                            </span>
-                            <span class="font-semibold">
-                                {{ item.value }}
-                            </span>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <div class="flex flex-col border-2 rounded-2xl flex-grow py-2">
-                    {% for item in items2 %}
-                        <div class="flex justify-between {% if not loop.last %} border-b-2 border-neutral-700 {% endif %} mx-3 px-2 py-1">
-                            <span>
-                                {{ item.name }}
-                            </span>
-                            <span class="font-semibold">
-                                {{ item.value }}
-                            </span>
-                        </div>
-                    {% endfor %}
-                </div>
-
-            </div>
-            <div class="flex gap-3 ">
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+        <div class="flex flex-col items-center w-full px-3 text-2xl gap-3">
+            
+            <div class="flex gap-3 w-fit">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Tensão L1</h2>
-                    <canvas id="chartTensaoL1" class="max-h-[200px]"></canvas> 
+                    <canvas id="chartTensaoL1" class="w-[500px]"></canvas> 
                     </canvas>
                 </div>
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Tensão L2</h2>
-                    <canvas id="chartTensaoL2" class="max-h-[200px]"></canvas>  
+                    <canvas id="chartTensaoL2" class="w-[500px]"></canvas>  
                     </canvas>
                 </div>
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Tensão L3</h2>
-                    <canvas id="chartTensaoL3" class="max-h-[200px]"></canvas> 
+                    <canvas id="chartTensaoL3" class="w-[500px]"></canvas> 
                     </canvas>
                 </div>
                 
             </div>
-            <div class="flex gap-3 ">
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+            <div class="flex gap-3 w-fit ">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Corrente L1</h2>
-                    <canvas id="chartCorrenteL1" class="max-h-[200px]"></canvas> 
+                    <canvas id="chartCorrenteL1" class="w-[500px]"></canvas> 
                     </canvas>
                 </div>
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Corrente L2</h2>
-                    <canvas id="chartCorrenteL2" class="max-h-[200px]"></canvas>
+                    <canvas id="chartCorrenteL2" class="w-[500px]"></canvas>
                     </canvas>
                 </div>
-                <div class="flex flex-col flex-grow border-2 rounded-2xl p-3 gap-2">
+                <div class="flex flex-col border-2 rounded-2xl p-3 gap-2">
                     <h2>Corrente L3</h2>
-                    <canvas id="chartCorrenteL3" class="max-h-[200px]"></canvas> 
+                    <canvas id="chartCorrenteL3" class="w-[500px]"></canvas> 
                     </canvas>
                 </div>
                 
             </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex flex-col border-2 rounded-2xl py-2 col-span-1  ">
+                  {% for item in items %}
+                      <div class="flex justify-between {% if not loop.last %} border-b-2 border-neutral-700 {% endif %} mx-3 px-2 py-1 gap-3">
+                          <span>
+                              {{ item.name }}
+                          </span>
+                          <span class="font-semibold">
+                              {{ item.value }}
+                          </span>
+                      </div>
+                  {% endfor %}
+              </div>
+
+              <div class="flex flex-col border-2 rounded-2xl  py-2 col-span-1">
+                  {% for item in items2 %}
+                      <div class="flex justify-between {% if not loop.last %} border-b-2 border-neutral-700 {% endif %} mx-3 px-2 py-1 gap-3">
+                          <span>
+                              {{ item.name }}
+                          </span>
+                          <span class="font-semibold">
+                              {{ item.value }}
+                          </span>
+                      </div>
+                  {% endfor %}
+              </div>
+
+          </div>
 
         </div>
+
+        
 
         <script>
             var socket = io();
@@ -142,333 +146,20 @@
             });
         
             document.addEventListener('htmx:load', function() {
-              let width, height, gradient;
-              function getGradient(ctx, chartArea) {
-                const chartWidth = chartArea.right - chartArea.left;
-                const chartHeight = chartArea.bottom - chartArea.top;
-                if (!gradient || width !== chartWidth || height !== chartHeight) {
-                  // Create the gradient because this is either the first render
-                  // or the size of the chart has changed
-                  width = chartWidth;
-                  height = chartHeight;
-                  gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                  gradient.addColorStop(0, '#7C3AED00');
-                  // gradient.addColorStop(0.4, '#FFFF00');
-                  gradient.addColorStop(1, '#7C3AED');
-                }
-        
-                return gradient;
-              }
-        
-              const chartTensaoL1 = document.getElementById('chartTensaoL1');
-            
-              chartTensaoL1.innerHTML = '';
-              new Chart(chartTensaoL1, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    cubicInterpolationMode: 'monotone',
-                    fill:true,
-                    // backgroundColor:  '#AA00FF',
-                    backgroundColor:  function(context) {
-                      const chart = context.chart;
-                      const {ctx, chartArea} = chart;
-        
-                      if (!chartArea) {
-                        // This case happens on initial chart load
-                        return;
-                      }
-                      return getGradient(ctx, chartArea);
-                    },
-                    // borderColor: '#AA00FF',
-                    borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                      
-                    },
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-        
-              });
-            
-              const chartTensaoL2 = document.getElementById('chartTensaoL2');
-              chartTensaoL2.innerHTML = '';
-              new Chart(chartTensaoL2, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    fill:true,
-                    cubicInterpolationMode: 'monotone',
-                    backgroundColor:  function(context) {
-                        const chart = context.chart;
-                        const {ctx, chartArea} = chart;
-          
-                        if (!chartArea) {
-                          // This case happens on initial chart load
-                          return;
-                        }
-                        return getGradient(ctx, chartArea);
-                      },
-                      // borderColor: '#AA00FF',
-                      borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                          color: '#AAAAAA'
-                        },
-                    },
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      }
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-              });
 
+              let contextTensaoL1 = document.getElementById('chartTensaoL1').getContext("2d");
+              let tensaoL1Chart = newGraph(contextTensaoL1);
+              let contextTensaoL2 = document.getElementById('chartTensaoL2').getContext("2d");
+              let tensaoL2Chart = newGraph(contextTensaoL2);
+              let contextTensaoL3 = document.getElementById('chartTensaoL3').getContext("2d");
+              let tensaoL3Chart = newGraph(contextTensaoL3);
 
-              const chartTensaoL3 = document.getElementById('chartTensaoL3');
-              //cleanup whats inside
-              chartTensaoL3.innerHTML = '';
-              new Chart(chartTensaoL3, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    cubicInterpolationMode: 'monotone',
-                    fill:true,
-                    // backgroundColor:  '#AA00FF',
-                    backgroundColor:  function(context) {
-                      const chart = context.chart;
-                      const {ctx, chartArea} = chart;
-        
-                      if (!chartArea) {
-                        // This case happens on initial chart load
-                        return;
-                      }
-                      return getGradient(ctx, chartArea);
-                    },
-                    // borderColor: '#AA00FF',
-                    borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                      
-                    },
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-              });
-        
-        
-        
-        
-        
-        
-        
-        
-              const chartCorrenteL1 = document.getElementById('chartCorrenteL1');
-              //cleanup whats inside
-              chartCorrenteL1.innerHTML = '';
-              new Chart(chartCorrenteL1, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    cubicInterpolationMode: 'monotone',
-                    fill:true,
-                    // backgroundColor:  '#AA00FF',
-                    backgroundColor:  function(context) {
-                      const chart = context.chart;
-                      const {ctx, chartArea} = chart;
-        
-                      if (!chartArea) {
-                        // This case happens on initial chart load
-                        return;
-                      }
-                      return getGradient(ctx, chartArea);
-                    },
-                    // borderColor: '#AA00FF',
-                    borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                      
-                    },
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-        
-              });
-
-              const chartCorrenteL2 = document.getElementById('chartCorrenteL2');
-              chartCorrenteL2.innerHTML = '';
-              new Chart(chartCorrenteL2, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    fill:true,
-                    cubicInterpolationMode: 'monotone',
-                    backgroundColor:  function(context) {
-                        const chart = context.chart;
-                        const {ctx, chartArea} = chart;
-          
-                        if (!chartArea) {
-                          // This case happens on initial chart load
-                          return;
-                        }
-                        return getGradient(ctx, chartArea);
-                      },
-                      // borderColor: '#AA00FF',
-                      borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                          color: '#AAAAAA'
-                        },
-                    },
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      }
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-              });
-
-
-              const chartCorrenteL3 = document.getElementById('chartCorrenteL3');
-              //cleanup whats inside
-              chartCorrenteL3.innerHTML = '';
-              new Chart(chartCorrenteL3, {
-                type: 'line',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1,
-                    cubicInterpolationMode: 'monotone',
-                    fill:true,
-                    // backgroundColor:  '#AA00FF',
-                    backgroundColor:  function(context) {
-                      const chart = context.chart;
-                      const {ctx, chartArea} = chart;
-        
-                      if (!chartArea) {
-                        // This case happens on initial chart load
-                        return;
-                      }
-                      return getGradient(ctx, chartArea);
-                    },
-                    // borderColor: '#AA00FF',
-                    borderColor: '#7C3AED'
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                      
-                    },
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        color: '#AAAAAA'
-                      },
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false, // Hide the legend
-                    }
-                  }
-                },
-              });
-
-
-
-
-
+              let contextCorrenteL1 = document.getElementById('chartCorrenteL1').getContext("2d");
+              let CorrenteL1Chart = newGraph(contextCorrenteL1);
+              let contextCorrenteL2 = document.getElementById('chartCorrenteL2').getContext("2d");
+              let CorrenteL2Chart = newGraph(contextCorrenteL2);
+              let contextCorrenteL3 = document.getElementById('chartCorrenteL3').getContext("2d");
+              let CorrenteL3Chart = newGraph(contextCorrenteL3);
           });
         </script>
   {% endblock %}

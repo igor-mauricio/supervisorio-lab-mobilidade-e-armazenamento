@@ -1,4 +1,6 @@
+from socket import SocketIO
 from flask import Flask, request, flash, redirect, url_for, render_template
+from infra import Mediator
 from models import User, PROFESSOR_PERMISSION
 from AuthService import AuthService
 from BatteryService import BatteryService
@@ -117,7 +119,15 @@ def AuthController(app: Flask, authService: AuthService):
         return redirect(url_for("login"))
 
 
-def BatteryController(app: Flask, batteryService: BatteryService):
+def BatteryController(app: Flask, batteryService: BatteryService, mediator: Mediator, socketio: SocketIO):
+    mediator.subscribe("battery_charged", lambda charged_percent: socketio.emit('battery_update', {'charged_percent': charged_percent}))
+    mediator.subscribe("battery_log_created", lambda battery_log: socketio.emit('battery_log_created', {
+        "current": battery_log.current,
+        "voltage": battery_log.voltage,
+        "power": battery_log.power,
+        "temperature": battery_log.temperature,
+        "timestamp": battery_log.timestamp.strftime("%H:%M:%S")
+    }))
     @app.get("/equipments/battery")
     @login_required
     def battery():
@@ -140,7 +150,42 @@ def BatteryController(app: Flask, batteryService: BatteryService):
             "state": battery.state,
             "relay_status": battery.relay_status
         })
+    
+    # @socketio.on('toggle_battery_mode')
+    # def toggle_battery_mode():
+    #     print("asodjasiodjio")
+    #     if not current_user.is_authenticated or current_user.permission_level < PROFESSOR_PERMISSION:
+    #         return "Permission denied", 403
+    #     # mode = request.form["mode"]
+    #     try:
+    #         batteryService.toggle_battery_mode()
+    #     except Exception as e:
+    #         error = str(e)
+    #         print(e)
+    #         print("asiduasidou")
+    #         if error == "Invalid mode":
+    #             return "Invalid mode", 400
+    #         elif error == "No battery found":
+    #             return "No battery found", 404
+    #         return "Internal server error", 500
+    #     return "ok", 200
 
+    # @socketio.on('toggle_relay_state')
+    # def toggle_relay_state():
+    #     if not current_user.is_authenticated or current_user.permission_level < PROFESSOR_PERMISSION:
+    #         return "Permission denied", 403
+    #     try:
+    #         batteryService.toggle_battery_relay_state()
+    #     except Exception as e:
+    #         error = str(e)
+    #         print(e)
+    #         if error == "Invalid state":
+    #             return "Invalid state", 400
+    #         if error == "No battery found":
+    #             return "No battery found", 404
+    #         return "Internal server error", 500
+    #     return "ok", 200
+        
     @app.post("/equipments/battery/change_relay_state")
     @login_required
     def toggle_battery_relay_state():
@@ -148,7 +193,8 @@ def BatteryController(app: Flask, batteryService: BatteryService):
             return "Permission denied", 403
         try:
 
-            batteryService.toggle_battery_relay_state()
+            relay_state = batteryService.toggle_battery_relay_state()
+            return {'relay_status': relay_state}, 200
         except Exception as e:
             error = str(e)
             print(e)
@@ -157,7 +203,6 @@ def BatteryController(app: Flask, batteryService: BatteryService):
             if error == "No battery found":
                 return "No battery found", 404
             return "Internal server error", 500
-        return redirect(url_for("battery"))
 
     @app.post("/equipments/battery/change_battery_mode")
     @login_required
@@ -167,7 +212,8 @@ def BatteryController(app: Flask, batteryService: BatteryService):
             return "Permission denied", 403
         # mode = request.form["mode"]
         try:
-            batteryService.toggle_battery_mode()
+            mode = batteryService.toggle_battery_mode()
+            return {'state': mode}, 200
         except Exception as e:
             error = str(e)
             print(e)
@@ -177,4 +223,3 @@ def BatteryController(app: Flask, batteryService: BatteryService):
             elif error == "No battery found":
                 return "No battery found", 404
             return "Internal server error", 500
-        return redirect(url_for("battery"))

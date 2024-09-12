@@ -14,7 +14,7 @@ class BatteryService:
             raise Exception("No battery found")
         return battery
   
-    def toggle_battery_relay_state(self, state: str ="") -> None:
+    def toggle_battery_relay_state(self) -> str:
         # if state not in ["OPEN", "CLOSED"]:
         #     raise Exception("Invalid state")
 
@@ -27,8 +27,9 @@ class BatteryService:
             battery.relay_status = "OPEN"
         db.session.commit()
         self.mediator.notify("battery_relay_status_changed", battery.relay_status)
+        return battery.relay_status
 
-    def toggle_battery_mode(self, mode: str=""):
+    def toggle_battery_mode(self, mode: str="") -> str:
         # if mode not in ["OPEN", "STANDBY", "SHUTDOWN"]:
         #     raise Exception("Invalid mode")
         battery: Battery = Battery.query.all()[0] # type: ignore
@@ -40,3 +41,4 @@ class BatteryService:
             battery.state = "STANDBY"
         db.session.commit()
         self.mediator.notify("battery_state_changed", battery.state)
+        return battery.state

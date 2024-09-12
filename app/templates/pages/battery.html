@@ -9,25 +9,20 @@
           <div class="flex justify-center">
             <div  class="relative flex h-full w-fit justify-center items-center ">
               <img class="z-20" src="{{url_for('static', filename='images/battery_animated.svg')}}"/>
-              <span class="absolute z-40">
+              <span id="battery_percent" class="absolute z-40">
                 {{battery.charged_percent}}%
               </span>
-              <span class="absolute bottom-0 left-0 w-full {% if battery.charged_percent < 20 %}bg-red-500 shadow-red-500 {% elif battery.charged_percent < 60 %} bg-yellow-500 shadow-yellow-500 {% else %} bg-green-500 shadow-green-500 {% endif %} z-10 rounded-md shadow-glow  " style="height: {{battery.charged_percent * 3.49}}px;"></span>
+              <span id="battery_bar" class="absolute bottom-0 left-0 w-full {% if battery.charged_percent < 20 %}bg-red-500 shadow-red-500 {% elif battery.charged_percent < 60 %} bg-yellow-500 shadow-yellow-500 {% else %} bg-green-500 shadow-green-500 {% endif %} z-10 rounded-md shadow-glow  " style="height: 0px;"></span>
             </span>
             </div>
           </div>
           <div  class="flex justify-center items-center gap-4"> 
-            <form action="{{url_for('toggle_battery_mode')}}" method="post">
-              <button type="submit" id="power" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
+              <button type="button" id="power" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600" onclick="toggleBatteryMode()">
                 <img class="size-6" src="{{url_for('static', filename='images/on.svg')}}">
               </button>
-            </form>
-            </form>
-              <form action="{{url_for('toggle_battery_relay_state')}}" method="post">
-                <button type="submit" id="settings" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600">
-                  <img class="size-6" src="{{url_for('static', filename='images/cog.svg')}}">
-                </button>
-              </form>
+              <button type="submit" id="settings" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600" onclick="toggleRelayState()">
+                <img class="size-6" src="{{url_for('static', filename='images/cog.svg')}}">
+              </button>
               <a id="viewer" class="flex p-3 items-center justify-center flex-col rounded-full bg-violet-600" href="{{url_for('grafics')}}">
                 <img class="size-6" src="{{url_for('static', filename='images/eye.svg')}}">
               </a>
@@ -57,17 +52,17 @@
 
 
       {% set first_half = [
-        ('Capacidade:', battery.capacity, "Ah"),
-        ('Porcentagem de Saúde:', battery.health_percent, "%"),
-        ('Percentual de Carga:', battery.charged_percent, "%"),
-        ('Máxima Tensão de Entrada:', battery.max_in_voltage, "V"),
-        ('Mínima Tensão de Saída:', battery.min_out_voltage, "V"),
+        ('Capacidade:', battery.capacity, "Ah", ""),
+        ('Porcentagem de Saúde:', battery.health_percent, "%", "health_percent"),
+        ('Percentual de Carga:', battery.charged_percent, "%", "charged_percent"),
+        ('Máxima Tensão de Entrada:', battery.max_in_voltage, "V", "max_in_voltage"),
+        ('Mínima Tensão de Saída:', battery.min_out_voltage, "V", "min_out_voltage"),
       ]%}
       {% set second_half = [
-        ('Relé:', battery.relay_status, ""),
-        ('Modelo:', battery.model, ""),
-        ('Fabricante:', battery.manufacturer, ""),
-        ('Estado:', battery.state, "")
+        ('Relé:', battery.relay_status, "", "relay_status"),
+        ('Modelo:', battery.model, "", ""),
+        ('Fabricante:', battery.manufacturer, "", ""),
+        ('Estado:', battery.state, "", "state")
       ]%}
       <div class="flex items-start gap-3 w-full">
         <div class="flex px-3 py-2 flex-col items-stretch flex-1 rounded-2xl border-2 border-solid border-white ">
@@ -75,7 +70,7 @@
             <div class="flex px-1 py-2 justify-between items-start {% if not loop.last %} border-b-2 {% endif %} border-neutral-600">
               <span class="text-white
             text-2xl">{{ item[0] }}</span>
-              <span class="text-white text-2xl font-medium">{{ item[1] }} {{item[2]}}</span>
+              <span  class="text-white text-2xl font-medium"><span id="{{item[3]}}">{{ item[1] }}</span> {{item[2]}}</span>
             </div>
           {% endfor %}  
         </div>
@@ -84,7 +79,7 @@
             <div class="flex px-1 py-2 justify-between items-start {% if not loop.last %} border-b-2 {% endif %}-b-2 border-neutral-600">
               <span class="text-white
             text-2xl">{{ item[0] }}</span>
-              <span class="text-white text-2xl font-medium">{{ item[1] }} {{item[2]}}</span>
+              <span  class="text-white text-2xl font-medium"><span id="{{item[3]}}">{{ item[1] }}</span> {{item[2]}}</span>
             </div>
           {% endfor %}  
         </div>
@@ -98,134 +93,94 @@
         console.log('Connected to WebSocket server');
     });
 
-    document.addEventListener('htmx:load', function() {
-
-      let width, height, gradient;
-      function getGradient(ctx, chartArea) {
-        const chartWidth = chartArea.right - chartArea.left;
-        const chartHeight = chartArea.bottom - chartArea.top;
-        if (!gradient || width !== chartWidth || height !== chartHeight) {
-          // Create the gradient because this is either the first render
-          // or the size of the chart has changed
-          width = chartWidth;
-          height = chartHeight;
-          gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, '#7C3AED00');
-          // gradient.addColorStop(0.4, '#FFFF00');
-          gradient.addColorStop(1, '#7C3AED');
-        }
-
-        return gradient;
-      }
-
-
-
-
-
-
-
-
-
-
-      const chartTensao = document.getElementById('chartTensao');
-      //cleanup whats inside
-      chartTensao.innerHTML = '';
-      new Chart(chartTensao, {
-        type: 'line',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1,
-            cubicInterpolationMode: 'monotone',
-            fill:true,
-            // backgroundColor:  '#AA00FF',
-            backgroundColor:  function(context) {
-              const chart = context.chart;
-              const {ctx, chartArea} = chart;
-
-              if (!chartArea) {
-                // This case happens on initial chart load
-                return;
-              }
-              return getGradient(ctx, chartArea);
-            },
-            // borderColor: '#AA00FF',
-            borderColor: '#7C3AED'
-          }]
-        },
-        options: {
-          scales: {
-            x: {
-              ticks: {
-                color: '#AAAAAA'
-              },
-              
-            },
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: '#AAAAAA'
-              },
-            }
-          },
-          plugins: {
-            legend: {
-              display: false, // Hide the legend
-            }
-          }
-        },
-
-      });
-    
-    const chartCorrente = document.getElementById('chartCorrente');
-    chartCorrente.innerHTML = '';
-    new Chart(chartCorrente, {
-      type: 'line',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-          borderWidth: 1,
-          fill:true,
-          cubicInterpolationMode: 'monotone',
-          backgroundColor:  function(context) {
-              const chart = context.chart;
-              const {ctx, chartArea} = chart;
-
-              if (!chartArea) {
-                // This case happens on initial chart load
-                return;
-              }
-              return getGradient(ctx, chartArea);
-            },
-            // borderColor: '#AA00FF',
-            borderColor: '#7C3AED'
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-                color: '#AAAAAA'
-              },
-          },
-          x: {
-            ticks: {
-              color: '#AAAAAA'
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            display: false, // Hide the legend
-          }
-        }
-      },
+    socket.on('battery_update', (data) => {
+      console.log('Battery update:', data.charged_percent);
       
+      // Update the battery bar style based on the charged_percent
+      let batteryBar = document.getElementById('battery_bar');
+      let chargedPercent = data.charged_percent;
+      batteryBar.style.height = `${chargedPercent * 3.49}px`;
+
+      // Remove existing color classes
+      batteryBar.classList.remove('bg-red-500', 'shadow-red-500', 'bg-yellow-500', 'shadow-yellow-500', 'bg-green-500', 'shadow-green-500');
+
+      // Add new color classes based on the charged_percent
+      if (chargedPercent < 20) {
+        batteryBar.classList.add('bg-red-500', 'shadow-red-500');
+      } else if (chargedPercent < 60) {
+        batteryBar.classList.add('bg-yellow-500', 'shadow-yellow-500');
+      } else {
+        batteryBar.classList.add('bg-green-500', 'shadow-green-500');
+      }
+      let batteryPercent = document.getElementById('battery_percent');
+      batteryPercent.innerText = `${chargedPercent}%`;
+      let batteryPercentBelow = document.getElementById('charged_percent');
+      batteryPercentBelow.innerText = `${chargedPercent}`;
     });
-  });
+
+
+    let contextTensao = document.getElementById('chartTensao').getContext("2d");
+    let tensaoChart = newGraph(contextTensao);
+    let context = document.getElementById('chartCorrente').getContext("2d");
+    let correnteChart = newGraph(context);
+
+    socket.on('battery_log_created', (data) => {
+      console.log('Battery log created:', data);
+
+      // Update the chart with the new data
+      let timestamp = data.timestamp;
+      let current = data.current;
+
+      // Add the new data to the chart
+      correnteChart.data.labels.push(timestamp);
+      correnteChart.data.datasets[0].data.push(current);
+      tensaoChart.data.labels.push(timestamp);
+      tensaoChart.data.datasets[0].data.push(data.voltage);
+
+      if (correnteChart.data.labels.length > 200) {
+        // Remove the oldest data
+        correnteChart.data.labels.shift();
+        correnteChart.data.datasets[0].data.shift();
+      }
+      if (tensaoChart.data.labels.length > 200) {
+        // Remove the oldest data
+        tensaoChart.data.labels.shift();
+        tensaoChart.data.datasets[0].data.shift();
+      }
+      // Update the chart
+      tensaoChart.update();
+      correnteChart.update();
+    });
+
+    function toggleBatteryMode() {
+      // Send the event through websockets
+      axios.post('/equipments/battery/change_battery_mode')
+        .then(response => {
+          console.log(response.data);
+          console.log('Battery mode changed');
+          let relay_status = document.getElementById('state');
+          relay_status.innerText = response.data.state;
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    function toggleRelayState() {
+      // Send the event through websockets
+      axios.post('/equipments/battery/change_relay_state')
+        .then(response => {
+          console.log(response.data);
+          console.log('Relay state changed');
+          let relay_status = document.getElementById('relay_status');
+          relay_status.innerText = response.data.relay_status;
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
 </script>
 
 {% endblock %}

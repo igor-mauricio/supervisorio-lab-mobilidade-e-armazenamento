@@ -1,0 +1,22 @@
+<svg width="159" height="160" viewBox="0 0 159 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_490_910)">
+<rect x="1.25488" y="32.6986" width="156.49" height="103.66" rx="4" stroke="white" stroke-width="2"/>
+<path d="M23.3679 14.5859H87.3301C89.5393 14.5859 91.3301 16.3768 91.3301 18.5859V33.718H19.3679V18.5859C19.3679 16.3768 21.1588 14.5859 23.3679 14.5859Z" stroke="white" stroke-width="2"/>
+<path d="M136.613 141.133C136.613 151.001 128.614 159.001 118.745 159.001C108.877 159.001 100.877 151.001 100.877 141.133C100.877 131.264 108.877 123.265 118.745 123.265C128.614 123.265 136.613 131.264 136.613 141.133Z" stroke="white" stroke-width="2"/>
+<path d="M139.632 70.1868C139.632 80.055 131.633 88.0547 121.764 88.0547C111.896 88.0547 103.896 80.055 103.896 70.1868C103.896 60.3186 111.896 52.3188 121.764 52.3188C131.633 52.3188 139.632 60.3186 139.632 70.1868Z" stroke="white" stroke-width="2"/>
+<line x1="0.264591" y1="104.662" x2="157.245" y2="106.186" stroke="white" stroke-width="2"/>
+<line x1="3.27393" y1="83.5284" x2="68.1796" y2="83.5284" stroke="white" stroke-width="2"/>
+<path d="M67.4246 83.0194C90.0661 83.0194 90.0662 104.151 90.0662 104.151" stroke="white" stroke-width="2"/>
+<rect x="120.5" y="1" width="17.6226" height="32.717" stroke="white" stroke-width="2"/>
+<rect x="110.944" y="0.5" width="38.2452" height="2.01886" stroke="white"/>
+<line x1="22.387" y1="135.848" x2="22.387" y2="159.999" stroke="white" stroke-width="2"/>
+<rect x="19.3679" y="55.3384" width="5.54717" height="5.54717" stroke="white" stroke-width="2"/>
+<path d="M57.104 55.3384H62.6512V60.8856H57.104V55.3384Z" stroke="white" stroke-width="2"/>
+<rect x="37.4812" y="55.3384" width="5.54717" height="5.54717" stroke="white" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0_490_910">
+<rect width="158.49" height="160.001" fill="white" transform="translate(0.254883)"/>
+</clipPath>
+</defs>
+</svg>

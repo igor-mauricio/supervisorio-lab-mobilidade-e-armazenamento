@@ -10,36 +10,36 @@
                 <img class="size-[160px]" src="{{url_for('static', filename='images/battery_animated.svg')}}">
                 <span class="">Bateria</span>
                 <div class=" flex  flex-col text-2xl"> 
-                    <div class="flex px-2">
+                    <div class="w-[325px] flex px-2">
                         <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Estado</span>
-                            <span>dado</span>
+                            <span id="batteryState">dado</span>
                         </div>
                     </div>
-                    <div class="flex px-2">
+                    <div class="w-[325px] flex px-2">
                         <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Capacidade</span>
-                            <span>dado</span>
+                            <span id="batteryCapacity">dado</span>
                         </div>
                     </div>
 
-                    <div class="flex px-2">
+                    <div class="w-[325px] flex px-2">
                         <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Tensão</span>
-                            <span>dado</span>
+                            <span id="voltage">dado</span>
                         </div>
                     </div>
 
-                    <div class="flex px-2">
+                    <div class="w-[325px] flex px-2">
                         <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
                             <span>Corrente</span>
-                            <span>dado</span>
+                            <span id="current">dado</span>
                         </div>
                     </div>
-                    <div class="flex px-2">
+                    <div class="w-[325px] flex px-2">
                         <div class="flex w-full mx-3 px-2 py-1 justify-between gap-3">
                             <span>Temperatura</span>
-                            <span>dado</span>
+                            <span id="temperature">dado</span>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
 
                     <div class="flex px-2">
                         <div class="flex w-full border-b-2 border-neutral-700 mx-3 px-2 py-1 justify-between gap-3">
-                            <span>Limite de Corrente Ativa</span>
+                            <span>Lim. de Corrente Ativa</span>
                             <span>10 A</span>
                         </div>
                     </div>
@@ -161,4 +161,24 @@
             </div>
 
         </div>
+
+        <script>
+            var socket = io();
+
+            socket.on('connect', () => {
+                console.log('Connected to WebSocket server');
+            });
+
+            socket.on('battery_log_created', (data) => {
+                console.log('Battery log created:', data);
+
+                document.getElementById('batteryState').innerText = "SHUTDOWN";
+                document.getElementById('batteryCapacity').innerText = 270.0 + ' Ah';
+                document.getElementById('temperature').innerText = data.temperature.toFixed(2) + ' ºC';
+                document.getElementById('voltage').innerText = data.voltage.toFixed(2) + ' V';
+                document.getElementById('current').innerText = data.current.toFixed(2) + ' A';
+            });
+
+
+        </script>
   {% endblock %}

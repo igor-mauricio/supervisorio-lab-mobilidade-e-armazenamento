@@ -10,6 +10,7 @@ services:
 
   postgres:
     image: postgres
+    mem_limit: 700mb
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "123456"

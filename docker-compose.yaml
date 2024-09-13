@@ -2,7 +2,7 @@ version: "2.4"
 services:
   web:
     image: flask_app
-    mem_limit: 700mb
+    mem_limit: 400mb
     restart: "unless-stopped"
     stop_signal: SIGINT
     ports:
@@ -10,7 +10,7 @@ services:
 
   postgres:
     image: postgres
-    mem_limit: 700mb
+    mem_limit: 300mb
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "123456"
